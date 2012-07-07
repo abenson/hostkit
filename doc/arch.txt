@@ -5,13 +5,9 @@
 
 # Run Modes
 
-The main module of the application will handle arguments parsing and calling
-the modules that pertain to the flags. To add a new module to be called, 
-it's entry point should be added to the list to be called under which section
-it should be called under. The goal of this is compile time modularity. 
+The main module of the application will handle arguments parsing and calling the modules that pertain to the flags. To add a new module to be called, it's entry point should be added to the list to be called under which section it should be called under. The goal of this is compile time modularity. 
 
-There will be three standard modes to run the tool. Basic, Standard, and 
-Full. Each will increase in detail, respectively.
+There will be three standard modes to run the tool. Basic, Standard, and Full. Each will increase in detail, respectively.
 
 ## Basic
 
@@ -19,20 +15,15 @@ Basic will do a function test and identify the machine.
 
 ## Standard
 
-Standard will pull limited information about the machine. It will include the
-same information included in Basic, as well.
+Standard will pull limited information about the machine. It will include the same information included in Basic, as well.
 
 ## Full
 
-Full will include Basic, Standard, but collect the rest of the available 
-information from the host. This will run all of the modules available, with 
-some caveats.
+Full will include Basic, Standard, but collect the rest of the available information from the host. This will run all of the modules available, with some caveats.
 
 ## Details
 
-Each module can be asked to provide additional details about what it is
-collecting that otherwise would be left unreported. This may be flags set for
-a file, for example. 
+Each module can be asked to provide additional details about what it is collecting that otherwise would be left unreported. This may be flags set for a file, for example. 
 
 # Adding New Modules
 
@@ -45,8 +36,7 @@ There are 6 lists modules can be added to:
 - full
 - full_only
 
-To add a new module to each mode list, simply add its entry point to the list
-before the last line (the last line will always be NULL).  Example:
+To add a new module to each mode list, simply add its entry point to the list before the last line (the last line will always be NULL).  Example:
 
     /* Standard Module List */
     struct module standard[] = {
@@ -57,22 +47,11 @@ before the last line (the last line will always be NULL).  Example:
 
 ## Exclusivity
 
-Some modules may behave differently depending on whether they are being run in
-a basic, standard, or full scan.
+Some modules may behave differently depending on whether they are being run in a basic, standard, or full scan.
 
-With the exception of the *_only* lists, each mode will include the modules 
-listed in the lesser modes. For example, the **basic** run mode will run all 
-of the modules listed in *basic* and *basic_only*. **standard** will run all
-of the modules listed in *basic*, *standard*, and *standard_only*. As 
-expected, **full** will run all of the modules in *basic*, *standard*, *full*,
-and *full_only*. 
+With the exception of the *_only* lists, each mode will include the modules listed in the lesser modes. For example, the **basic** run mode will run all of the modules listed in *basic* and *basic_only*. **standard** will run all of the modules listed in *basic*, *standard*, and *standard_only*. As expected, **full** will run all of the modules in *basic*, *standard*, *full*, and *full_only*. 
 
-This is necessary for some modules that will behave differently depending on
-run mode. An example, file information may include system and home directories
-when run in standard mode, but in full mode would include all folders. To 
-avoid duplicating the system and home directories when run in full mode, the
-file information module would have two entry points, *file_info* and 
-*file_info_full*.  Example.
+This is necessary for some modules that will behave differently depending on run mode. An example, file information may include system and home directories when run in standard mode, but in full mode would include all folders. To avoid duplicating the system and home directories when run in full mode, the file information module would have two entry points, *file_info* and *file_info_full*.  Example.
 
 
     /* Standard *Only* Module List */
