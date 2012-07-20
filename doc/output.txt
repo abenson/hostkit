@@ -34,26 +34,22 @@ The file and format should be handled by the host application, with only the sec
 A module would generate output like that shown above with calls similar to the follow.
 
     /* Assuming this in the host app */
-    loghndl = reslog_open_log(filename, format);
+    log_t *loghdnl;
+    loghndl = open_log(filename, format);
 
-    reslog_open_section(loghndl, "Section1");
+    open_section(loghndl, "Section1");
 
-    reslog_open_item(loghndl);
-    reslog_add_value("Key", "Value");
-    reslog_close_item(loghdnl);
+    open_item(loghndl);
+    add_value(loghndl, "Key", "Value");
+    close_item(loghdnl);
 
-    reslog_open_item(loghndl);
-    reslog_add_value("Key", "Value");
-    reslog_close_item(loghndl);
+    open_item(loghndl);
+    add_value(loghndl, "Key", "Value");
+    close_item(loghndl);
 
-    reslog_close_section(loghndl);
+    close_section(loghndl);
 
-    reslog_open_section(loghndl, "Section2");
+    open_section(loghndl, "Section2");
     /* and so on */
 
 This would generate appropriate output for the specified format. 
-
-# Implementation
-
-
-
