@@ -1,0 +1,59 @@
+                        ___  _   _ _____ ___ _   _ _____ 
+                       / _ \| | | |_   _| _ \ | | |_   _|
+                      | (_) | |_| | | | |  _/ |_| | | |  
+                       \___/ \___/  |_| |_|  \___/  |_|  
+                                                         
+
+# Overview
+
+Currently planned output formats are JSON, YAML, and XML, with the default being JSON. From within the application, this should all be abstracted by the logging system. The output format is specified when the results file is initially created. The output will have a very rigid structure, both due to limitations with the library (a full spec will not be implemented) but more importantly to limit complexity of output files, making them easier to parse.
+
+# File Structure
+
+The resulting file structure will be rigid and simple. The overall structure, regardless of format, will be as such:
+
+    Section1:
+        Item1:
+            Key, Value
+            ...
+        Item2:
+            Key, Value
+            ...
+        ...
+    Section2:
+        ...
+
+Each module will have its own section. Each module should have only one section. 
+
+# API
+
+User exposed API provides the ability to create a results file with a certain format, create and close a section, create and close a new item, and add key/value pairs to the item. 
+
+The file and format should be handled by the host application, with only the section, item, and kv calls handled by the module. 
+
+A module would generate output like that shown above with calls similar to the follow.
+
+    /* Assuming this in the host app */
+    loghndl = reslog_open_log(filename, format);
+
+    reslog_open_section(loghndl, "Section1");
+
+    reslog_open_item(loghndl);
+    reslog_add_value("Key", "Value");
+    reslog_close_item(loghdnl);
+
+    reslog_open_item(loghndl);
+    reslog_add_value("Key", "Value");
+    reslog_close_item(loghndl);
+
+    reslog_close_section(loghndl);
+
+    reslog_open_section(loghndl, "Section2");
+    /* and so on */
+
+This would generate appropriate output for the specified format. 
+
+# Implementation
+
+
+
