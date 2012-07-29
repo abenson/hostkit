@@ -34,26 +34,47 @@ The file and format should be handled by the host application, with only the sec
 A module would generate output like that shown above with calls similar to the follow.
 
     /* Assuming this in the host app */
-    loghndl = reslog_open_log(filename, format);
+    log_t *loghdnl;
+    loghndl = open_log(filename, format);
 
-    reslog_open_section(loghndl, "Section1");
+    open_section(loghndl, "Section1");
 
-    reslog_open_item(loghndl);
-    reslog_add_value("Key", "Value");
-    reslog_close_item(loghdnl);
+    open_item(loghndl);
+    add_value(loghndl, "Key", "Value");
+    close_item(loghdnl);
 
-    reslog_open_item(loghndl);
-    reslog_add_value("Key", "Value");
-    reslog_close_item(loghndl);
+    open_item(loghndl);
+    add_value(loghndl, "Key", "Value");
+    close_item(loghndl);
 
-    reslog_close_section(loghndl);
+    close_section(loghndl);
 
-    reslog_open_section(loghndl, "Section2");
+    open_section(loghndl, "Section2");
     /* and so on */
 
 This would generate appropriate output for the specified format. 
 
-# Implementation
+# Output Formats
+
+Currently, only JSON, YAML, and XML are planned to be implemented. Each output module needs to implement the following functions:
+
+- begin: Any pre-output actions, such as a file header, also gives an opportunity to allocate and initialize the moduleData structure.
+- end: Any post-output actions, like begin. Also deallocate the structures from begin.
+- open_section: Begin a section. 
+- close_section: End a section. 
+- open_item: Begin an item within the section.      
+- close_item: Close an item within the section. 
+- add_value: Add a key/value pair to an item. 
 
 
+Prepend the name of the format to these to avoid symbol conflicts. 
+
+A module's identifier and methods are registered in the modules structure. For example, if a module "foo" is implemented, it would be registered in the structure as follows. The last line will always be NULL. 
+
+    #include "modules/foo.h"
+    struct module modules[] = {
+        {"foo", foo_begin, foo_end, foo_open_section, foo_close_section, foo_open_item, foo_close_item, foo_add_value},
+        ...
+        {NULL, NULL, NULL, NULL, NULL, NULL}
+    };
 
