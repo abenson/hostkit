@@ -1,12 +1,12 @@
-ALL: hostkit.exe writer.a
+ALL: hostkit.exe 
 
 include common.mk
 
-HK_SRC= main.c arguments.c
-HK_HDR= common.h arguments.h
-
 WRITER_SRC= writer/writers.c writer/writer_json.c writer/writer.c writer/writer_xml.c
 WRITER_HDR= writer/writers.h writer/writer_json.h writer/writer.h writer/writer_xml.h
+
+HK_SRC= main.c arguments.c util.c 
+HK_HDR= common.h arguments.h util.h 
 
 hostkit.exe: $(HK_SRC) $(HK_HDR) writer.a
 	$(CC) -o hostkit.exe $(HK_SRC) writer.a
