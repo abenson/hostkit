@@ -1,0 +1,78 @@
+              ___   _   ___  _   ___ ___ _    ___ _____ ___ ___ ___ 
+             / __| /_\ | _ \/_\ | _ )_ _| |  |_ _|_   _|_ _| __/ __|
+            | (__ / _ \|  _/ _ \| _ \| || |__ | |  | |  | || _|\__ \
+             \___/_/ \_\_|/_/ \_\___/___|____|___| |_| |___|___|___/
+                                                                    
+# Capabilities
+
+This will describe each module and their function.
+
+## Basic
+
+- System
+	- Hostname
+	- Domain
+	- OS
+	- Version
+	- Machine Type
+	- Processor Type
+	- Count of Processors
+	- Memory
+	- Detect VM
+- Drives
+	- Physical Device
+	- Assigned Drive Letter
+	- Model
+	- Serial
+
+## Standard
+
+- Filesystem (%PATH%)
+	- Name
+	- Folder
+	- Size
+	- SHA-256
+	- Owner
+	- Verbose: ACLs¹
+- Services
+	- Name
+	- Display Name
+	- Description
+	- Status
+	- Type
+	- StartType
+- Processes
+	- PID
+	- Name
+	- Path
+	- Owner
+	- Loaded Modules¹
+- Network Info
+	- Gateways¹
+	- Routes¹
+	- DNS Servers¹
+- Network Devices
+	- Name
+	- HW Address
+	- IPs¹
+	- Subnet Mask
+- DNS Cache
+	- Name
+	- Type
+- Autoruns
+	- Location
+	- Name
+	- Value
+- USBs
+	- Serial
+	- Vendor
+	- Date 
+
+## Full
+
+- Filesystem (everything)
+
+
+# Notes
+
+¹ This may (read: will) require an implementation change to add subitems. 
