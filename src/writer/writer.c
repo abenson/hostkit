@@ -5,16 +5,6 @@
 #include "writer.h"
 #include "writers.h"
 
-static char *dupestr(const char *str)
-{
-	char *duped;
-	duped = malloc(sizeof(*duped) * (strlen(str)+1));
-	if(duped) {
-		strncpy(duped, str, strlen(str));
-	}
-	return NULL;
-}
-
 log_t* open_log(const char *filename, const char *format)
 {
 	log_t *log;
