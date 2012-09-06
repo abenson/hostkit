@@ -32,7 +32,7 @@ int validate_arguments(void)
 		return ARGS_INVALID;
 	}
 
-	/* If no mode is specified and we're not persisten, defaul to standard. */
+	/* If no mode is specified and we're not persistent, default to standard. */
 	if(arguments.mode == RM_NONE && arguments.persistent == FALSE) {
 		arguments.mode = RM_STANDARD;
 	}
