@@ -8,8 +8,8 @@ WRITER_HDR= writer/writers.h writer/writer_json.h writer/writer.h writer/writer_
 MODULES_SRC= modules/modules.c
 MODULES_HDR= modules/mdoules.h
 
-HK_SRC= main.c arguments.c util.c 
-HK_HDR= common.h arguments.h util.h 
+HK_SRC= main.c arguments.c util.c service.c persist.c
+HK_HDR= common.h arguments.h util.h service.h persist.h
 
 hostkit.exe: $(HK_SRC) $(HK_HDR) writer/writer.a modules/modules.a
 	$(CC) -o hostkit.exe $(HK_SRC) writer.a
