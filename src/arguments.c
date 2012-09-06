@@ -27,7 +27,7 @@ int validate_arguments(void)
 		return ARGS_INVALID;
 	}
 
-	/* Check for this invalid combination. */
+	/* Check for invalid combinations. */
 	if(arguments.mode != RM_NONE && arguments.persistent == TRUE) {
 		return ARGS_INVALID;
 	}
