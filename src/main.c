@@ -49,7 +49,13 @@ int _tmain(int argc, TCHAR *argv[])
 		quit();
 	}
 
-
+	if(arguments.mode == RM_BASIC) {
+		run_basic_scan();
+	} else if(arguments.mode == RM_STANDARD) {
+		run_standard_scan();
+	} else if(arguments.mode == RM_FULL) {
+		run_full_scan();
+	}
 
 	return 0;
 }
