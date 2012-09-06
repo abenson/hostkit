@@ -7,6 +7,11 @@ TCHAR *get_version(void)
 	return _T("HostKit Agent PREALPHA\nCompiled at ") __TIME__ _T(" on ") __DATE__ _T("\n");
 }
 
+TCHAR *get_copyright(void)
+{
+	return _T("");
+}
+
 int _tmain(int argc, TCHAR *argv[])
 {
 	int result;
@@ -24,6 +29,7 @@ int _tmain(int argc, TCHAR *argv[])
 
 	if(arguments.version == TRUE) {
 		_tprintf(_T("%s"), get_version());
+		_tprintf(_T("%s"), get_copyright());
 		quit();
 	}
 
@@ -43,7 +49,7 @@ int _tmain(int argc, TCHAR *argv[])
 		quit();
 	}
 
-	
+
 
 	return 0;
 }
