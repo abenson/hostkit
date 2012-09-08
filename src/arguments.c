@@ -123,7 +123,7 @@ int parse_arguments(TCHAR *argv[])
 			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.log = _tfopen(_T(argv[i+1]), "w+");
+				arguments.log = _tfopen(argv[i+1], _T("w+"));
 				if(arguments.log == NULL) {
 					arguments.error = 2;
 				}
