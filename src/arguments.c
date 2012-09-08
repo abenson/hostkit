@@ -17,7 +17,7 @@ void initialize_arguments(void)
 	arguments.service = FALSE;
 	arguments.verbose = FALSE;
 	arguments.debug = FALSE;
-	arguments.log = NULL;
+	arguments.log = stderr;
 	arguments.pipe = _T("hkadmin");
 }
 
@@ -59,7 +59,7 @@ _T("Common options:\n")
 _T("   /service              Install self and run as a service.\n")
 _T("   /verbose              Increases verbosity for logging.\n")
 _T("   /debug                Enables debug output.\n")
-_T("   /log <name>           Name of log. Defaults to stdout.\n")
+_T("   /log <name>           Name of log. Defaults to stderr.\n")
 _T("\n")
 _T("Other options:\n")
 _T("   /help                This message.\n")
