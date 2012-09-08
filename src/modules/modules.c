@@ -1,7 +1,12 @@
 #include "../common.h"
 #include "modules.h"
 
+#include "basic/basic.h"
+#include "standard/standard.h"
+#include "full/full.h"
+
 struct module basic[] = {
+	host_details,
 	NULL
 };
 
