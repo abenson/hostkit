@@ -11,6 +11,7 @@ void initialize_arguments(void)
 	arguments.error = 0;
 	arguments.version = FALSE;
 	arguments.mode = RM_NONE;
+	arguments.filename = NULL;
 	arguments.file = stdout;
 	arguments.writer = find_format("json");
 	arguments.persistent = FALSE;
@@ -84,10 +85,7 @@ int parse_arguments(TCHAR *argv[])
 			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.file = _tfopen(argv[i+1], "w+");
-				if(arguments.file == NULL) {
-					arguments.error = 2;
-				}
+				arguments.filename = dupestr(argv[i+1]);
 			}
 			i++;
 		} else if(_tcscmp(argv[i], _T("/writer")) == 0) {

@@ -14,6 +14,7 @@ struct arguments {
 
 	int mode;
 	FILE *file;
+	TCHAR *filename;
 	int writer;
 
 	BOOL persistent;
