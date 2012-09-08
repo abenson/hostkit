@@ -1,4 +1,4 @@
-
+#include "../../common.h"
 
 int host_details(void)
 {
