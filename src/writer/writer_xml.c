@@ -15,7 +15,7 @@ int xml_end(log_t *log)
 	return 0;
 }
 
-int xml_open_section(log_t *log, const char *name)
+int xml_open_section(log_t *log, const _TCHAR *name)
 {
 	fprintf(log->file, "   <%s>\n", log->section);
 	return 0;
@@ -39,7 +39,7 @@ int xml_close_item(log_t *log)
 	return 0;
 }
 
-int xml_add_value(log_t *log, const char *key, const char *value)
+int xml_add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
 	fprintf(log->file, "          <%s>%s</%s>\n", key, value, key);
 	return 0;

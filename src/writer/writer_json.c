@@ -30,7 +30,7 @@ int json_end(log_t *log)
 	return 0;
 }
 
-int json_open_section(log_t *log, const char *name)
+int json_open_section(log_t *log, const _TCHAR *name)
 {
 	if(((struct json_data*)log->moduleData)->followingSection == 1) {
 		fprintf(log->file, ",\n\t\"%s\": [", log->section);
@@ -67,7 +67,7 @@ int json_close_item(log_t *log)
 	return 0;
 }
 
-int json_add_value(log_t *log, const char *key, const char *value)
+int json_add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
 	if(((struct json_data*)log->moduleData)->followingKeyVal == 1) {
 		fprintf(log->file, ",\n\t\t\t\"%s\": \"%s\"", key, value, key);

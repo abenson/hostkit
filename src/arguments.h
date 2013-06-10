@@ -14,7 +14,7 @@ struct arguments {
 
 	int mode;
 	FILE *file;
-	TCHAR *filename;
+	_TCHAR *filename;
 	int writer;
 
 	BOOL persistent;
@@ -24,16 +24,16 @@ struct arguments {
 	BOOL debug;
 	FILE *log;
 
-	TCHAR *pipe;
-	TCHAR *server;
+	_TCHAR *pipe;
+	_TCHAR *server;
 };
 
 extern struct arguments arguments;
 
 void initialize_arguments(void);
 
-TCHAR* get_help();
+_TCHAR* get_help();
 
-int parse_arguments(TCHAR *argv[]);
+int parse_arguments(_TCHAR *argv[]);
 
 #endif

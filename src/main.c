@@ -2,17 +2,17 @@
 
 #include "arguments.h"
 
-TCHAR *get_version(void)
+_TCHAR *get_version(void)
 {
 	return _T("HostKit Agent PREALPHA\nCompiled at ") __TIME__ _T(" on ") __DATE__ _T("\n");
 }
 
-TCHAR *get_copyright(void)
+_TCHAR *get_copyright(void)
 {
 	return _T("");
 }
 
-int _tmain(int argc, TCHAR *argv[])
+int main(int argc, _TCHAR *argv[])
 {
 	int result;
 

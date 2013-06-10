@@ -41,7 +41,7 @@ int validate_arguments(void)
 	return ARGS_OK;
 }
 
-TCHAR* get_help(void)
+_TCHAR* get_help(void)
 {
 	return
 _T("Standalone options:\n")
@@ -67,7 +67,7 @@ _T("   /help                This message.\n")
 _T("   /version             Display version.\n");
 }
 
-int parse_arguments(TCHAR *argv[])
+int parse_arguments(_TCHAR *argv[])
 {
 	int i = 0;
 	while(argv[i] != NULL) {

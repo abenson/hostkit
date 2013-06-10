@@ -2,9 +2,9 @@
 
 #include "util.h"
 
-TCHAR *dupestr(const TCHAR *str)
+_TCHAR *dupestr(const _TCHAR *str)
 {
-	TCHAR *duped;
+	_TCHAR *duped;
 	duped = malloc(sizeof(*duped) * (_tcslen(str)+1));
 	if(duped) {
 		_tcsncpy(duped, str, _tcslen(str));

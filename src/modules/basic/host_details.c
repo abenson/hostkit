@@ -8,15 +8,15 @@ int host_details(void)
 
 static int hostname(void)
 {
-	TCHAR *name = NULL;
+	_TCHAR *name = NULL;
 	DWORD nameLen = 0;
 
 	/* Get size of buffer. */
-	GetComputerNameEx(ComputerNameDnsHostname, name, &nameLen);
+	GetComputerNameExW(ComputerNameDnsHostname, name, &nameLen);
 	
 	/* Get name of host. */
 	name = malloc(sizeof(*name) * nameLen);
-	GetComputerNameEx(ComputerNameDnsHostname, name, &nameLen);
+	GetComputerNameExW(ComputerNameDnsHostname, name, &nameLen);
 
 	
 

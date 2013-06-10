@@ -5,7 +5,7 @@
 #include "writer.h"
 #include "writers.h"
 
-log_t* open_log(const char *filename, const char *format)
+log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 {
 	log_t *log;
 	int fmtIndex;
@@ -15,10 +15,10 @@ log_t* open_log(const char *filename, const char *format)
 
 	log = malloc(sizeof(*log));
 	if(log) {
-		if(strcmp(filename, "-") == 0) {
+		if(_tcscmp(filename, _T("-")) == 0) {
 			log->file = stdout;
 		} else {
-			log->file = fopen(filename, "w+");
+			log->file = _tfopen(filename, _T("w+"));
 		}
 		if(log->file) {
 			log->format = fmtIndex;
@@ -39,7 +39,7 @@ void close_log(log_t *log)
 	free(log);
 }
 
-int open_section(log_t *log, const char *name)
+int open_section(log_t *log, const _TCHAR *name)
 {
 	log->section = dupestr(name);
 	return modules[log->format].open_section(log, name);
@@ -63,7 +63,7 @@ int close_item(log_t *log)
 	return modules[log->format].close_item(log);
 }
 
-int add_value(log_t *log, const char *key, const char *value)
+int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
 	return modules[log->format].add_value(log, key, value);
 }
