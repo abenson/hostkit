@@ -1,3 +1,11 @@
 *.o
 *.exe
 *.a
+*.tlog
+Debug
+*.obj
+*.pdb
+*.user
+*.filters
+*.suo
+*.sdf
