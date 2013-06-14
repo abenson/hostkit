@@ -2,7 +2,7 @@
 
 #include "arguments.h"
 
-#include "util.h"
+#include "writer/writers.h"
 
 struct arguments arguments;
 
@@ -13,7 +13,7 @@ void initialize_arguments(void)
 	arguments.mode = RM_NONE;
 	arguments.filename = NULL;
 	arguments.file = stdout;
-	arguments.writer = find_format("json");
+	arguments.writer = find_format(_T("json"));
 	arguments.persistent = FALSE;
 	arguments.service = FALSE;
 	arguments.verbose = FALSE;
@@ -117,12 +117,18 @@ int parse_arguments(_TCHAR *argv[])
 			arguments.verbose = TRUE;
 		} else if(_tcscmp(argv[i], _T("/debug")) == 0) {
 			arguments.debug = TRUE;
-		} else if(_tcscmp(argv[i], _T("/log")) == 0) {
-			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
+		} else if(_tcscmp(argv[i], _T("/log")) == 0) 
+		{
+			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) 
+			{
 				arguments.error = 1;
-			} else {
-				arguments.log = _tfopen(argv[i+1], _T("w+"));
-				if(arguments.log == NULL) {
+			} 
+			else 
+			{
+				//arguments.log = _tfopen(argv[i+1], _T("w+"));
+				_tfopen_s(&arguments.log, argv[i + 1], _T("w+"));
+				if(arguments.log == NULL) 
+				{
 					arguments.error = 2;
 				}
 			}
