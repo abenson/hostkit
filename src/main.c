@@ -4,7 +4,7 @@
 
 _TCHAR *get_version(void)
 {
-	return _T("HostKit Agent PREALPHA\nCompiled at ") __TIME__ _T(" on ") __DATE__ _T("\n");
+	return _T("HostKit Agent PREALPHA\nCompiled at ") _T(__TIME__) _T(" on ") _T(__DATE__) _T("\n");
 }
 
 _TCHAR *get_copyright(void)
@@ -12,28 +12,32 @@ _TCHAR *get_copyright(void)
 	return _T("");
 }
 
-int main(int argc, _TCHAR *argv[])
+int _tmain(int argc, _TCHAR *argv[])
 {
 	int result;
 
 	initialize_arguments();
 
-	if(parse_arguments(argv) != ARGS_OK || arguments.error) {
+	if(parse_arguments(argv) != ARGS_OK || arguments.error) 
+	{
 		_tprintf(_T("%s"), get_help());
 		quit();
 	}
 
-	if(arguments.debug) {
+	if(arguments.debug) 
+	{
 		_ftprintf(stderr, _T("Debug log is enabled.\n"));
 	}
 
-	if(arguments.version == TRUE) {
+	if(arguments.version == TRUE) 
+	{
 		_tprintf(_T("%s"), get_version());
 		_tprintf(_T("%s"), get_copyright());
 		quit();
 	}
 
-	if(arguments.service == TRUE) {
+	if(arguments.service == TRUE) 
+	{
 		result = servicize();
 		if(result != 0) {
 			_ftprintf(stderr, _T("Unable to install as service.\n"));
