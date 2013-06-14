@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <malloc.h>
 
 #include "writer.h"
 #include "writers.h"
@@ -14,15 +15,23 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 	fmtIndex = find_format(format);
 	if(fmtIndex < 0) { return NULL; }
 
-	log = malloc(sizeof(*log));
-	if(log) {
-		if(_tcscmp(filename, _T("-")) == 0) {
+	log = (log_t *) malloc(sizeof(*log));
+
+	if(log) 
+	{
+		if(_tcscmp(filename, _T("-")) == 0) 
+		{
 			log->file = stdout;
-		} else {
-			//log->file = _tfopen(filename, _T("w+"));
-			_err = _tfopen_s(&log->file, filename, _T("w+"));
+		} 
+		else 
+		{
+			log->file = _tfopen(filename, _T("w+"));
+			//_tfopen is a compile error without forcing it...
+			//_err = _tfopen_s(&log->file, filename, _T("w+"));
 		}
-		if(log->file) {
+		
+		if(log->file) 
+		{
 			log->format = fmtIndex;
 			modules[log->format].begin(log);
 			return log;
@@ -35,15 +44,19 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 void close_log(log_t *log)
 {
 	modules[log->format].end(log);
-	if(log->file != stdout) {
+
+	if(log->file != stdout) 
+	{
 		fclose(log->file);
 	}
+
 	free(log);
 }
 
 int open_section(log_t *log, const _TCHAR *name)
 {
 	log->section = dupestr(name);
+
 	return modules[log->format].open_section(log, name);
 }
 
