@@ -1,4 +1,7 @@
-#include "common.h"
+#include <Windows.h>
+#include <tchar.h>
+
+#include <stdio.h>
 
 #include "service.h"
 
