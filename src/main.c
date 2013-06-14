@@ -1,6 +1,8 @@
 #include "common.h"
 
 #include "arguments.h"
+#include "service.h"
+#include "persist.h"
 
 _TCHAR *get_version(void)
 {
@@ -39,25 +41,33 @@ int _tmain(int argc, _TCHAR *argv[])
 	if(arguments.service == TRUE) 
 	{
 		result = servicize();
-		if(result != 0) {
+		if(result != 0) 
+		{
 			_ftprintf(stderr, _T("Unable to install as service.\n"));
 		}
 		quit();
 	}
 
-	if(arguments.persistent == TRUE) {
+	if(arguments.persistent == TRUE) 
+	{
 		result = persist();
-		if(result != 0) {
+		if(result != 0) 
+		{
 			_ftprintf(stderr, _T("An occurred when running persistent.\n"));
 		}
 		quit();
 	}
 
-	if(arguments.mode == RM_BASIC) {
+	if(arguments.mode == RM_BASIC) 
+	{
 		run_basic_scan();
-	} else if(arguments.mode == RM_STANDARD) {
+	} 
+	else if(arguments.mode == RM_STANDARD) 
+	{
 		run_standard_scan();
-	} else if(arguments.mode == RM_FULL) {
+	} 
+	else if(arguments.mode == RM_FULL) 
+	{
 		run_full_scan();
 	}
 
