@@ -9,7 +9,8 @@ int main(int argc, char *argv[])
 
 	log = open_log(_T("-"), _T("json"));
 
-	if(log == NULL) {
+	if(log == NULL) 
+	{
 		puts("Failed.");
 	}
 
