@@ -55,6 +55,8 @@
       <ExceptionHandling>false</ExceptionHandling>
       <CompileAs>CompileAsC</CompileAs>
       <AdditionalIncludeDirectories>C:\Users\hammackj\Documents\GitHub\hostkit\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -86,7 +88,6 @@
     <ClCompile Include="..\..\src\main.c" />
     <ClCompile Include="..\..\src\persist.c" />
     <ClCompile Include="..\..\src\service.c" />
-    <ClCompile Include="..\..\src\util.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\arguments.h" />
@@ -94,11 +95,11 @@
     <ClInclude Include="..\..\src\service.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Modules\Modules.vcxproj">
-      <Project>{67831875-5fec-4433-bc97-7b9faf54bbe5}</Project>
-    </ProjectReference>
     <ProjectReference Include="Common\Common.vcxproj">
       <Project>{7c12ed32-d2b1-4ac0-8cdc-44c6656a4b77}</Project>
+    </ProjectReference>
+    <ProjectReference Include="Modules\Modules.vcxproj">
+      <Project>{67831875-5fec-4433-bc97-7b9faf54bbe5}</Project>
     </ProjectReference>
     <ProjectReference Include="Writer\Writer.vcxproj">
       <Project>{a68cc383-f072-4429-9f34-db87ab26a6d6}</Project>
