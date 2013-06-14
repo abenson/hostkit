@@ -3,7 +3,8 @@
 
 #include "writer.h"
 
-struct wmodule {
+struct wmodule
+{
 	const _TCHAR *name;
 	int (*begin)(log_t*);
 	int (*end)(log_t*);
