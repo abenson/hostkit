@@ -9,6 +9,7 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 {
 	log_t *log;
 	int fmtIndex;
+	errno_t _err;
 
 	fmtIndex = find_format(format);
 	if(fmtIndex < 0) { return NULL; }
@@ -18,7 +19,8 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 		if(_tcscmp(filename, _T("-")) == 0) {
 			log->file = stdout;
 		} else {
-			log->file = _tfopen(filename, _T("w+"));
+			//log->file = _tfopen(filename, _T("w+"));
+			_err = _tfopen_s(&log->file, filename, _T("w+"));
 		}
 		if(log->file) {
 			log->format = fmtIndex;

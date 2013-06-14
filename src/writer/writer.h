@@ -1,9 +1,14 @@
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
-#include "../common.h"
+#include <Windows.h>
+#include <tchar.h>
 
-#include "../util.h"
+#include <stdio.h>
+
+#include "common\common.h"
+
+//#include "../util.h"
 
 typedef struct log 
 {
