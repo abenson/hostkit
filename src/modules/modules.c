@@ -1,4 +1,3 @@
-#include "../common.h"
 #include "modules.h"
 
 #include "basic/basic.h"
@@ -40,13 +39,15 @@ int run_scan(struct module list[])
 			return -1;
 		}
 	}
-	return 0;
+	return ERR_NONE;
 }
 
 int run_basic_scan(void)
 {
 	run_scan(basic);
 	run_scan(basic_only);
+
+	return ERR_NONE;
 }
 
 int run_standard_scan(void)
@@ -54,6 +55,8 @@ int run_standard_scan(void)
 	run_scan(basic);
 	run_scan(standard);
 	run_scan(standard_only);
+
+	return ERR_NONE;
 }
 
 int run_full_scan(void)
@@ -62,4 +65,6 @@ int run_full_scan(void)
 	run_scan(standard);
 	run_scan(full);
 	run_scan(full_only);
+
+	return ERR_NONE;
 }
