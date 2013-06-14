@@ -10,9 +10,9 @@ This will describe each module and their function.
 ## Basic
 
 - System
-	- Hostname
-	- Domain
-	- OS
+	- Hostname - hostname()
+	- Domain - hostname()
+	- OS - 
 	- Version
 	- Machine Type
 	- Processor Type
