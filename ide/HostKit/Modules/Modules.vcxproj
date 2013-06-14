@@ -10,6 +10,16 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\modules\basic\basic.h" />
+    <ClInclude Include="..\..\..\src\modules\full\full.h" />
+    <ClInclude Include="..\..\..\src\modules\modules.h" />
+    <ClInclude Include="..\..\..\src\modules\standard\standard.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\modules\basic\host_details.c" />
+    <ClCompile Include="..\..\..\src\modules\modules.c" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{67831875-5FEC-4433-BC97-7B9FAF54BBE5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -75,16 +85,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\modules\basic\host_details.c" />
-    <ClCompile Include="..\..\src\modules\modules.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\modules\basic\basic.h" />
-    <ClInclude Include="..\..\src\modules\full\full.h" />
-    <ClInclude Include="..\..\src\modules\modules.h" />
-    <ClInclude Include="..\..\src\modules\standard\standard.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
