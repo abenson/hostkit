@@ -14,7 +14,6 @@ int host_details(void)
 	os_info();
 
 	close_section(arguments.log);
-	close_log(arguments.log);
 	
 	return ERR_NONE;
 }

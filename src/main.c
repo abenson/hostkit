@@ -71,5 +71,7 @@ int _tmain(int argc, _TCHAR *argv[])
 		run_full_scan();
 	}
 
+	close_log(arguments.log);
+
 	return 0;
 }
