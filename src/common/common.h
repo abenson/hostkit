@@ -12,8 +12,6 @@
 #define ERR_NOTFOUND 3
 #define ERR_LOGFAIL 4
 
-
-
 TCHAR *dupestr(const TCHAR *str);
 
 void quit(void);
