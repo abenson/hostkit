@@ -12,7 +12,7 @@
 #define ERR_NOTFOUND 3
 #define ERR_LOGFAIL 4
 
-_TCHAR *dupestr(const _TCHAR *str);
+TCHAR *dupestr(const TCHAR *str);
 
 void quit(void);
 

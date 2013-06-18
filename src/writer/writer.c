@@ -57,7 +57,7 @@ int open_section(log_t *log, const _TCHAR *name)
 {
 	log->section = dupestr(name);
 
-	return modules[log->format].open_section(log, name);
+	return modules[log->format].open_section(log, log->section);
 }
 
 int close_section(log_t *log)

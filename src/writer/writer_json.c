@@ -32,7 +32,6 @@ int json_end(log_t *log)
 
 int json_open_section(log_t *log, const TCHAR *name)
 {
-	log->section = dupestr(name);
 	if(log->section == NULL) {
 		return -1;
 	}
@@ -47,7 +46,6 @@ int json_open_section(log_t *log, const TCHAR *name)
 int json_close_section(log_t *log)
 {
 	_ftprintf(log->file, _T("\n\t]"));
-	free(log->section);
 	((struct json_data*)log->moduleData)->followingSection = 1;
 	((struct json_data*)log->moduleData)->followingItem = 0;
 	((struct json_data*)log->moduleData)->followingKeyVal = 0;
