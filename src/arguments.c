@@ -93,7 +93,7 @@ int parse_arguments(_TCHAR *argv[])
 			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.writer = find_format(argv[i+1]);
+				arguments.writer = dupestr(argv[i+1]);
 			}
 			i++;
 		} else if(_tcscmp(argv[i], _T("/persist")) == 0) {
