@@ -13,16 +13,18 @@ struct arguments {
 	BOOL version;
 
 	int mode;
-	FILE *file;
-	_TCHAR *filename;
-	int writer;
+
+	log_t *log;
+	TCHAR *filename;
+	TCHAR *writer;
 
 	BOOL persistent;
 
 	BOOL service;
 	BOOL verbose;
 	BOOL debug;
-	FILE *log;
+
+	FILE *logFile;
 
 	_TCHAR *pipe;
 	_TCHAR *server;

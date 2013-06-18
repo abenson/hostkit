@@ -11,14 +11,13 @@ void initialize_arguments(void)
 	arguments.error = 0;
 	arguments.version = FALSE;
 	arguments.mode = RM_NONE;
-	arguments.filename = NULL;
-	arguments.file = stdout;
-	arguments.writer = find_format(_T("json"));
+	arguments.filename = _T("-");
+	arguments.writer = _T("json");
 	arguments.persistent = FALSE;
 	arguments.service = FALSE;
 	arguments.verbose = FALSE;
 	arguments.debug = FALSE;
-	arguments.log = stderr;
+	arguments.logFile = stderr;
 	arguments.pipe = _T("hkadmin");
 }
 
@@ -31,6 +30,8 @@ int validate_arguments(void)
 	/* Check for invalid combinations. */
 	if(arguments.mode != RM_NONE && arguments.persistent == TRUE) {
 		return ARGS_INVALID;
+	} else {
+		arguments.log = open_log(arguments.filename, arguments.writer);
 	}
 
 	/* If no mode is specified and we're not persistent, default to standard. */
@@ -48,7 +49,7 @@ _T("Standalone options:\n")
 _T("   /basic                Basic run mode.\n")
 _T("   /standard             Standard run mode. Default.\n")
 _T("   /full                 Full run mode.\n")
-_T("   /filename <name>      Filename to write results to. Default is hostname.\n")
+_T("   /filename <name>      Filename to write results to. Default is standard output.\n")
 _T("   /writer <name>        Writer to use. Default is 'json'. Choose 'list' for available writers\n")
 _T("\n")
 _T("Persistent options\n")
@@ -125,8 +126,7 @@ int parse_arguments(_TCHAR *argv[])
 			} 
 			else 
 			{
-				//arguments.log = _tfopen(argv[i+1], _T("w+"));
-				_tfopen_s(&arguments.log, argv[i + 1], _T("w+"));
+				_tfopen_s(&arguments.logFile, argv[i + 1], _T("w+"));
 				if(arguments.log == NULL) 
 				{
 					arguments.error = 2;

@@ -1,28 +1,20 @@
+#include "arguments.h"
 #include "modules\modules.h"
 
 #define _WIN32_WINNT 0x0500
-
-static log_t *log;
 
 static int hostname(void);
 static int os_info(void);
 
 int host_details(void)
 {
-	//log = open_log(_T("-"), _T("json"));
-
-	//if (log == NULL)
-	//{
-	//	return ERR_MODFAIL;
-	//}
-	
-	//open_section(log, _T("host_details"));
+	open_section(arguments.log, _T("host_details"));
 
 	hostname();
 	os_info();
 
-	//close_section(log);
-	//close_log(log);
+	close_section(arguments.log);
+	close_log(arguments.log);
 	
 	return ERR_NONE;
 }
@@ -55,10 +47,9 @@ static int hostname(void)
 		}
 		else
 		{
-			_tprintf_s(_T("Field: %s : %s\n"), fields[i], buffer);
-			//open_item(log);
-			//add_value(log, fields[i], buffer);
-			//close_item(log);
+			open_item(arguments.log);
+			add_value(arguments.log, fields[i], buffer);
+			close_item(arguments.log);
 		}
 
 		length = _countof(buffer);
