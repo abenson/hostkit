@@ -36,6 +36,10 @@ A module would generate output like that shown above with calls similar to the f
     /* Assuming this in the host app */
     log_t *loghdnl;
     loghndl = open_log(filename, format);
+    
+    ...
+    
+    /* This is in the module code .... */
 
     open_section(loghndl, "Section1");
 
