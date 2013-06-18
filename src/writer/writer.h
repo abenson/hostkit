@@ -15,16 +15,16 @@ typedef struct log
 	FILE *file;
 	int format;
 
-	_TCHAR *section;
+	TCHAR *section;
 	void *moduleData;
 
 } log_t;
 
-log_t* open_log(const _TCHAR *filename, const _TCHAR *format);
+log_t* open_log(const TCHAR *filename, const TCHAR *format);
 
 void close_log(log_t *log);
 
-int open_section(log_t *log, const _TCHAR *name);
+int open_section(log_t *log, const TCHAR *name);
 
 int close_section(log_t *log);
 
@@ -32,6 +32,6 @@ int open_item(log_t *log);
 
 int close_item(log_t *log);
 
-int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value);
+int add_value(log_t *log, const TCHAR *key, const TCHAR *value);
 
 #endif

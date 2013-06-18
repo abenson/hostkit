@@ -1,8 +1,8 @@
 #include "common.h"
 
-_TCHAR *dupestr(const _TCHAR *str)
+TCHAR *dupestr(const TCHAR *str)
 {
-	_TCHAR *duped;
+	TCHAR *duped;
 	duped = malloc(sizeof(*duped) * (_tcslen(str)+1));
 	if(duped) {
 		//_tcsncpy(duped, str, _tcslen(str));
