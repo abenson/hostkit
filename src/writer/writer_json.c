@@ -11,7 +11,7 @@ struct json_data
 int json_begin(log_t *log)
 {
 	struct json_data *data;
-	data = (struct json_data *) malloc(sizeof(*data));
+	data = malloc(sizeof(*data));
 	if(data == NULL) {
 		return -1;
 	}
