@@ -11,6 +11,7 @@
 #define ERR_MODFAIL 2
 #define ERR_NOTFOUND 3
 #define ERR_LOGFAIL 4
+#define ERR_GENFAIL 5
 
 TCHAR *dupestr(const TCHAR *str);
 

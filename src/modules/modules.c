@@ -36,7 +36,7 @@ int run_scan(struct module list[])
 	for(i=0; list[i].entry_point != NULL; i++)
 	{
 		if(list[i].entry_point() != 0) {
-			return -1;
+			return ERR_MODFAIL;
 		}
 	}
 	return ERR_NONE;
