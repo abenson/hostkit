@@ -34,6 +34,8 @@ Return code should be 0 if no error occurred. Currently defined error codes are 
 - *ERR_MODFAIL*: An error occurred inside the module.
 - *ERR_NOTFOUND*: Something was not found, and the module could not successfully complete.
 - *ERR_LOGFAIL*: Some error occurred in the logging system.
+- *ERR_GENFAIL*: Some other error that does not fit well into the previous categories occurred.
+- *ERR_NOTIMPL*: This function is not implemented yet.
 
 # Supporting Functions
 
