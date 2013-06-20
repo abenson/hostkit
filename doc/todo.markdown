@@ -16,5 +16,3 @@
 - Memory
 - Detect VM
 
-#Writer
-- Broken..
