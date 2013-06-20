@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+#include "common/common.h"
 #include "arguments.h"
 
 #include "persist.h"
@@ -10,5 +11,5 @@
 int persist(void)
 {
 	_ftprintf(arguments.logFile, _T("Persistent mode not implemented!\n"));
-	return -1;
+	return ERR_NOTIMPL;
 }
