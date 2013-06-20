@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 
+#include "arguments.h"
 #include "service.h"
 
 int servicize(void)
 {
-	_ftprintf(stderr, _T("Service mode not implemented!\n"));
+	_ftprintf(arguments.logFile, _T("Service mode not implemented!\n"));
 	return -1;
 }

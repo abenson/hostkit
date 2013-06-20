@@ -28,7 +28,7 @@ int _tmain(int argc, _TCHAR *argv[])
 
 	if(arguments.debug) 
 	{
-		_ftprintf(stderr, _T("Debug log is enabled.\n"));
+		_ftprintf(arguments.logFile, _T("Debug log is enabled.\n"));
 	}
 
 	if(arguments.version == TRUE) 
@@ -43,7 +43,7 @@ int _tmain(int argc, _TCHAR *argv[])
 		result = servicize();
 		if(result != 0) 
 		{
-			_ftprintf(stderr, _T("Unable to install as service.\n"));
+			_ftprintf(arguments.logFile, _T("Unable to install as service.\n"));
 		}
 		quit();
 	}
@@ -53,7 +53,7 @@ int _tmain(int argc, _TCHAR *argv[])
 		result = persist();
 		if(result != 0) 
 		{
-			_ftprintf(stderr, _T("An occurred when running persistent.\n"));
+			_ftprintf(arguments.logFail, _T("An occurred when running persistent.\n"));
 		}
 		quit();
 	}
