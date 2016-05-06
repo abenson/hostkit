@@ -31,16 +31,12 @@ static int domain(void)
 	DWORD length = sizeof(buffer);
 	int i = 0;
 
-	if (!GetComputerNameEx(ComputerNameDnsDomain, buffer, &length))
-	{
-		return ERR_MODFAIL;
-	}
-	else
-	{
+	if (GetComputerNameEx(ComputerNameDnsDomain, buffer, &length)) {
 		add_value(arguments.log, _T("Domain"), buffer);
+		return ERR_NONE;
 	}
 
-	return ERR_NONE;
+	return ERR_MODFAIL;
 }
 
 //Based on
@@ -51,23 +47,17 @@ static int hostname(void)
 	DWORD length = sizeof(buffer);
 	int i = 0;
 
-	if (!GetComputerNameEx(ComputerNameDnsHostname, buffer, &length))
-	{
-		return ERR_MODFAIL;
-	}
-	else
-	{
+	if (GetComputerNameEx(ComputerNameDnsHostname, buffer, &length)) {
 		add_value(arguments.log, _T("Hostname"), buffer);
+		return ERR_NONE;
 	}
 
-	return ERR_NONE;
+	return ERR_MODFAIL;
 }
 
 //Based on
 //http://msdn.microsoft.com/en-us/library/windows/desktop/ms724429%28v=vs.85%29.aspx
 static int os_info(void)
 {
-
-
 	return ERR_NONE;
 }
