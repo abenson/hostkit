@@ -1,10 +1,9 @@
-#include <Windows.h>
-#include <LM.h>
+#include <windows.h>
+#include <lm.h>
 
-#include "arguments.h"
-#include "modules\modules.h"
-
-#define _WIN32_WINNT 0x0500
+#include "../../common/common.h"
+#include "../../arguments.h"
+#include "../modules.h"
 
 static int hostname(void);
 static int workgroup(void);

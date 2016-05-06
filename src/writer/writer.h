@@ -1,16 +1,14 @@
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
-#include <Windows.h>
+#include <windows.h>
 #include <tchar.h>
 
 #include <stdio.h>
 
-#include "common\common.h"
+#include "../common/common.h"
 
-//#include "writers.h"
-
-typedef struct log 
+typedef struct log
 {
 	FILE *file;
 	int format;

@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 
-#include "common\common.h"
-#include "writer\writer.h"
+#include "../common/common.h"
+#include "../writer/writer.h"
 
 enum RUNMODE { RM_NONE, RM_BASIC, RM_STANDARD, RM_FULL };
 
