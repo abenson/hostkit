@@ -1,4 +1,4 @@
-ALL: hostkit.exe 
+ALL: hostkit.exe
 
 include common.mk
 
