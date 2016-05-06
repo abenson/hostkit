@@ -17,18 +17,18 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 
 	log = (log_t *) malloc(sizeof(*log));
 
-	if(log) 
+	if(log)
 	{
-		if(_tcscmp(filename, _T("-")) == 0) 
+		if(_tcscmp(filename, _T("-")) == 0)
 		{
 			log->file = stdout;
-		} 
-		else 
+		}
+		else
 		{
 			log->file = _tfopen(filename, _T("w+"));
 		}
-		
-		if(log->file) 
+
+		if(log->file)
 		{
 			log->format = fmtIndex;
 			modules[log->format].begin(log);
@@ -43,7 +43,7 @@ void close_log(log_t *log)
 {
 	modules[log->format].end(log);
 
-	if(log->file != stdout) 
+	if(log->file != stdout)
 	{
 		fclose(log->file);
 	}
@@ -60,7 +60,7 @@ int open_section(log_t *log, const _TCHAR *name)
 
 int close_section(log_t *log)
 {
-	int value; 
+	int value;
 	value = modules[log->format].close_section(log);
 	free(log->section);
 	return value;
