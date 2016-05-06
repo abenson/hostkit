@@ -20,53 +20,53 @@ int _tmain(int argc, _TCHAR *argv[])
 
 	initialize_arguments();
 
-	if(parse_arguments(argv) != ARGS_OK || arguments.error) 
+	if(parse_arguments(argv) != ARGS_OK || arguments.error)
 	{
 		_tprintf(_T("%s"), get_help());
 		quit();
 	}
 
-	if(arguments.debug) 
+	if(arguments.debug)
 	{
 		_ftprintf(arguments.logFile, _T("Debug log is enabled.\n"));
 	}
 
-	if(arguments.version == TRUE) 
+	if(arguments.version == TRUE)
 	{
 		_tprintf(_T("%s"), get_version());
 		_tprintf(_T("%s"), get_copyright());
 		quit();
 	}
 
-	if(arguments.service == TRUE) 
+	if(arguments.service == TRUE)
 	{
 		result = servicize();
-		if(result != 0) 
+		if(result != 0)
 		{
 			_ftprintf(arguments.logFile, _T("Unable to install as service.\n"));
 		}
 		quit();
 	}
 
-	if(arguments.persistent == TRUE) 
+	if(arguments.persistent == TRUE)
 	{
 		result = persist();
-		if(result != 0) 
+		if(result != 0)
 		{
-			_ftprintf(arguments.logFail, _T("An occurred when running persistent.\n"));
+			_ftprintf(arguments.logFile, _T("An occurred when running persistent.\n"));
 		}
 		quit();
 	}
 
-	if(arguments.mode == RM_BASIC) 
+	if(arguments.mode == RM_BASIC)
 	{
 		run_basic_scan();
-	} 
-	else if(arguments.mode == RM_STANDARD) 
+	}
+	else if(arguments.mode == RM_STANDARD)
 	{
 		run_standard_scan();
-	} 
-	else if(arguments.mode == RM_FULL) 
+	}
+	else if(arguments.mode == RM_FULL)
 	{
 		run_full_scan();
 	}
