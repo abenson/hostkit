@@ -10,6 +10,40 @@ TCHAR *dupestr(const TCHAR *str)
 	return duped;
 }
 
+TCHAR *lpstr2tchar(const LPSTR str)
+{
+	TCHAR *duped;
+	size_t i, len;
+
+	len = strlen(str);
+	duped = malloc(sizeof(*duped) * (len+1));
+
+	if(duped) {
+		for(i=0; i<len; i++) {
+			duped[i] = (TCHAR)str[i];
+		}
+	}
+
+	return duped;
+}
+
+TCHAR *lpwstr2tchar(const LPWSTR str)
+{
+	TCHAR *duped;
+	size_t i, len;
+
+	len = wcslen(str);
+	duped = malloc(sizeof(*duped) * (len+1));
+
+	if(duped) {
+		for(i=0; i<len; i++) {
+			duped[i] = (TCHAR)str[i];
+		}
+	}
+
+	return duped;
+}
+
 void quit(void)
 {
 	exit(EXIT_SUCCESS);

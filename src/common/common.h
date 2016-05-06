@@ -15,6 +15,8 @@
 #define ERR_NOTIMPL 6
 
 TCHAR *dupestr(const TCHAR *str);
+TCHAR *lpstr2tchar(const LPSTR str);
+TCHAR *lpwstr2tchar(const LPWSTR str);
 
 void quit(void);
 
