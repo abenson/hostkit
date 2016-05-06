@@ -11,18 +11,23 @@ MODULES_HDR= modules/modules.h modules/basic/basic.h modules/standard/standard.h
 HK_SRC= main.c arguments.c util.c service.c persist.c
 HK_HDR= common.h arguments.h util.h service.h persist.h
 
-hostkit.exe: $(HK_SRC) $(HK_HDR) writer/writer.a modules/modules.a
-	$(CC) $(CFLAGS) -o hostkit.exe $(HK_SRC) writer.a modules.a $(LDFLAGS)
+COMMON_SRC= common/common.c
+COMMON_HDR= common/common.h
 
-modules/modules.a:  $(MODULES_SRC) $(WRITER_HDR)
-	cd modules
+hostkit.exe: $(HK_SRC) $(HK_HDR) writer.a modules.a common.a
+	$(CC) $(CFLAGS) -o hostkit.exe $(HK_SRC) writer.a modules.a common.a $(LDFLAGS)
+
+modules.a:  $(MODULES_SRC) $(WRITER_HDR)
 	$(CC) $(CFLAGS) -c $(MODULES_SRC) $(LDFLAGS)
 	$(AR) r modules.a *.o
 
-writer/writer.a:  $(WRITER_SRC) $(WRITER_HDR)
-	cd writer
+writer.a:  $(WRITER_SRC) $(WRITER_HDR)
 	$(CC) $(CFLAGS) -c $(WRITER_SRC) $(LDFLAGS)
 	$(AR) r writer.a *.o
+
+common.a: $(COMMON_SRC) $(COMMON_HDR)
+	$(CC) $(CFLAGS) -c $(COMMON_SRC) $(LDFLAGS)
+	$(AR) r common.a *.o
 
 clean:
 	cd writer && make clean
