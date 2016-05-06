@@ -39,8 +39,6 @@ static int domain(void)
 	return ERR_MODFAIL;
 }
 
-//Based on
-//http://msdn.microsoft.com/en-us/library/windows/desktop/ms724301%28v=vs.85%29.aspx
 static int hostname(void)
 {
 	TCHAR buffer[256];
@@ -55,8 +53,6 @@ static int hostname(void)
 	return ERR_MODFAIL;
 }
 
-//Based on
-//http://msdn.microsoft.com/en-us/library/windows/desktop/ms724429%28v=vs.85%29.aspx
 static int os_info(void)
 {
 	return ERR_NONE;

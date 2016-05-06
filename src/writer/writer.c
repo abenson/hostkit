@@ -26,8 +26,6 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 		else 
 		{
 			log->file = _tfopen(filename, _T("w+"));
-			//_tfopen is a compile error without forcing it...
-			//_err = _tfopen_s(&log->file, filename, _T("w+"));
 		}
 		
 		if(log->file) 
