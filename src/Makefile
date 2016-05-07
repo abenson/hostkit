@@ -14,6 +14,14 @@ HK_HDR= common.h arguments.h util.h service.h persist.h
 COMMON_SRC= common/common.c
 COMMON_HDR= common/common.h
 
+ifdef X64
+	CC=$(CC64)
+	AR=$(AR64)
+else
+	CC=$(CC32)
+	AR=$(AR32)
+endif
+
 hostkit.exe: $(HK_SRC) $(HK_HDR) writer.a modules.a common.a
 	$(CC) $(CFLAGS) -o hostkit.exe $(HK_SRC) writer.a modules.a common.a $(LDFLAGS)
 
