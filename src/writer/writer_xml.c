@@ -15,25 +15,25 @@ int xml_end(log_t *log)
 	return 0;
 }
 
-int xml_open_section(log_t *log, const _TCHAR *name)
+int xml_start_dict(log_t *log, const _TCHAR *name)
 {
 	_ftprintf(log->file, _T("   <%s>\n"), log->section);
 	return 0;
 }
 
-int xml_close_section(log_t *log)
+int xml_close_dict(log_t *log)
 {
 	_ftprintf(log->file, _T("   </%s>\n"), log->section);
 	return 0;
 }
 
-int xml_open_item(log_t *log)
+int xml_start_list(log_t *log)
 {
 	_ftprintf(log->file, _T("      <item>\n"));
 	return 0;
 }
 
-int xml_close_item(log_t *log)
+int xml_close_list(log_t *log)
 {
 	_ftprintf(log->file, _T("      </item>\n"));
 	return 0;

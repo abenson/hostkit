@@ -30,7 +30,7 @@ int json_end(log_t *log)
 	return 0;
 }
 
-int json_open_section(log_t *log, const TCHAR *name)
+int json_start_dict(log_t *log, const TCHAR *name)
 {
 	if(log->section == NULL) {
 		return -1;
@@ -43,7 +43,7 @@ int json_open_section(log_t *log, const TCHAR *name)
 	return 0;
 }
 
-int json_close_section(log_t *log)
+int json_close_dict(log_t *log)
 {
 	_ftprintf(log->file, _T("\n\t]"));
 	((struct json_data*)log->moduleData)->followingSection = 1;
@@ -52,7 +52,7 @@ int json_close_section(log_t *log)
 	return 0;
 }
 
-int json_open_item(log_t *log)
+int json_start_list(log_t *log)
 {
 	if(((struct json_data*)log->moduleData)->followingItem == 1) {
 		_ftprintf(log->file, _T(",\n\t\t{"));
@@ -62,7 +62,7 @@ int json_open_item(log_t *log)
 	return 0;
 }
 
-int json_close_item(log_t *log)
+int json_close_list(log_t *log)
 {
 	_ftprintf(log->file, _T("\n\t\t}"));
 	((struct json_data*)log->moduleData)->followingItem = 1;

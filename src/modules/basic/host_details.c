@@ -10,16 +10,16 @@ static int os_info(void);
 
 int host_details(void)
 {
-	open_section(arguments.log, _T("Host"));
-	open_item(arguments.log);
+	start_dict(arguments.log, _T("Host"));
+	start_list(arguments.log);
 
 	hostname();
 	domain();
 
 	os_info();
 
-	close_item(arguments.log);
-	close_section(arguments.log);
+	close_list(arguments.log);
+	close_dict(arguments.log);
 
 	return ERR_NONE;
 }

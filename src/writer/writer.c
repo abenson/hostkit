@@ -51,29 +51,29 @@ void close_log(log_t *log)
 	free(log);
 }
 
-int open_section(log_t *log, const _TCHAR *name)
+int start_dict(log_t *log, const _TCHAR *name)
 {
 	log->section = dupestr(name);
 
-	return modules[log->format].open_section(log, log->section);
+	return modules[log->format].start_dict(log, log->section);
 }
 
-int close_section(log_t *log)
+int close_dict(log_t *log)
 {
 	int value;
-	value = modules[log->format].close_section(log);
+	value = modules[log->format].close_dict(log);
 	free(log->section);
 	return value;
 }
 
-int open_item(log_t *log)
+int start_list(log_t *log)
 {
-	return modules[log->format].open_item(log);
+	return modules[log->format].start_list(log);
 }
 
-int close_item(log_t *log)
+int close_list(log_t *log)
 {
-	return modules[log->format].close_item(log);
+	return modules[log->format].close_list(log);
 }
 
 int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
