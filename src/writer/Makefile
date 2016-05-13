@@ -8,6 +8,10 @@ all: writer.a
 test.exe: writer.a
 	$(CC) -o test.exe main.c writer.a
 
+writer.a:  $(WRITER_SRC) $(WRITER_HDR)
+	$(CC) $(CFLAGS) -c $(WRITER_SRC)
+	$(AR) r writer.a *.o
+
 clean:
 	rm -f *.o
 	rm -f *.a

@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <versionhelpers.h>
 
-#include "../../common/common.h"
 #include "../../arguments.h"
 #include "../modules.h"
 

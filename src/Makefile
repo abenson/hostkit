@@ -2,42 +2,20 @@ ALL: hostkit.exe
 
 include common.mk
 
-WRITER_SRC= writer/writers.c writer/writer_json.c writer/writer.c writer/writer_xml.c
-WRITER_HDR= writer/writers.h writer/writer_json.h writer/writer.h writer/writer_xml.h
+HK_SRC= main.c arguments.c util.c service.c persist.c common.c
+HK_HDR= common.h arguments.h util.h service.h persist.h common.h
 
-MODULES_SRC= modules/modules.c modules/basic/host_details.c
-MODULES_HDR= modules/modules.h modules/basic/basic.h modules/standard/standard.h modules/full/full.h
+hostkit.exe: $(HK_SRC) $(HK_HDR) writer/writer.a modules/modules.a
+	$(CC) $(CFLAGS) -o hostkit.exe $(HK_SRC) writer/writer.a modules/modules.a $(LDFLAGS)
 
-HK_SRC= main.c arguments.c util.c service.c persist.c
-HK_HDR= common.h arguments.h util.h service.h persist.h
+modules/modules.a:
+	cd modules && make modules.a
 
-COMMON_SRC= common/common.c
-COMMON_HDR= common/common.h
-
-ifdef X64
-	CC=$(CC64)
-	AR=$(AR64)
-else
-	CC=$(CC32)
-	AR=$(AR32)
-endif
-
-hostkit.exe: $(HK_SRC) $(HK_HDR) writer.a modules.a common.a
-	$(CC) $(CFLAGS) -o hostkit.exe $(HK_SRC) writer.a modules.a common.a $(LDFLAGS)
-
-modules.a:  $(MODULES_SRC) $(WRITER_HDR)
-	$(CC) $(CFLAGS) -c $(MODULES_SRC) $(LDFLAGS)
-	$(AR) r modules.a *.o
-
-writer.a:  $(WRITER_SRC) $(WRITER_HDR)
-	$(CC) $(CFLAGS) -c $(WRITER_SRC) $(LDFLAGS)
-	$(AR) r writer.a *.o
-
-common.a: $(COMMON_SRC) $(COMMON_HDR)
-	$(CC) $(CFLAGS) -c $(COMMON_SRC) $(LDFLAGS)
-	$(AR) r common.a *.o
+writer/writer.a:
+	cd writer && make writer.a
 
 clean:
 	cd writer && make clean
+	cd modules && make clean
 	rm -f *.o *.a
 	rm -f hostkit.exe
