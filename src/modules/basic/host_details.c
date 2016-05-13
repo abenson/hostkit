@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <lm.h>
+#include <versionhelpers.h>
 
 #include "../../common/common.h"
 #include "../../arguments.h"
@@ -55,5 +55,44 @@ static int hostname(void)
 
 static int os_info(void)
 {
+	TCHAR *versionName = _T("Windows?");
+
+	/* Version */
+
+	/* Can we replace this with something that works after 8.x but doesn't suck? */
+	if(IsWindowsServer()) {
+		versionName = _T("Windows Server");
+	} else {
+		if(IsWindows8Point1OrGreater()) {
+			versionName = _T("Windows 8.1");
+	    } else if(IsWindows8OrGreater()) {
+			versionName = _T("Windows 8");
+	    } else if(IsWindows7SP1OrGreater()) {
+			versionName = _T("Windows 7 SP1");
+	    } else if(IsWindows7OrGreater()) {
+			versionName = _T("Windows 7 SP0");
+	    } else if(IsWindowsVistaSP2OrGreater()) {
+			versionName = _T("Windows Vista SP2");
+	    } else if(IsWindowsVistaSP1OrGreater()) {
+	    	versionName = _T("Windows Vista SP1");
+	    } else if(IsWindowsVistaOrGreater()) {
+	    	versionName = _T("Windows Vista SP0");
+	    } else if(IsWindowsXPSP3OrGreater()) {
+	    	versionName = _T("Windows XP SP3");
+	    } else if(IsWindowsXPSP2OrGreater()) {
+	    	versionName = _T("Windows XP SP2");
+	    } else if(IsWindowsXPSP1OrGreater()) {
+	    	versionName = _T("Windows XP SP1");
+	    } else if(IsWindowsXPOrGreater()) {
+	    	versionName = _T("Windows XP SP0");
+	    } else {
+	    	versionName = _T("Windows Desktop");
+	    }
+	}
+
+	add_value(arguments.log, _T("Version"), versionName);
+
+	/* Edition */
+
 	return ERR_NONE;
 }
