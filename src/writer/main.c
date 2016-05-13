@@ -3,13 +3,13 @@
 
 #include "writer.h"
 
-int main(int argc, char *argv[])
+void run(TCHAR *type)
 {
 	log_t *log;
 
-	log = open_log(_T("-"), _T("json"));
+	log = open_log(_T("-"), type);
 
-	if(log == NULL) 
+	if(log == NULL)
 	{
 		puts("Failed.");
 	}
@@ -32,6 +32,11 @@ int main(int argc, char *argv[])
 	close_section(log);
 
 	close_log(log);
+}
 
+int main(int argc, char *argv[])
+{
+	run(_T("json"));
+	run(_T("xml"));
 	return 0;
 }

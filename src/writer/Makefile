@@ -8,7 +8,7 @@ all: writer.a
 test: test.exe
 	wine test.exe 2>/dev/null
 
-test.exe: writer.a
+test.exe: writer.a main.c
 	$(CC) -o test.exe main.c writer.a ../common.c
 
 writer.a:  $(WRITER_SRC) $(WRITER_HDR)
