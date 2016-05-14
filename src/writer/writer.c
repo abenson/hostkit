@@ -11,14 +11,16 @@ static void add_section(log_t *log, const TCHAR *name)
 	const TCHAR **newlist;
 	const TCHAR *value;
 
+	log->indentLevel++;
 	newlist = realloc(log->sections, sizeof(*newlist) * log->indentLevel+1);
 	if(newlist) {
 		log->sections = newlist;
+		log->sections[log->indentLevel] = dupestr(name);
+		log->section = log->sections[log->indentLevel];
+	} else {
+		_ftprintf(log->file, _T("This explains a lot."));
 	}
-	log->sections[log->indentLevel] = dupestr(name);
-	log->section = log->sections[log->indentLevel];
 
-	log->indentLevel++;
 }
 
 static void pop_section(log_t *log)
