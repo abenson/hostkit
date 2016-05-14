@@ -118,16 +118,16 @@ int parse_arguments(_TCHAR *argv[])
 			arguments.verbose = TRUE;
 		} else if(_tcscmp(argv[i], _T("/debug")) == 0) {
 			arguments.debug = TRUE;
-		} else if(_tcscmp(argv[i], _T("/log")) == 0) 
+		} else if(_tcscmp(argv[i], _T("/log")) == 0)
 		{
-			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) 
+			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0)
 			{
 				arguments.error = 1;
-			} 
-			else 
+			}
+			else
 			{
 				_tfopen_s(&arguments.logFile, argv[i + 1], _T("w+"));
-				if(arguments.log == NULL) 
+				if(arguments.log == NULL)
 				{
 					arguments.error = 2;
 				}
