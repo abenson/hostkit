@@ -59,7 +59,6 @@ void run(TCHAR *type)
 
 int main(int argc, char *argv[])
 {
-	//run(_T("json"));
 	run(_T("xml"));
 	return 0;
 }
