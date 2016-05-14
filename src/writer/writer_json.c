@@ -5,8 +5,8 @@
 
 struct json_data
 {
-	int followingItem, followingSection, followingKeyVal;
-	int indentLevel;
+	int inList;
+	int inDict;
 };
 
 int json_begin(log_t *log)
@@ -17,17 +17,18 @@ int json_begin(log_t *log)
 		return -1;
 	}
 	log->moduleData = data;
-	((struct json_data*)log->moduleData)->followingSection = 0;
-	((struct json_data*)log->moduleData)->followingItem = 0;
-	((struct json_data*)log->moduleData)->followingKeyVal = 0;
-	_ftprintf(log->file, _T("{\n"));
+
+	((struct json_data*)log->moduleData)->inList = 0;
+	((struct json_data*)log->moduleData)->inDict = 0;
+
+	_ftprintf(log->file, _T("{ "));
 	return 0;
 }
 
 int json_end(log_t *log)
 {
 	free(log->moduleData);
-	_ftprintf(log->file, _T("\n}\n"));
+	_ftprintf(log->file, _T(" }\n"));
 	return 0;
 }
 
@@ -36,48 +37,38 @@ int json_start_dict(log_t *log)
 	if(log->section == NULL) {
 		return -1;
 	}
-	if(((struct json_data*)log->moduleData)->followingSection == 1) {
-		_ftprintf(log->file, _T(",\n\t\"%s\": {"), log->section);
-	} else {
-		_ftprintf(log->file, _T("\n\t\"%s\": {"), log->section);
-	}
+	_ftprintf(log->file, _T(" \"%s\": {"), log->section);
+	((struct json_data*)log->moduleData)->inDict = 0;
 	return 0;
 }
 
 int json_close_dict(log_t *log)
 {
-	_ftprintf(log->file, _T("\n\t}"));
-	((struct json_data*)log->moduleData)->followingSection = 1;
-	((struct json_data*)log->moduleData)->followingItem = 0;
-	((struct json_data*)log->moduleData)->followingKeyVal = 0;
+	_ftprintf(log->file, _T(" } "));
+	((struct json_data*)log->moduleData)->inDict = 0;
 	return 0;
 }
 
 int json_start_list(log_t *log)
 {
-	if(((struct json_data*)log->moduleData)->followingItem == 1) {
-		_ftprintf(log->file, _T(",\n\t\t["));
-	} else {
-		_ftprintf(log->file, _T("\n\t\t["));
-	}
+	_ftprintf(log->file, _T(" ["));
+	((struct json_data*)log->moduleData)->inList = 1;
 	return 0;
 }
 
 int json_close_list(log_t *log)
 {
-	_ftprintf(log->file, _T("\n\t\t]"));
-	((struct json_data*)log->moduleData)->followingItem = 1;
-	((struct json_data*)log->moduleData)->followingKeyVal = 0;
+	_ftprintf(log->file, _T(" ] "));
+	((struct json_data*)log->moduleData)->inList = 0;
 	return 0;
 }
 
 int json_add_value(log_t *log, const TCHAR *key, const TCHAR *value)
 {
-	if(((struct json_data*)log->moduleData)->followingKeyVal == 1) {
-		_ftprintf(log->file, _T(",\n\t\t\t\"%s\": \"%s\""), key, value, key);
+	if(((struct json_data*)log->moduleData)->inDict && ((struct json_data*)log->moduleData)->inList) {
+		_ftprintf(log->file, _T(", \"%s\": \"%s\" "), key, value, key);
 	} else {
-		_ftprintf(log->file, _T("\n\t\t\t\"%s\": \"%s\""), key, value, key);
+		_ftprintf(log->file, _T("  \"%s\": \"%s\" "), key, value, key);
 	}
-	((struct json_data*)log->moduleData)->followingKeyVal = 1;
 	return 0;
 }
