@@ -6,6 +6,7 @@
 
 #include "writer_json.h"
 #include "writer_xml.h"
+#include "writer_ruby.h"
 
 struct wmodule modules[] =
 {

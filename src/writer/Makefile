@@ -1,7 +1,7 @@
 include ../common.mk
 
-WRITER_SRC= writers.c writer_json.c writer.c writer_xml.c
-WRITER_HDR= writers.h writer_json.h writer.h writer_xml.h
+WRITER_SRC= writers.c writer_json.c writer.c writer_xml.c writer_ruby.c
+WRITER_HDR= writers.h writer_json.h writer.h writer_xml.h writer_ruby.h
 
 all: writer.a
 

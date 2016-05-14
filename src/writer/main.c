@@ -36,15 +36,15 @@ void run(TCHAR *type)
 		close_dict(log);
 	close_list(log);
 	start_list(log, _T("listonumbers"));
-		start_dict(log, _T("123"));
+		start_dict(log, _T("i123"));
 			add_value(log, _T("one"), _T("1"));
 			add_value(log, _T("two"), _T("2"));
 		close_dict(log);
-		start_dict(log, _T("123"));
+		start_dict(log, _T("i123"));
 			add_value(log, _T("one"), _T("1"));
 			add_value(log, _T("two"), _T("2"));
 		close_dict(log);
-		start_dict(log, _T("123"));
+		start_dict(log, _T("i123"));
 			add_value(log, _T("one"), _T("1"));
 			add_value(log, _T("two"), _T("2"));
 			add_value(log, _T("three"), _T("3"));
