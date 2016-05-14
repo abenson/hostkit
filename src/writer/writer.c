@@ -6,6 +6,58 @@
 #include "writer.h"
 #include "writers.h"
 
+static void add_section(log_t *log, const TCHAR *name)
+{
+	const TCHAR **newlist;
+	const TCHAR *value;
+
+	newlist = realloc(log->sections, sizeof(*newlist) * log->indentLevel+1);
+	if(newlist) {
+		log->sections = newlist;
+	}
+	log->sections[log->indentLevel] = dupestr(name);
+	log->section = log->sections[log->indentLevel];
+
+	log->indentLevel++;
+}
+
+static void pop_section(log_t *log)
+{
+	const TCHAR **newlist;
+	const TCHAR *value;
+
+	free((TCHAR*)log->sections[log->indentLevel]);
+	log->sections[log->indentLevel] = NULL;
+
+	log->indentLevel--;
+
+	newlist = realloc(log->sections, sizeof(*newlist) * log->indentLevel+1);
+	if(newlist) {
+		log->sections = newlist;
+		log->section = log->sections[log->indentLevel];
+	} else {
+		_ftprintf(log->file, _T("This explains a lot."));
+	}
+}
+
+static void debug_sections(log_t *log)
+{
+	int i;
+	_ftprintf(log->file, _T("DEBUG: "));
+	if(log->sections == NULL) {
+		_ftprintf(log->file, _T("Empty\n"));
+		return;
+	}
+	for(i=0; i<log->indentLevel; i++) {
+		if(log->sections[i] == NULL) {
+			_ftprintf(log->file, _T("NULL"));
+			break;
+		}
+		_ftprintf(log->file, _T("%s, "), log->sections[i]);
+	}
+	_ftprintf(log->file, _T("\n"));
+}
+
 log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 {
 	log_t *log;
@@ -15,10 +67,13 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 	fmtIndex = find_format(format);
 	if(fmtIndex < 0) { return NULL; }
 
-	log = (log_t *) malloc(sizeof(*log));
+	log = malloc(sizeof(*log));
 
 	if(log)
 	{
+		log->indentLevel = 0;
+		log->sections = NULL;
+		log->section = NULL;
 		if(_tcscmp(filename, _T("-")) == 0)
 		{
 			log->file = stdout;
@@ -53,30 +108,42 @@ void close_log(log_t *log)
 
 int start_dict(log_t *log, const _TCHAR *name)
 {
-	log->section = dupestr(name);
-
-	return modules[log->format].start_dict(log, log->section);
+	int value;
+	add_section(log, name);
+	value = modules[log->format].start_dict(log);
+	return value;
 }
 
 int close_dict(log_t *log)
 {
 	int value;
 	value = modules[log->format].close_dict(log);
-	free(log->section);
+	pop_section(log);
 	return value;
 }
 
-int start_list(log_t *log)
+int start_list(log_t *log, const TCHAR *name)
 {
-	return modules[log->format].start_list(log);
+	int value;
+	add_section(log, name);
+	value = modules[log->format].start_list(log);
+	return value;
 }
 
 int close_list(log_t *log)
 {
-	return modules[log->format].close_list(log);
+	int value;
+	value = modules[log->format].close_list(log);
+	pop_section(log);
+	return value;
 }
 
 int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
-	return modules[log->format].add_value(log, key, value);
+	int ret;
+	log->indentLevel++;
+	ret = modules[log->format].add_value(log, key, value);
+	log->indentLevel--;
+	return ret;
 }
+

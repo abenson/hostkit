@@ -15,28 +15,51 @@ void run(TCHAR *type)
 	}
 
 	start_dict(log, _T("compile"));
-	start_list(log);
-	add_value(log, _T("date"), _T(__DATE__));
-	add_value(log, _T("time"), _T(__TIME__));
-	close_list(log);
-	start_list(log);
-	add_value(log, _T("file"), _T(__FILE__));
-	add_value(log, _T("timestamp"), _T(__TIMESTAMP__));
-	close_list(log);
+		add_value(log, _T("date"), _T(__DATE__));
+		add_value(log, _T("time"), _T(__TIME__));
+		add_value(log, _T("file"), _T(__FILE__));
+		add_value(log, _T("timestamp"), _T(__TIMESTAMP__));
 	close_dict(log);
-
-	start_dict(log, _T("test"));
-	start_list(log);
-	add_value(log, _T("test"), _T("field"));
+	start_list(log, _T("listodata"));
+		start_dict(log, _T("data"));
+			add_value(log, _T("one"), _T("1"));
+			add_value(log, _T("two"), _T("2"));
+		close_dict(log);
+		start_dict(log, _T("data"));
+			add_value(log, _T("one"), _T("1"));
+			add_value(log, _T("two"), _T("2"));
+		close_dict(log);
+		start_dict(log, _T("data"));
+			add_value(log, _T("one"), _T("1"));
+			add_value(log, _T("two"), _T("2"));
+			add_value(log, _T("three"), _T("3"));
+		close_dict(log);
 	close_list(log);
+	start_list(log, _T("listonumbers"));
+		start_dict(log, _T("123"));
+			add_value(log, _T("one"), _T("1"));
+			add_value(log, _T("two"), _T("2"));
+		close_dict(log);
+		start_dict(log, _T("123"));
+			add_value(log, _T("one"), _T("1"));
+			add_value(log, _T("two"), _T("2"));
+		close_dict(log);
+		start_dict(log, _T("123"));
+			add_value(log, _T("one"), _T("1"));
+			add_value(log, _T("two"), _T("2"));
+			add_value(log, _T("three"), _T("3"));
+		close_dict(log);
+	close_list(log);
+	start_dict(log, _T("book"));
+		add_value(log, _T("author"), _T("Bilbo Baggins"));
+		add_value(log, _T("title"), _T("There and Back Again"));
 	close_dict(log);
-
 	close_log(log);
 }
 
 int main(int argc, char *argv[])
 {
-	run(_T("json"));
+	//run(_T("json"));
 	run(_T("xml"));
 	return 0;
 }

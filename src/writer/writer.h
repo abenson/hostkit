@@ -13,7 +13,12 @@ typedef struct log
 	FILE *file;
 	int format;
 
-	TCHAR *section;
+	int indentLevel;
+
+	const TCHAR **sections;
+
+	const TCHAR *section;
+
 	void *moduleData;
 
 } log_t;
@@ -26,7 +31,7 @@ int start_dict(log_t *log, const TCHAR *name);
 
 int close_dict(log_t *log);
 
-int start_list(log_t *log);
+int start_list(log_t *log, const TCHAR *name);
 
 int close_list(log_t *log);
 

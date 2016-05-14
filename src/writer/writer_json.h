@@ -6,7 +6,7 @@
 int json_begin(log_t *log);
 int json_end(log_t *log);
 
-int json_start_dict(log_t *, const _TCHAR*);
+int json_start_dict(log_t *);
 int json_close_dict(log_t *);
 
 int json_start_list(log_t*);

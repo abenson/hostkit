@@ -8,7 +8,7 @@ struct wmodule
 	const _TCHAR *name;
 	int (*begin)(log_t*);
 	int (*end)(log_t*);
-	int (*start_dict)(log_t *, const _TCHAR*);
+	int (*start_dict)(log_t *);
 	int (*close_dict)(log_t *);
 
 	int (*start_list)(log_t*);

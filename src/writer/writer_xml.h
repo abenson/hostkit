@@ -6,7 +6,7 @@
 int xml_begin(log_t *log);
 int xml_end(log_t *log);
 
-int xml_start_dict(log_t *, const _TCHAR*);
+int xml_start_dict(log_t *);
 int xml_close_dict(log_t *);
 
 int xml_start_list(log_t*);
