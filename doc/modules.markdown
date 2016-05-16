@@ -1,10 +1,6 @@
-                      __  __  ___  ___  _   _ _    ___ ___
-                     |  \/  |/ _ \|   \| | | | |  | __/ __|
-                     | |\/| | (_) | |) | |_| | |__| _|\__ \
-                     |_|  |_|\___/|___/ \___/|____|___|___/
+# Modules
 
-
-# Writing Modules
+## Writing Modules
 
 Each module should perform one collection task. Unrelated collection tasks, such as file system enumeration and network device enumeration, should never be included in the same module.
 
@@ -12,7 +8,7 @@ Modules are not typically named, but are referred to by the entry point they pro
 
 Modules shall be self-contained, with one source file per module.
 
-# Entry Points
+## Entry Points
 
 While each module must have one entry point, multiple entry points can be defined for a module. This is especially useful for modules that have specific functionality for a given run mode. Entry points have the following form:
 
@@ -37,10 +33,10 @@ Return code should be 0 if no error occurred. Currently defined error codes are 
 - *ERR_GENFAIL*: Some other error that does not fit well into the previous categories occurred.
 - *ERR_NOTIMPL*: This function is not implemented yet.
 
-# Supporting Functions
+## Supporting Functions
 
 Supporting functions should be declared static. They should not be accessible outside of the module source file.
 
-# Output
+## Output
 
 
