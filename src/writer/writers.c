@@ -1,7 +1,11 @@
 
+#include <windows.h>
+#include <tchar.h>
+
 #include <stdlib.h>
 #include <string.h>
 
+#include "../arguments.h"
 #include "writers.h"
 
 #include "writer_json.h"
@@ -23,9 +27,9 @@ int find_format(const _TCHAR *format)
 	int i = 0;
 
 	if(_tcscmp(format, _T("list")) == 0) {
-		_ftprintf(_T("Available writer modules:\n"));
+		_ftprintf(arguments.logFile, _T("Available writer modules:\n"));
 		while(modules[i].name) {
-			_ftprintf(_T("   %s\n", modules[i].name));
+			_ftprintf(arguments.logFile, _T("   %s\n"), modules[i].name);
 		}
 		return -1;
 	}
