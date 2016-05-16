@@ -30,8 +30,6 @@ int validate_arguments(void)
 	/* Check for invalid combinations. */
 	if(arguments.mode != RM_NONE && arguments.persistent == TRUE) {
 		return ARGS_INVALID;
-	} else {
-		arguments.log = open_log(arguments.filename, arguments.writer);
 	}
 
 	/* If no mode is specified and we're not persistent, default to standard. */
@@ -43,7 +41,7 @@ int validate_arguments(void)
 /*	if(arguments.filename == NULL) {
 		arguments.file = open_log(
 	} else {
-		arguments.file = 
+		arguments.file =
 	}
 */
 	return ARGS_OK;

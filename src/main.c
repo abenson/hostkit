@@ -58,6 +58,8 @@ int _tmain(int argc, _TCHAR *argv[])
 		quit();
 	}
 
+	arguments.log = open_log(arguments.filename, arguments.writer);
+
 	if(arguments.mode == RM_BASIC)
 	{
 		run_basic_scan();
