@@ -61,7 +61,7 @@ int _tmain(int argc, _TCHAR *argv[])
 	arguments.log = open_log(arguments.filename, arguments.writer);
 
 	if(arguments.log == NULL) {
-		_ftprintf(_T("Did not open output file.\n"));
+		_ftprintf(stdout, _T("Did not open output file.\n"));
 		return 1;
 	}
 
