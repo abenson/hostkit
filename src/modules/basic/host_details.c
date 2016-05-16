@@ -6,7 +6,7 @@
 
 static int hostname(void);
 static int domain(void);
-static int os_info(void);
+static int version(void);
 
 int host_details(void)
 {
@@ -14,8 +14,7 @@ int host_details(void)
 
 	hostname();
 	domain();
-
-	os_info();
+	version();
 
 	close_dict(arguments.log);
 
@@ -50,7 +49,7 @@ static int hostname(void)
 	return ERR_MODFAIL;
 }
 
-static int os_info(void)
+static int version(void)
 {
 	TCHAR *versionName = _T("Windows?");
 
