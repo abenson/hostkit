@@ -21,6 +21,15 @@ struct wmodule modules[] =
 int find_format(const _TCHAR *format)
 {
 	int i = 0;
+
+	if(_tcscmp(format, _T("list")) == 0) {
+		_ftprintf(_T("Available writer modules:\n"));
+		while(modules[i].name) {
+			_ftprintf(_T("   %s\n", modules[i].name));
+		}
+		return -1;
+	}
+
 	while(modules[i].name)
 	{
 		if(_tcscmp(modules[i].name, format) == 0)
