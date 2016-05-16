@@ -37,13 +37,6 @@ int validate_arguments(void)
 		arguments.mode = RM_STANDARD;
 	}
 
-	/* Make sure we have a file to write to. */
-/*	if(arguments.filename == NULL) {
-		arguments.file = open_log(
-	} else {
-		arguments.file =
-	}
-*/
 	return ARGS_OK;
 }
 
