@@ -57,7 +57,7 @@ void run(TCHAR *type)
 	close_log(log);
 }
 
-int main(int argc, char *argv[])
+int _tmain(int argc, char *argv[])
 {
 	run(_T("xml"));
 	return 0;
