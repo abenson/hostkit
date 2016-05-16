@@ -60,14 +60,15 @@ static void debug_sections(log_t *log)
 	_ftprintf(log->file, _T("\n"));
 }
 
-log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
+log_t* open_log(const TCHAR *filename, const TCHAR *format)
 {
 	log_t *log;
 	int fmtIndex;
-	errno_t _err;
 
 	fmtIndex = find_format(format);
-	if(fmtIndex < 0) { return NULL; }
+	if(fmtIndex < 0) {
+		return NULL;
+	}
 
 	log = malloc(sizeof(*log));
 
