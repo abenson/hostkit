@@ -1,13 +1,7 @@
+# Todo
 
- _____ ___  ____   ___
-|_   _/ _ \|  _ \ / _ \
-  | || | | | | | | | | |
-  | || |_| | |_| | |_| |
-  |_| \___/|____/ \___/
-
-
-# Modules
-## Host Details
+## Modules
+### Host Details
 - OS
 - Version
 - Machine Type

@@ -1,8 +1,3 @@
-              ___   _   ___  _   ___ ___ _    ___ _____ ___ ___ ___ 
-             / __| /_\ | _ \/_\ | _ )_ _| |  |_ _|_   _|_ _| __/ __|
-            | (__ / _ \|  _/ _ \| _ \| || |__ | |  | |  | || _|\__ \
-             \___/_/ \_\_|/_/ \_\___/___|____|___| |_| |___|___|___/
-                                                                    
 # Capabilities
 
 This will describe each module and their function.
@@ -66,7 +61,7 @@ This will describe each module and their function.
 - USBs
 	- Serial
 	- Vendor
-	- Date 
+	- Date
 
 ## Full
 
@@ -75,4 +70,4 @@ This will describe each module and their function.
 
 # Notes
 
-¹ This may (read: will) require an implementation change to add subitems. 
+¹ This may (read: will) require an implementation change to add subitems.
