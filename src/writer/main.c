@@ -9,9 +9,9 @@ void run(TCHAR *type)
 
 	log = open_log(_T("-"), type);
 
-	if(log == NULL)
-	{
-		puts("Failed.");
+	if(log == NULL) {
+		_ftprintf(stdout, _T("Did not open log.\n"));
+		return;
 	}
 
 	start_dict(log, _T("compile"));
