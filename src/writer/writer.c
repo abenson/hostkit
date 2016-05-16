@@ -6,42 +6,6 @@
 #include "writer.h"
 #include "writers.h"
 
-static void add_section(log_t *log, const TCHAR *name)
-{
-	const TCHAR **newlist;
-	const TCHAR *value;
-
-	log->indentLevel++;
-	newlist = realloc(log->sections, sizeof(*newlist) * log->indentLevel+1);
-	if(newlist) {
-		log->sections = newlist;
-		log->sections[log->indentLevel] = dupestr(name);
-		log->section = log->sections[log->indentLevel];
-	} else {
-		_ftprintf(log->file, _T("This explains a lot."));
-	}
-
-}
-
-static void pop_section(log_t *log)
-{
-	const TCHAR **newlist;
-	const TCHAR *value;
-
-	free((TCHAR*)log->sections[log->indentLevel]);
-	log->sections[log->indentLevel] = NULL;
-
-	log->indentLevel--;
-
-	newlist = realloc(log->sections, sizeof(*newlist) * log->indentLevel+1);
-	if(newlist) {
-		log->sections = newlist;
-		log->section = log->sections[log->indentLevel];
-	} else {
-		_ftprintf(log->file, _T("This explains a lot."));
-	}
-}
-
 static void debug_sections(log_t *log)
 {
 	int i;
@@ -58,6 +22,48 @@ static void debug_sections(log_t *log)
 		_ftprintf(log->file, _T("%s, "), log->sections[i]);
 	}
 	_ftprintf(log->file, _T("\n"));
+}
+
+static void add_section(log_t *log, const TCHAR *name)
+{
+	const TCHAR **newlist;
+	const TCHAR *value;
+
+	log->indentLevel++;
+	newlist = realloc(log->sections, sizeof(*newlist) * log->indentLevel);
+	if(newlist) {
+		log->sections = newlist;
+		log->sections[log->indentLevel-1] = dupestr(name);
+		log->section = log->sections[log->indentLevel-1];
+	} else {
+		_ftprintf(stdout, _T("Failed to add section."));
+	}
+}
+
+static void pop_section(log_t *log)
+{
+	const TCHAR **newlist;
+	const TCHAR *value;
+
+	free((TCHAR*)log->sections[log->indentLevel-1]);
+	log->sections[log->indentLevel-1] = NULL;
+
+	log->indentLevel--;
+
+	if(log->indentLevel < 1) {
+		free(log->sections);
+		log->section = NULL;
+		log->sections = NULL;
+		return;
+	}
+
+	newlist = realloc(log->sections, sizeof(*newlist) * log->indentLevel);
+	if(newlist) {
+		log->sections = newlist;
+		log->section = log->sections[log->indentLevel-1];
+	} else {
+		_ftprintf(stdout, _T("Failed to pop section."));
+	}
 }
 
 log_t* open_log(const TCHAR *filename, const TCHAR *format)
