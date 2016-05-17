@@ -5,8 +5,7 @@
 
 struct json_data
 {
-	int inList;
-	int inDict;
+	int firstItem[512];
 };
 
 int json_begin(log_t *log)
@@ -16,10 +15,10 @@ int json_begin(log_t *log)
 	if(data == NULL) {
 		return -1;
 	}
+	memset(data, 0, sizeof(*data));
 	log->moduleData = data;
 
-	((struct json_data*)log->moduleData)->inList = 0;
-	((struct json_data*)log->moduleData)->inDict = 0;
+	((struct json_data*)log1->moduleData)->firstItem;
 
 	_ftprintf(log->file, _T("{ "));
 	return 0;
@@ -37,38 +36,47 @@ int json_start_dict(log_t *log)
 	if(log->section == NULL) {
 		return -1;
 	}
-	_ftprintf(log->file, _T(" \"%s\": {"), log->section);
-	((struct json_data*)log->moduleData)->inDict = 0;
+	if(((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] == 1) {
+		_ftprintf(log->file, _T(", \"%s\": {"), log->section);
+	} else {
+		_ftprintf(log->file, _T(" \"%s\": {"), log->section);
+	}
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-2] = 1;
 	return 0;
 }
 
 int json_close_dict(log_t *log)
 {
 	_ftprintf(log->file, _T(" } "));
-	((struct json_data*)log->moduleData)->inDict = 0;
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 0;
 	return 0;
 }
 
 int json_start_list(log_t *log)
 {
-	_ftprintf(log->file, _T(" ["));
-	((struct json_data*)log->moduleData)->inList = 1;
+	if(((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] == 1) {
+		_ftprintf(log->file, _T(", ["));
+	} else {
+		_ftprintf(log->file, _T(" ["));
+	}
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-2] = 1;
 	return 0;
 }
 
 int json_close_list(log_t *log)
 {
 	_ftprintf(log->file, _T(" ] "));
-	((struct json_data*)log->moduleData)->inList = 0;
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 0;
 	return 0;
 }
 
 int json_add_value(log_t *log, const TCHAR *key, const TCHAR *value)
 {
-	if(((struct json_data*)log->moduleData)->inDict && ((struct json_data*)log->moduleData)->inList) {
+	if(((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] == 1) {
 		_ftprintf(log->file, _T(", \"%s\": \"%s\" "), key, value, key);
 	} else {
 		_ftprintf(log->file, _T("  \"%s\": \"%s\" "), key, value, key);
 	}
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 1;
 	return 0;
 }
