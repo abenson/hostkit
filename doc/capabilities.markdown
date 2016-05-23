@@ -7,7 +7,7 @@ This will describe each module and their function.
 - System
 	- Hostname, implemented
 	- Domain, implemented
-	- OS
+	- OS, semi-implemented
 	- Version
 	- Machine Type
 	- Processor Type
