@@ -12,7 +12,7 @@ void initialize_arguments(void)
 	arguments.version = FALSE;
 	arguments.mode = RM_NONE;
 	arguments.filename = _T("-");
-	arguments.writer = _T("xml");
+	arguments.writer = _T("json");
 	arguments.persistent = FALSE;
 	arguments.service = FALSE;
 	arguments.verbose = FALSE;
