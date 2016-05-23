@@ -6,6 +6,7 @@
 struct json_data
 {
 	int firstItem[512];
+	int inDict[512];
 };
 
 int json_begin(log_t *log)
@@ -18,7 +19,8 @@ int json_begin(log_t *log)
 	memset(data, 0, sizeof(*data));
 	log->moduleData = data;
 
-	((struct json_data*)log1->moduleData)->firstItem;
+	((struct json_data*)log->moduleData)->firstItem;
+	((struct json_data*)log->moduleData)->inDict[0] = 1;
 
 	_ftprintf(log->file, _T("{ "));
 	return 0;
@@ -37,36 +39,44 @@ int json_start_dict(log_t *log)
 		return -1;
 	}
 	if(((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] == 1) {
-		_ftprintf(log->file, _T(", \"%s\": {"), log->section);
-	} else {
-		_ftprintf(log->file, _T(" \"%s\": {"), log->section);
+		_ftprintf(log->file, _T(", "), log->section);
 	}
-	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-2] = 1;
+	if(((struct json_data*)log->moduleData)->inDict[log->indentLevel-1] == 1) {
+		_ftprintf(log->file, _T("\"%s\":"), log->section);
+	}
+	_ftprintf(log->file, _T(" {"), log->section);
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 1;
+	((struct json_data*)log->moduleData)->inDict[log->indentLevel] = 1;
 	return 0;
 }
 
 int json_close_dict(log_t *log)
 {
 	_ftprintf(log->file, _T(" } "));
-	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 0;
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel] = 0;
+	((struct json_data*)log->moduleData)->inDict[log->indentLevel] = 0;
 	return 0;
 }
 
 int json_start_list(log_t *log)
 {
 	if(((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] == 1) {
-		_ftprintf(log->file, _T(", ["));
-	} else {
-		_ftprintf(log->file, _T(" ["));
+		_ftprintf(log->file, _T(", "));
 	}
-	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-2] = 1;
+	if(((struct json_data*)log->moduleData)->inDict[log->indentLevel-1] == 1) {
+		_ftprintf(log->file, _T("\"%s\":"), log->section);
+	}
+	_ftprintf(log->file, _T(" ["));
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 1;
+	((struct json_data*)log->moduleData)->inDict[log->indentLevel] = 0;
 	return 0;
 }
 
 int json_close_list(log_t *log)
 {
 	_ftprintf(log->file, _T(" ] "));
-	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 0;
+	((struct json_data*)log->moduleData)->inDict[log->indentLevel] = 0;
+	((struct json_data*)log->moduleData)->firstItem[log->indentLevel] = 0;
 	return 0;
 }
 
