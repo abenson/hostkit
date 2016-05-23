@@ -9,9 +9,9 @@ void run(TCHAR *type)
 
 	log = open_log(_T("-"), type);
 
-	if(log == NULL)
-	{
-		puts("Failed.");
+	if(log == NULL) {
+		_ftprintf(stdout, _T("Did not open log.\n"));
+		return;
 	}
 
 	start_dict(log, _T("compile"));
@@ -20,6 +20,14 @@ void run(TCHAR *type)
 		add_value(log, _T("file"), _T(__FILE__));
 		add_value(log, _T("timestamp"), _T(__TIMESTAMP__));
 	close_dict(log);
+	start_list(log, _T("a"));
+		start_list(log, _T("b"));
+			start_list(log, _T("c"));
+				start_list(log, _T("d"));
+				close_list(log);
+			close_list(log);
+		close_list(log);
+	close_list(log);
 	start_list(log, _T("listodata"));
 		start_dict(log, _T("data"));
 			add_value(log, _T("one"), _T("1"));
@@ -57,8 +65,8 @@ void run(TCHAR *type)
 	close_log(log);
 }
 
-int main(int argc, char *argv[])
+int _tmain(int argc, char *argv[])
 {
-	run(_T("xml"));
+	run(_T("json"));
 	return 0;
 }

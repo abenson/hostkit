@@ -6,19 +6,16 @@
 
 static int hostname(void);
 static int domain(void);
-static int os_info(void);
+static int version(void);
 
 int host_details(void)
 {
-	start_dict(arguments.log, _T("Host"));
-	start_list(arguments.log);
+	start_dict(arguments.log, _T("host"));
 
 	hostname();
 	domain();
+	version();
 
-	os_info();
-
-	close_list(arguments.log);
 	close_dict(arguments.log);
 
 	return ERR_NONE;
@@ -31,7 +28,7 @@ static int domain(void)
 	int i = 0;
 
 	if (GetComputerNameEx(ComputerNameDnsDomain, buffer, &length)) {
-		add_value(arguments.log, _T("Domain"), buffer);
+		add_value(arguments.log, _T("domain"), buffer);
 		return ERR_NONE;
 	}
 
@@ -45,14 +42,14 @@ static int hostname(void)
 	int i = 0;
 
 	if (GetComputerNameEx(ComputerNameDnsHostname, buffer, &length)) {
-		add_value(arguments.log, _T("Hostname"), buffer);
+		add_value(arguments.log, _T("hostname"), buffer);
 		return ERR_NONE;
 	}
 
 	return ERR_MODFAIL;
 }
 
-static int os_info(void)
+static int version(void)
 {
 	TCHAR *versionName = _T("Windows?");
 
@@ -89,7 +86,7 @@ static int os_info(void)
 	    }
 	}
 
-	add_value(arguments.log, _T("Version"), versionName);
+	add_value(arguments.log, _T("version"), versionName);
 
 	/* Edition */
 

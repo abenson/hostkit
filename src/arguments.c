@@ -12,7 +12,7 @@ void initialize_arguments(void)
 	arguments.version = FALSE;
 	arguments.mode = RM_NONE;
 	arguments.filename = _T("-");
-	arguments.writer = _T("xml");
+	arguments.writer = _T("json");
 	arguments.persistent = FALSE;
 	arguments.service = FALSE;
 	arguments.verbose = FALSE;
@@ -30,8 +30,6 @@ int validate_arguments(void)
 	/* Check for invalid combinations. */
 	if(arguments.mode != RM_NONE && arguments.persistent == TRUE) {
 		return ARGS_INVALID;
-	} else {
-		arguments.log = open_log(arguments.filename, arguments.writer);
 	}
 
 	/* If no mode is specified and we're not persistent, default to standard. */
@@ -39,13 +37,6 @@ int validate_arguments(void)
 		arguments.mode = RM_STANDARD;
 	}
 
-	/* Make sure we have a file to write to. */
-/*	if(arguments.filename == NULL) {
-		arguments.file = open_log(
-	} else {
-		arguments.file = 
-	}
-*/
 	return ARGS_OK;
 }
 
@@ -59,7 +50,7 @@ _T("   /full                 Full run mode.\n")
 _T("   /filename <name>      Filename to write results to. Default is standard output.\n")
 _T("   /writer <name>        Writer to use. Default is 'json'. Choose 'list' for available writers\n")
 _T("\n")
-_T("Persistent options\n")
+_T("Persistence options\n")
 _T("   /persist              Do not run automatically, but wait for instructions from the named pipe.\n")
 _T("   /server <server>      Call back to a server for instructions. Disables default persist pipe.\n")
 _T("   /pipe <name>          Creates a named pipe.\n")

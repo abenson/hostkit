@@ -58,6 +58,13 @@ int _tmain(int argc, _TCHAR *argv[])
 		quit();
 	}
 
+	arguments.log = open_log(arguments.filename, arguments.writer);
+
+	if(arguments.log == NULL) {
+		_ftprintf(stdout, _T("Did not open output file.\n"));
+		return 1;
+	}
+
 	if(arguments.mode == RM_BASIC)
 	{
 		run_basic_scan();

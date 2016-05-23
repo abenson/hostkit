@@ -6,10 +6,10 @@ WRITER_HDR= writers.h writer_json.h writer.h writer_xml.h writer_ruby.h
 all: writer.a
 
 test: test.exe
-	wine test.exe 2>/dev/null
+	wine test.exe
 
 test.exe: writer.a main.c
-	$(CC) -o test.exe main.c writer.a ../common.c
+	$(CC) $(CFLAGS) -o test.exe main.c writer.a ../common.c $(LDFLAGS)
 
 writer.a:  $(WRITER_SRC) $(WRITER_HDR)
 	$(CC) $(CFLAGS) -c $(WRITER_SRC)
