@@ -89,6 +89,11 @@ static int domain(void)
 
 	ret = DsRoleGetPrimaryDomainInformation(NULL,  DsRolePrimaryDomainInfoBasic, (BYTE**)&info);
 
+	/*
+		I'd like to clean this section up a bit. I like the informaiton gathered, but I dont't like how
+		it's being presented.
+	*/
+
 	if(ret == ERROR_SUCCESS) {
 		switch(info->MachineRole) {
 			case DsRole_RoleStandaloneWorkstation:
