@@ -124,44 +124,20 @@ static int hostname(void)
 
 static int version(void)
 {
-	TCHAR *versionName = _T("Windows?");
+	WKSTA_INFO_101 *inf;
+	TCHAR str[5];
 
-	/* Version */
+	NetWkstaGetInfo(NULL, 101, (BYTE**)&inf);
 
-	/* Can we replace this with something that works after 8.x but doesn't suck? */
-	if(IsWindowsServer()) {
-		versionName = _T("Windows Server");
-	} else {
-		if(IsWindows8Point1OrGreater()) {
-			versionName = _T("Windows 8.1");
-	    } else if(IsWindows8OrGreater()) {
-			versionName = _T("Windows 8");
-	    } else if(IsWindows7SP1OrGreater()) {
-			versionName = _T("Windows 7 SP1");
-	    } else if(IsWindows7OrGreater()) {
-			versionName = _T("Windows 7 SP0");
-	    } else if(IsWindowsVistaSP2OrGreater()) {
-			versionName = _T("Windows Vista SP2");
-	    } else if(IsWindowsVistaSP1OrGreater()) {
-	    	versionName = _T("Windows Vista SP1");
-	    } else if(IsWindowsVistaOrGreater()) {
-	    	versionName = _T("Windows Vista SP0");
-	    } else if(IsWindowsXPSP3OrGreater()) {
-	    	versionName = _T("Windows XP SP3");
-	    } else if(IsWindowsXPSP2OrGreater()) {
-	    	versionName = _T("Windows XP SP2");
-	    } else if(IsWindowsXPSP1OrGreater()) {
-	    	versionName = _T("Windows XP SP1");
-	    } else if(IsWindowsXPOrGreater()) {
-	    	versionName = _T("Windows XP SP0");
-	    } else {
-	    	versionName = _T("Windows Desktop");
-	    }
-	}
+	_stprintf(str, 5, _T("%d.%d"), inf->wki101_ver_major, inf->wki101_ver_minor);
 
-	add_value(arguments.log, _T("version"), versionName);
+	add_value(arguments.log, _T("version"), str);
 
-	/* Edition */
+
+
+
+
+	NetApiBufferFree((BYTE**)inf);
 
 	return ERR_NONE;
 }
