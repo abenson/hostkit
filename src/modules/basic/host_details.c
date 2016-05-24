@@ -114,7 +114,7 @@ static int hostname(void)
 	DWORD length = sizeof(buffer);
 	int i = 0;
 
-	if (GetComputerNameEx(ComputerNameDnsHostname, buffer, &length)) {
+	if (GetComputerNameEx(ComputerNamePhysicalNetBIOS, buffer, &length)) {
 		add_value(arguments.log, _T("hostname"), buffer);
 		return ERR_NONE;
 	}
