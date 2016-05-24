@@ -2,6 +2,8 @@
 #include <lm.h>
 #include <dsrole.h>
 #include <versionhelpers.h>
+#include <intrin.h>
+
 
 #include "../../arguments.h"
 #include "../modules.h"
@@ -35,12 +37,33 @@ static int processors(void)
 {
 	SYSTEM_INFO si;
 	TCHAR buf[100];
+	TCHAR *cpuStr;
+	int cpuInfo[4] = {0};
+	char CPUBrandString[0x40];
+
+
 
 	GetNativeSystemInfo(&si);
 
-	_stprintf(buf, 10, _T("%d"), si.dwNumberOfProcessors);
+	start_dict(arguments.log, _T("processors"));
+		memset(CPUBrandString, 0, 0x40);
+		__cpuid(cpuInfo, 0x80000002);
+		memcpy(CPUBrandString, cpuInfo, sizeof(cpuInfo));
+		__cpuid(cpuInfo, 0x80000003);
+		memcpy(CPUBrandString + 16, cpuInfo, sizeof(cpuInfo));
+		__cpuid(cpuInfo, 0x80000004);
+		memcpy(CPUBrandString + 32, cpuInfo, sizeof(cpuInfo));
+		cpuStr = lpstr2tchar(CPUBrandString);
+		add_value(arguments.log, _T("name"), cpuStr);
+		free(cpuStr);
+		_stprintf(buf, 10, _T("%d"), si.dwNumberOfProcessors);
+		add_value(arguments.log, _T("count"), buf);
+		_stprintf(buf, 10, _T("%d"), HIBYTE(si.wProcessorRevision));
+		add_value(arguments.log, _T("model"), buf);
+		_stprintf(buf, 10, _T("%d"), LOBYTE(si.wProcessorRevision));
+		add_value(arguments.log, _T("stepping"), buf);
 
-	add_value(arguments.log, _T("processors"), buf);
+	close_dict(arguments.log);
 }
 
 static int ostype(void)
