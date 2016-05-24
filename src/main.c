@@ -1,3 +1,5 @@
+#include <windows.h>
+
 #include "common.h"
 
 #include "arguments.h"
@@ -12,6 +14,12 @@ _TCHAR *get_version(void)
 _TCHAR *get_copyright(void)
 {
 	return _T("");
+}
+
+void disableWoW64(void)
+{
+	PVOID wow64;
+	Wow64DisableWow64FsRedirection(&wow64);
 }
 
 int _tmain(int argc, _TCHAR *argv[])
@@ -64,6 +72,8 @@ int _tmain(int argc, _TCHAR *argv[])
 		_ftprintf(stdout, _T("Did not open output file.\n"));
 		return 1;
 	}
+
+	disableWoW64();
 
 	if(arguments.mode == RM_BASIC)
 	{
