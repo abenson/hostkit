@@ -133,10 +133,6 @@ static int version(void)
 
 	add_value(arguments.log, _T("version"), str);
 
-
-
-
-
 	NetApiBufferFree((BYTE**)inf);
 
 	return ERR_NONE;
