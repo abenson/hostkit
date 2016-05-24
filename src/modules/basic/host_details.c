@@ -41,6 +41,7 @@ static int check64(void)
 			add_value(arguments.log, _T("wow64"), _T("false"));
 		}
 	}
+	return ERR_NONE;
 }
 
 static int domain(void)
