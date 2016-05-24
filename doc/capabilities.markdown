@@ -10,9 +10,9 @@ This will describe each module and their function.
 	- OS, implemented
 	- Version, implemented
 	- Machine Type, implemented
-	- Processor Type
-	- Count of Processors
-	- Memory
+	- Processor Type, implemented
+	- Count of Processors, implemented
+	- Memory, implemented
 	- Detect VM
 - Drives
 	- Physical Device
