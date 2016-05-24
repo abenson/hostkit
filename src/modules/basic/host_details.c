@@ -1,4 +1,6 @@
 #include <windows.h>
+#include <lm.h>
+#include <dsrole.h>
 #include <versionhelpers.h>
 
 #include "../../arguments.h"
@@ -8,6 +10,7 @@ static int hostname(void);
 static int domain(void);
 static int version(void);
 static int check64(void);
+static int architecture(void);
 
 int host_details(void)
 {
@@ -17,12 +20,36 @@ int host_details(void)
 	domain();
 	version();
 	check64();
+	architecture();
 
 	close_dict(arguments.log);
 
 	return ERR_NONE;
 }
 
+static int architecture(void)
+{
+	SYSTEM_INFO si;
+	GetNativeSystemInfo(&si);
+	switch(si.wProcessorArchitecture) {
+		case PROCESSOR_ARCHITECTURE_AMD64:
+			add_value(arguments.log, _T("arch"), _T("amd64"));
+			break;
+		case PROCESSOR_ARCHITECTURE_ARM:
+			add_value(arguments.log, _T("arch"), _T("arm"));
+			break;
+		case PROCESSOR_ARCHITECTURE_IA64:
+			add_value(arguments.log, _T("arch"), _T("ia64"));
+			break;
+		case PROCESSOR_ARCHITECTURE_INTEL:
+			add_value(arguments.log, _T("arch"), _T("i686"));
+			break;
+		case PROCESSOR_ARCHITECTURE_UNKNOWN:
+		default:
+			add_value(arguments.log, _T("arch"), _T("unknown"));
+			break;
+	}
+}
 
 static int check64(void)
 {
