@@ -7,6 +7,7 @@
 static int hostname(void);
 static int domain(void);
 static int version(void);
+static int check64(void);
 
 int host_details(void)
 {
@@ -15,10 +16,31 @@ int host_details(void)
 	hostname();
 	domain();
 	version();
+	check64();
 
 	close_dict(arguments.log);
 
 	return ERR_NONE;
+}
+
+
+static int check64(void)
+{
+	void *fnIsWow64;
+
+	fnIsWow64 = GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")), "IsWow64Process");
+
+	if(fnIsWow64 == NULL) {
+		add_value(arguments.log, _T("wow64"), _T("false"));
+	} else {
+		BOOL isWow64;
+		IsWow64Process(GetCurrentProcess(), &isWow64);
+		if(isWow64) {
+			add_value(arguments.log, _T("wow64"), _T("true"));
+		} else {
+			add_value(arguments.log, _T("wow64"), _T("false"));
+		}
+	}
 }
 
 static int domain(void)
