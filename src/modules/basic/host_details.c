@@ -73,15 +73,38 @@ static int check64(void)
 
 static int domain(void)
 {
-	TCHAR buffer[256];
-	DWORD length = sizeof(buffer);
-	int i = 0;
+	DSROLE_PRIMARY_DOMAIN_INFO_BASIC *info;
+	DWORD ret;
 
-	if (GetComputerNameEx(ComputerNameDnsDomain, buffer, &length)) {
-		add_value(arguments.log, _T("domain"), buffer);
-		return ERR_NONE;
+	ret = DsRoleGetPrimaryDomainInformation(NULL,  DsRolePrimaryDomainInfoBasic, (BYTE**)&info);
+
+	if(ret == ERROR_SUCCESS) {
+		switch(info->MachineRole) {
+			case DsRole_RoleStandaloneWorkstation:
+				add_value(arguments.log, _T("role"), _T("workstation"));
+				add_value(arguments.log, _T("workgroup"), info->DomainNameFlat);
+				break;
+			case DsRole_RoleMemberWorkstation:
+				add_value(arguments.log, _T("role"), _T("domain workstation"));
+				add_value(arguments.log, _T("domain"), info->DomainNameDns);
+				break;
+			case DsRole_RoleStandaloneServer:
+				add_value(arguments.log, _T("role"), _T("server"));
+				add_value(arguments.log, _T("workgroup"), info->DomainNameFlat);
+				break;
+			case DsRole_RoleMemberServer:
+				add_value(arguments.log, _T("role"), _T("domain server"));
+				add_value(arguments.log, _T("domain"), info->DomainNameDns);
+				break;
+			case DsRole_RoleBackupDomainController:
+			case DsRole_RolePrimaryDomainController:
+				add_value(arguments.log, _T("role"), _T("domain controller"));
+				add_value(arguments.log, _T("domain"), info->DomainNameDns);
+				break;
+		}
 	}
 
+	DsRoleFreeMemory(info);
 	return ERR_MODFAIL;
 }
 
