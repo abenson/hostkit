@@ -8,6 +8,7 @@
 
 static int hostname(void);
 static int domain(void);
+static int ostype(void);
 static int version(void);
 static int check64(void);
 static int architecture(void);
@@ -18,6 +19,7 @@ int host_details(void)
 
 	hostname();
 	domain();
+	ostype();
 	version();
 	check64();
 	architecture();
@@ -25,6 +27,15 @@ int host_details(void)
 	close_dict(arguments.log);
 
 	return ERR_NONE;
+}
+
+static int ostype(void)
+{
+	if(IsWindowsServer()) {
+		add_value(arguments.log, _T("windows"), _T("server"));
+	} else {
+		add_value(arguments.log, _T("windows"), _T("client"));
+	}
 }
 
 static int architecture(void)
