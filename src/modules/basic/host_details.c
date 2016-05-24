@@ -15,6 +15,7 @@ static int version(void);
 static int check64(void);
 static int architecture(void);
 static int processors(void);
+static int memory(void);
 
 int host_details(void)
 {
@@ -27,10 +28,27 @@ int host_details(void)
 	check64();
 	architecture();
 	processors();
+	memory();
 
 	close_dict(arguments.log);
 
 	return ERR_NONE;
+}
+
+static int memory(void)
+{
+	TCHAR buf[1024];
+	MEMORYSTATUSEX mem;
+
+	mem.dwLength = sizeof(mem);
+	GlobalMemoryStatusEx(&mem);
+
+	start_dict(arguments.log, _T("memory"));
+		_stprintf(buf, 1024, _T("%llu"), mem.ullTotalPhys);
+		add_value(arguments.log, _T("total"), buf);
+		_stprintf(buf, 1024, _T("%llu"), mem.ullAvailPhys);
+		add_value(arguments.log, _T("free"), buf);
+	close_dict(arguments.log);
 }
 
 static int processors(void)
