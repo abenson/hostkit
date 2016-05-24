@@ -12,6 +12,7 @@ static int ostype(void);
 static int version(void);
 static int check64(void);
 static int architecture(void);
+static int processors(void);
 
 int host_details(void)
 {
@@ -23,10 +24,23 @@ int host_details(void)
 	version();
 	check64();
 	architecture();
+	processors();
 
 	close_dict(arguments.log);
 
 	return ERR_NONE;
+}
+
+static int processors(void)
+{
+	SYSTEM_INFO si;
+	TCHAR buf[100];
+
+	GetNativeSystemInfo(&si);
+
+	_stprintf(buf, 10, _T("%d"), si.dwNumberOfProcessors);
+
+	add_value(arguments.log, _T("processors"), buf);
 }
 
 static int ostype(void)
