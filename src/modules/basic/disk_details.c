@@ -3,6 +3,7 @@
 #include "../modules.h"
 
 static int volume_info(TCHAR *disk);
+static int physical_drive_info(TCHAR *disk);
 
 int disk_details(void)
 {
@@ -23,6 +24,7 @@ int disk_details(void)
 			add_value(arguments.log, _T("assignment"), szSingleDrive);
 
 			volume_info(szSingleDrive);
+			physical_drive_info(szSingleDrive);
 
 			close_dict(arguments.log);
 
@@ -32,6 +34,33 @@ int disk_details(void)
 		close_list(arguments.log);
 	}
 
+}
+
+static int physical_drive_info(TCHAR *disk)
+{
+	HANDLE h;
+	VOLUME_DISK_EXTENTS *diskExtents;
+	DWORD size, sizeRet;
+	TCHAR logDisk[100];
+	TCHAR physicalDrive[100];
+
+	_sntprintf(logDisk, 100, _T("\\\\.\\%.2s"), disk);
+
+	h = CreateFile(logDisk, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if(h) {
+
+		DeviceIoControl(h, IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, NULL, 0, NULL, 0, &size, NULL);
+		diskExtents = malloc(sizeof(*diskExtents) * size);
+		if(diskExtents == NULL) {
+			return ERR_MODFAIL;
+		}
+		if(DeviceIoControl(h, IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, NULL, 0, diskExtents, size * sizeof(*diskExtents), &size, NULL)) {
+			_sntprintf(physicalDrive, 100, _T("\\\\.\\\\PhysicalDrive%u"), diskExtents->Extents[0].DiskNumber);
+			add_value(arguments.log, _T("device"), physicalDrive);
+		}
+		free(diskExtents);
+	}
+	return ERR_NONE;
 }
 
 static int volume_info(TCHAR *disk)
