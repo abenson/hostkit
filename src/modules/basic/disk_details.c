@@ -73,6 +73,8 @@ static int volume_info(TCHAR *disk)
 
 	GetVolumeInformation(disk, name, 100, &serial, NULL, &flags, fs, 100);
 
+	start_dict(arguments.log, _T("volume"));
+
 	add_value(arguments.log, _T("name"), name);
 	add_value(arguments.log, _T("fs"), fs);
 
@@ -84,6 +86,8 @@ static int volume_info(TCHAR *disk)
 	} else {
 		add_value(arguments.log, _T("readonly"), _T("false"));
 	}
+
+	close_dict(arguments.log);
 
 	return ERR_NONE;
 }
