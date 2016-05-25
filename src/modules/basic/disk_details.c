@@ -37,6 +37,7 @@ int disk_details(void)
 static int volume_info(TCHAR *disk)
 {
 	TCHAR name[100], fs[100];
+	TCHAR serialStr[100];
 	DWORD serial, flags;
 
 	GetVolumeInformation(disk, name, 100, &serial, NULL, &flags, fs, 100);
@@ -44,5 +45,14 @@ static int volume_info(TCHAR *disk)
 	add_value(arguments.log, _T("name"), name);
 	add_value(arguments.log, _T("fs"), fs);
 
+	_sntprintf(serialStr, 100, _T("%x"), serial);
+	add_value(arguments.log, _T("serial"), serialStr);
 
+	if(flags & FILE_READ_ONLY_VOLUME) {
+		add_value(arguments.log, _T("readonly"), _T("true"));
+	} else {
+		add_value(arguments.log, _T("readonly"), _T("false"));
+	}
+
+	return 0;
 }
