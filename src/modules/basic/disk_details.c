@@ -39,27 +39,29 @@ int disk_details(void)
 static int physical_drive_info(TCHAR *disk)
 {
 	HANDLE h;
-	VOLUME_DISK_EXTENTS *diskExtents;
+	VOLUME_DISK_EXTENTS diskExtents;
 	DWORD size, sizeRet;
 	TCHAR logDisk[100];
 	TCHAR physicalDrive[100];
 
 	_sntprintf(logDisk, 100, _T("\\\\.\\%.2s"), disk);
 
-	h = CreateFile(logDisk, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	if(h) {
+	h = CreateFile(logDisk, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
 
-		DeviceIoControl(h, IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, NULL, 0, NULL, 0, &size, NULL);
-		diskExtents = malloc(sizeof(*diskExtents) * size);
-		if(diskExtents == NULL) {
-			return ERR_MODFAIL;
-		}
-		if(DeviceIoControl(h, IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, NULL, 0, diskExtents, size * sizeof(*diskExtents), &size, NULL)) {
-			_sntprintf(physicalDrive, 100, _T("\\\\.\\\\PhysicalDrive%u"), diskExtents->Extents[0].DiskNumber);
-			add_value(arguments.log, _T("device"), physicalDrive);
-		}
-		free(diskExtents);
+	if(h == INVALID_HANDLE_VALUE) {
+		return ERR_MODFAIL;
 	}
+
+	if(DeviceIoControl(h, IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, NULL, 0, &diskExtents, sizeof(diskExtents), &size, NULL)) {
+		_sntprintf(physicalDrive, 100, _T("\\\\.\\\\PhysicalDrive%u"), diskExtents.Extents[0].DiskNumber);
+		add_value(arguments.log, _T("device"), physicalDrive);
+	} else {
+		CloseHandle(h);
+		return ERR_MODFAIL;
+	}
+
+	CloseHandle(h);
+
 	return ERR_NONE;
 }
 
