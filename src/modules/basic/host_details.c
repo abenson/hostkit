@@ -55,25 +55,23 @@ static int processors(void)
 {
 	SYSTEM_INFO si;
 	TCHAR buf[100];
-	TCHAR *cpuStr;
 	int cpuInfo[4] = {0};
-	char CPUBrandString[0x40];
+	char CPUBrandString[0x80] = {0};
+	TCHAR cpuStr[0x80] = {0};
 
 
 
 	GetNativeSystemInfo(&si);
 
 	start_dict(arguments.log, _T("processors"));
-		memset(CPUBrandString, 0, 0x40);
 		__cpuid(cpuInfo, 0x80000002);
 		memcpy(CPUBrandString, cpuInfo, sizeof(cpuInfo));
 		__cpuid(cpuInfo, 0x80000003);
 		memcpy(CPUBrandString + 16, cpuInfo, sizeof(cpuInfo));
 		__cpuid(cpuInfo, 0x80000004);
 		memcpy(CPUBrandString + 32, cpuInfo, sizeof(cpuInfo));
-		cpuStr = lpstr2tchar(CPUBrandString);
+		_stprintf(cpuStr, 0x80, _T("%S"), CPUBrandString);
 		add_value(arguments.log, _T("name"), cpuStr);
-		free(cpuStr);
 		_stprintf(buf, 10, _T("%d"), si.dwNumberOfProcessors);
 		add_value(arguments.log, _T("count"), buf);
 		_stprintf(buf, 10, _T("%d"), HIBYTE(si.wProcessorRevision));
