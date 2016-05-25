@@ -3,6 +3,45 @@
 
 #include "writer_json.h"
 
+/* Helper functions */
+
+static int escape_json(FILE *fp, const TCHAR *str)
+{
+	int i=0;
+
+	while(str[i]) {
+		switch(str[i]) {
+			case '\b':
+				_ftprintf(fp, _T("%s"), _T("\\b"));
+				break;
+			case '\f':
+				_ftprintf(fp, _T("%s"), _T("\\f"));
+				break;
+			case '\n':
+				_ftprintf(fp, _T("%s"), _T("\\n"));
+				break;
+			case '\r':
+				_ftprintf(fp, _T("%s"), _T("\\r"));
+				break;
+			case '\t':
+				_ftprintf(fp, _T("%s"), _T("\\t"));
+				break;
+			case '\"':
+				_ftprintf(fp, _T("%s"), _T("\\\""));
+				break;
+			case '\\':
+				_ftprintf(fp, _T("%s"), _T("\\\\"));
+				break;
+			default:
+				_ftprintf(fp, _T("%c"), str[i]);
+				break;
+		}
+		i++;
+	}
+
+	return i;
+}
+
 struct json_data
 {
 	int firstItem[512];
@@ -39,12 +78,12 @@ int json_start_dict(log_t *log)
 		return -1;
 	}
 	if(((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] == 1) {
-		_ftprintf(log->file, _T(", "), log->section);
+		_ftprintf(log->file, _T(", "));
 	}
 	if(((struct json_data*)log->moduleData)->inDict[log->indentLevel-1] == 1) {
 		_ftprintf(log->file, _T("\"%s\":"), log->section);
 	}
-	_ftprintf(log->file, _T(" {"), log->section);
+	_ftprintf(log->file, _T(" {"));
 	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 1;
 	((struct json_data*)log->moduleData)->inDict[log->indentLevel] = 1;
 	return 0;
@@ -83,9 +122,13 @@ int json_close_list(log_t *log)
 int json_add_value(log_t *log, const TCHAR *key, const TCHAR *value)
 {
 	if(((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] == 1) {
-		_ftprintf(log->file, _T(", \"%s\": \"%s\" "), key, value, key);
+		_ftprintf(log->file, _T(", \"%s\": \""), key);
+		escape_json(log->file, value);
+		_ftprintf(log->file, _T("\" "));
 	} else {
-		_ftprintf(log->file, _T("  \"%s\": \"%s\" "), key, value, key);
+		_ftprintf(log->file, _T("  \"%s\": \""), key);
+		escape_json(log->file, value);
+		_ftprintf(log->file, _T("\" "));
 	}
 	((struct json_data*)log->moduleData)->firstItem[log->indentLevel-1] = 1;
 	return 0;
