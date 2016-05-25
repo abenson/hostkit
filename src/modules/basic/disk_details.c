@@ -64,7 +64,7 @@ static int volume_disk_info(TCHAR *disk)
 	}
 
 	if(DeviceIoControl(h, IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, NULL, 0, &diskExtents, sizeof(diskExtents), &size, NULL)) {
-		_sntprintf(physicalDrive, 100, _T("\\\\.\\\\PhysicalDrive%u"), diskExtents.Extents[0].DiskNumber);
+		_sntprintf(physicalDrive, 100, _T("\\\\.\\PhysicalDrive%u"), diskExtents.Extents[0].DiskNumber);
 		add_value(arguments.log, _T("device"), physicalDrive);
 	} else {
 		CloseHandle(h);
