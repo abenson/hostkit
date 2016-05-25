@@ -1,6 +1,6 @@
 include ../common.mk
 
-MODULES_SRC= modules.c basic/host_details.c
+MODULES_SRC= modules.c basic/host_details.c basic/disk_details.c
 MODULES_HDR= modules.h basic/basic.h standard/standard.h full/full.h
 
 all: modules.a

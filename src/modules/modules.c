@@ -6,6 +6,7 @@
 
 struct module basic[] = {
 	host_details,
+	disk_details,
 	NULL
 };
 
