@@ -54,5 +54,5 @@ static int volume_info(TCHAR *disk)
 		add_value(arguments.log, _T("readonly"), _T("false"));
 	}
 
-	return 0;
+	return ERR_NONE;
 }
