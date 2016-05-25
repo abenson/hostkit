@@ -2,10 +2,21 @@
 #include "../../arguments.h"
 #include "../modules.h"
 
+static int volumes(void);
 static int volume_info(TCHAR *disk);
-static int physical_drive_info(TCHAR *disk);
+static int volume_disk_info(TCHAR *disk);
 
 int disk_details(void)
+{
+	start_dict(arguments.log, _T("disks"));
+
+	volumes();
+
+	close_dict(arguments.log);
+	return ERR_NONE;
+}
+
+static int volumes(void)
 {
 	DWORD dwSize = MAX_PATH;
 	TCHAR szLogicalDrives[MAX_PATH] = {0};
@@ -15,16 +26,16 @@ int disk_details(void)
 	{
 		TCHAR* szSingleDrive = szLogicalDrives;
 
-		start_list(arguments.log, _T("drives"));
+		start_list(arguments.log, _T("volumes"));
 
 		while(*szSingleDrive)
 		{
-			start_dict(arguments.log, _T("drive"));
+			start_dict(arguments.log, _T("volume"));
 
 			add_value(arguments.log, _T("assignment"), szSingleDrive);
 
 			volume_info(szSingleDrive);
-			physical_drive_info(szSingleDrive);
+			volume_disk_info(szSingleDrive);
 
 			close_dict(arguments.log);
 
@@ -36,7 +47,7 @@ int disk_details(void)
 
 }
 
-static int physical_drive_info(TCHAR *disk)
+static int volume_disk_info(TCHAR *disk)
 {
 	HANDLE h;
 	VOLUME_DISK_EXTENTS diskExtents;
@@ -73,8 +84,6 @@ static int volume_info(TCHAR *disk)
 
 	GetVolumeInformation(disk, name, 100, &serial, NULL, &flags, fs, 100);
 
-	start_dict(arguments.log, _T("volume"));
-
 	add_value(arguments.log, _T("name"), name);
 	add_value(arguments.log, _T("fs"), fs);
 
@@ -86,8 +95,6 @@ static int volume_info(TCHAR *disk)
 	} else {
 		add_value(arguments.log, _T("readonly"), _T("false"));
 	}
-
-	close_dict(arguments.log);
 
 	return ERR_NONE;
 }
