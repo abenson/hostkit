@@ -15,8 +15,8 @@ This will describe each module and their function.
 	- Memory, implemented
 	- Detect VM
 - Drives
-	- Physical Device
-	- Assigned Drive Letter
+	- Physical Device, implemented
+	- Assigned Drive Letter, implemented
 	- Model
 	- Serial
 
