@@ -74,7 +74,7 @@ static int volume_info(TCHAR *disk)
 	add_value(arguments.log, _T("name"), name);
 	add_value(arguments.log, _T("fs"), fs);
 
-	_sntprintf(serialStr, 100, _T("%x"), serial);
+	_sntprintf(serialStr, 100, _T("%04X-%04X"), HIBYTE(serial), LOBYTE(serial));
 	add_value(arguments.log, _T("serial"), serialStr);
 
 	if(flags & FILE_READ_ONLY_VOLUME) {
