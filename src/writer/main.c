@@ -62,6 +62,7 @@ void run(TCHAR *type)
 		add_value(log, _T("author"), _T("Bilbo Baggins"));
 		add_value(log, _T("title"), _T("There and Back Again"));
 	close_dict(log);
+	add_value(log, _T("System32"), _T("C:\\Windows\\System32\\"));
 	close_log(log);
 }
 
