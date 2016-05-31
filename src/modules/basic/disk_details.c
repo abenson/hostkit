@@ -41,8 +41,8 @@ static int physical_drive_info(TCHAR *disk)
 	HANDLE h;
 	VOLUME_DISK_EXTENTS *diskExtents;
 	DWORD size, sizeRet;
-	TCHAR logDisk[100];
-	TCHAR physicalDrive[100];
+	TCHAR logDisk[100] = {0};
+	TCHAR physicalDrive[100] = {0};
 
 	_sntprintf(logDisk, 100, _T("\\\\.\\%.2s"), disk);
 
@@ -65,8 +65,8 @@ static int physical_drive_info(TCHAR *disk)
 
 static int volume_info(TCHAR *disk)
 {
-	TCHAR name[100], fs[100];
-	TCHAR serialStr[100];
+	TCHAR name[100] = {0}, fs[100] = {0};
+	TCHAR serialStr[100] = {0};
 	DWORD serial, flags;
 
 	GetVolumeInformation(disk, name, 100, &serial, NULL, &flags, fs, 100);
