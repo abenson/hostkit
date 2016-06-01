@@ -10,3 +10,5 @@ Debug
 *.suo
 *.sdf
 *.opensdf
+*.json
+*.xml
