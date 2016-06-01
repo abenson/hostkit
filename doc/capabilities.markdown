@@ -15,8 +15,10 @@ This will describe each module and their function.
 	- Memory, implemented
 	- Detect VM
 - Drives
-	- Physical Device
-	- Assigned Drive Letter
+	- Physical Device, implemented
+	- Assigned Drive Letter, implemented
+	- Filesystem, implemented
+	- Volume serial, implemented
 	- Model
 	- Serial
 
@@ -70,4 +72,4 @@ This will describe each module and their function.
 
 # Notes
 
-¹ This may (read: will) require an implementation change to add subitems.
+¹ ~~This may (read: will) require an implementation change to add subitems.~~ Implementation now supports multiple levels of subitems.
