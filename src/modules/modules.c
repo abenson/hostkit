@@ -19,7 +19,7 @@ struct module standard[] = {
 };
 
 struct module standard_only[] = {
-	NULL
+	enum_path
 };
 
 struct module full[] = {

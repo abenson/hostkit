@@ -7,7 +7,12 @@ LDFLAGS=-lnetapi32
 HK_SRC= main.c arguments.c util.c service.c persist.c common.c
 HK_HDR= common.h arguments.h util.h service.h persist.h common.h
 
-MODULES_SRC= modules/modules.c modules/basic/host_details.c modules/basic/disk_details.c
+MODULES_SRC=	modules/modules.c                \
+				modules/basic/host_details.c     \
+				modules/basic/disk_details.c     \
+				modules/standard/enum_path.c     \
+				modules/common.c
+
 MODULES_HDR= modules/modules.h modules/basic/basic.h modules/standard/standard.h modules/full/full.h
 
 WRITER_SRC= writer/writers.c writer/writer_json.c writer/writer.c writer/writer_xml.c writer/writer_ruby.c
