@@ -10,7 +10,7 @@ HK_HDR= common.h arguments.h util.h service.h persist.h common.h
 MODULES_SRC=	modules/modules.c                \
 				modules/basic/host_details.c     \
 				modules/basic/disk_details.c     \
-				modules/standard/enum_path.c     \
+				modules/standard/enum_windir.c     \
 				modules/common.c
 
 MODULES_HDR= modules/modules.h modules/basic/basic.h modules/standard/standard.h modules/full/full.h

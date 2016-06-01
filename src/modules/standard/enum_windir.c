@@ -2,12 +2,12 @@
 #include "../../arguments.h"
 #include "../modules.h"
 
-int enum_path(void)
+int enum_windir(void)
 {
 	TCHAR *pathenv, *path;
 	DWORD size;
 
-	size = GetEnvironmentVariable(_T("PATH"), NULL, 0);
+	size = GetEnvironmentVariable(_T("windir"), NULL, 0);
 
 	if(size == 0) {
 		return ERR_MODFAIL;
@@ -19,7 +19,7 @@ int enum_path(void)
 		return ERR_MODFAIL;
 	}
 
-	size = GetEnvironmentVariable(_T("PATH"), pathenv, size);
+	size = GetEnvironmentVariable(_T("windir"), pathenv, size);
 
 	if(size == 0) {
 		free(pathenv);
@@ -28,20 +28,7 @@ int enum_path(void)
 
 	start_list(arguments.log, _T("files"));
 
-	path=pathenv;
-	while(*path) {
-		if(*path == _T(';')) {
-			*path = _T('\0');
-		}
-		path++;
-	}
-
-	path=pathenv;
-
-	while(*path) {
-		lsdir(path);
-		path += _tcslen(path)+1;
-	}
+	lsdir(path);
 
 	close_list(arguments.log);
 

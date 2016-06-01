@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <tchar.h>
 
 #include "../arguments.h"
 #include "modules.h"
@@ -9,7 +10,7 @@ int lsdir(const TCHAR *rootpath)
 {
 	WIN32_FIND_DATA ffd;
 	LARGE_INTEGER filesize;
-	TCHAR szDir[MAX_PATH];
+	TCHAR szDir[MAX_PATH], subDir[MAX_PATH];
 	size_t length_of_arg;
 	HANDLE hFind = INVALID_HANDLE_VALUE;
 	DWORD dwError=0;
@@ -19,7 +20,10 @@ int lsdir(const TCHAR *rootpath)
 	if(hFind != INVALID_HANDLE_VALUE) {
 		do {
 			if(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-				continue;
+				if(_tcscmp(ffd.cFileName, _T(".")) != 0 || _tcscmp(ffd.cFileName, _T("..")) != 0) {
+					_stprintf(subDir, MAX_PATH, _T("%s\\%s"), rootpath, ffd.cFileName);
+					lsdir(subDir);
+				}
 			}
 			file_info(rootpath, &ffd);
 		} while(FindNextFile(hFind, &ffd));
