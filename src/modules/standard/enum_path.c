@@ -49,4 +49,3 @@ int enum_path(void)
 
 	return ERR_NONE;
 }
-
