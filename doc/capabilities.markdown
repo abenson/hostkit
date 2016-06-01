@@ -13,6 +13,7 @@ This will describe each module and their function.
 	- Processor Type, implemented
 	- Count of Processors, implemented
 	- Memory, implemented
+	- Environment variables, implemented
 	- Detect VM
 - Drives
 	- Physical Device, implemented
