@@ -16,6 +16,7 @@ static int check64(void);
 static int architecture(void);
 static int processors(void);
 static int memory(void);
+static int getenvironment(void);
 
 int host_details(void)
 {
@@ -29,10 +30,34 @@ int host_details(void)
 	architecture();
 	processors();
 	memory();
+	getenvironment();
 
 	close_dict(arguments.log);
 
 	return ERR_NONE;
+}
+
+static int getenvironment(void)
+{
+	TCHAR *envb, *env, *key, *val;
+	size_t len;
+
+	envb = GetEnvironmentStrings();
+
+	start_dict(arguments.log, _T("environment"));
+	env = envb;
+	while(*env) {
+		key = dupestr(env);
+		val = key + _tcscspn(key, _T("="));
+		*val = 0;
+		val++;
+		add_value(arguments.log, key, val);
+		free(key);
+		env += _tcslen(env) + 1;
+	}
+	close_dict(arguments.log);
+	FreeEnvironmentStrings(envb);
+	return 0;
 }
 
 static int memory(void)
