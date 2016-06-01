@@ -25,7 +25,7 @@ This will describe each module and their function.
 
 ## Standard
 
-- Filesystem (%PATH%)
+- Filesystem ~~(%PATH%~~ %windir%)
 	- Name
 	- Folder
 	- Size
