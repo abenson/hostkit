@@ -51,7 +51,9 @@ static int getenvironment(void)
 		val = key + _tcscspn(key, _T("="));
 		*val = 0;
 		val++;
-		add_value(arguments.log, key, val);
+		if(_tcslen(key) > 0) {
+			add_value(arguments.log, key, val);
+		}
 		free(key);
 		env += _tcslen(env) + 1;
 	}
