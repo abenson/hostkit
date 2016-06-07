@@ -41,6 +41,8 @@ WRITERS_HDR=	include/writers/writers.h 		\
 
 all: bin/hostkit32.exe bin/hostkit64.exe
 
+test: bin/writer_test32.exe bin/writer_test64.exe
+
 bin/:
 	mkdir -p bin/
 
@@ -49,6 +51,12 @@ bin/hostkit32.exe: bin/ $(HOSTKIT_SRC) $(HOSTKIT_HDR) $(MODULES_SRC) $(MODULES_H
 
 bin/hostkit64.exe: bin/ $(HOSTKIT_SRC) $(HOSTKIT_HDR) $(MODULES_SRC) $(MODULES_HDR) $(WRITERS_HDR) $(WRITERS_SRC)
 	$(CC64) $(CFLAGS) -o bin/hostkit64.exe $(HOSTKIT_SRC) $(MODULES_SRC) $(WRITERS_SRC) $(LDFLAGS)
+
+bin/writer_test32.exe: bin/ $(WRITERS_SRC) $(WRITERS_HDR) src/writers/main.c src/common.c
+	$(CC32) $(CFLAGS) -o bin/writer_test32.exe $(WRITERS_SRC) src/writers/main.c src/common.c $(LDFLAGS)
+
+bin/writer_test64.exe: bin/ $(WRITERS_SRC) $(WRITERS_HDR) src/writers/main.c src/common.c
+	$(CC64) $(CFLAGS) -o bin/writer_test64.exe $(WRITERS_SRC) src/writers/main.c src/common.c $(LDFLAGS)
 
 clean:
 	rm -rf bin/

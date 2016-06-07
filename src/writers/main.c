@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "writer.h"
+#include "writers/writer.h"
 
 void run(TCHAR *type)
 {
