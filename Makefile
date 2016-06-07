@@ -27,11 +27,11 @@ MODULES_SRC=	src/modules/modules.c                \
 MODULES_HDR=	include/modules/modules.h	\
 				include/modules/modes.h
 
-WRITERS_SRC=	src/writer/writers.c		\
-				src/writer/writer_json.c	\
-				src/writer/writer.c			\
-				src/writer/writer_xml.c 	\
-				src/writer/writer_ruby.c
+WRITERS_SRC=	src/writers/writers.c		\
+				src/writers/writer_json.c	\
+				src/writers/writer.c			\
+				src/writers/writer_xml.c 	\
+				src/writers/writer_ruby.c
 
 WRITERS_HDR=	include/writers/writers.h 		\
 				include/writers/writer_json.h 	\
