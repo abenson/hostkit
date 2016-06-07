@@ -5,8 +5,8 @@
 #include <intrin.h>
 
 
-#include "../../arguments.h"
-#include "../modules.h"
+#include "arguments.h"
+#include "modules/modules.h"
 
 static int hostname(void);
 static int domain(void);

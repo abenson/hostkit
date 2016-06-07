@@ -1,6 +1,6 @@
 #include <windows.h>
-#include "../../arguments.h"
-#include "../modules.h"
+#include "arguments.h"
+#include "modules/modules.h"
 
 static int volume_info(TCHAR *disk);
 static int physical_drive_info(TCHAR *disk);

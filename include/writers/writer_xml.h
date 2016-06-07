@@ -1,7 +1,7 @@
 #ifndef OUTXML_H
 #define OUTXML_H
 
-#include "writer.h"
+#include "writers/writer.h"
 
 int xml_begin(log_t *log);
 int xml_end(log_t *log);

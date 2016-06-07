@@ -1,7 +1,7 @@
 #ifndef WMODULES_H
 #define WMODULES_H
 
-#include "writer.h"
+#include "writers/writer.h"
 
 struct wmodule
 {

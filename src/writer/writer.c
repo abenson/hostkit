@@ -3,8 +3,8 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "writer.h"
-#include "writers.h"
+#include "writers/writer.h"
+#include "writers/writers.h"
 
 static void debug_sections(log_t *log)
 {

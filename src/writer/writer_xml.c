@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "writer_xml.h"
+#include "writers/writer_xml.h"
 
 static void indent(FILE *file, int level)
 {

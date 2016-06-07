@@ -1,7 +1,7 @@
 #ifndef OUTJSON_H
 #define OUTJSON_H
 
-#include "writer.h"
+#include "writers/writer.h"
 
 int json_begin(log_t *log);
 int json_end(log_t *log);

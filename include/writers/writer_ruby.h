@@ -1,7 +1,7 @@
 #ifndef OUTRUBY_H
 #define OUTRUBY_H
 
-#include "writer.h"
+#include "writers/writer.h"
 
 int ruby_begin(log_t *log);
 int ruby_end(log_t *log);

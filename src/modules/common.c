@@ -1,8 +1,8 @@
 #include <windows.h>
 #include <tchar.h>
 
-#include "../arguments.h"
-#include "modules.h"
+#include "arguments.h"
+#include "modules/modules.h"
 
 static int file_info(const TCHAR *rootpath, const WIN32_FIND_DATA *ffd);
 

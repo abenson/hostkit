@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "writers.h"
+#include "writers/writers.h"
 
-#include "writer_json.h"
-#include "writer_xml.h"
-#include "writer_ruby.h"
+#include "writers/writer_json.h"
+#include "writers/writer_xml.h"
+#include "writers/writer_ruby.h"
 
 struct wmodule modules[] =
 {

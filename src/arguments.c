@@ -2,7 +2,7 @@
 
 #include "arguments.h"
 
-#include "writer/writers.h"
+#include "writers/writers.h"
 
 struct arguments arguments;
 

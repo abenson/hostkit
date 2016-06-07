@@ -1,8 +1,6 @@
-#include "modules.h"
+#include "modules/modules.h"
 
-#include "basic/basic.h"
-#include "standard/standard.h"
-#include "full/full.h"
+#include "modules/modes.h"
 
 struct module basic[] = {
 	host_details,

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "writer_json.h"
+#include "writers/writer_json.h"
 
 /* Helper functions */
 

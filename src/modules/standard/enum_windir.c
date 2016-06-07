@@ -1,6 +1,7 @@
 #include <windows.h>
-#include "../../arguments.h"
-#include "../modules.h"
+
+#include "arguments.h"
+#include "modules/modules.h"
 
 int enum_windir(void)
 {
