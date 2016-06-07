@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-#include "common.h"
+#include "util.h"
 
 typedef struct log
 {

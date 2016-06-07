@@ -8,21 +8,18 @@ HOSTKIT_SRC=	src/main.c              \
 				src/arguments.c         \
 				src/util.c				\
 				src/service.c			\
-				src/persist.c			\
-				src/common.c
+				src/persist.c
 
-HOSTKIT_HDR=	include/common.h			\
-				include/arguments.h			\
+HOSTKIT_HDR=	include/arguments.h			\
 				include/util.h				\
 				include/service.h			\
-				include/persist.h			\
-				include/common.h
+				include/persist.h
 
 MODULES_SRC=	src/modules/modules.c                \
+				src/modules/common.c 				 \
 				src/modules/basic/host_details.c     \
 				src/modules/basic/disk_details.c     \
-				src/modules/standard/enum_windir.c   \
-				src/modules/common.c
+				src/modules/standard/enum_windir.c
 
 MODULES_HDR=	include/modules/modules.h	\
 				include/modules/modes.h

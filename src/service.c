@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include "common.h"
+#include "util.h"
 #include "arguments.h"
 #include "service.h"
 
