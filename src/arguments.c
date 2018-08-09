@@ -70,7 +70,7 @@ _T("   /version             Display version.\n");
 
 int parse_arguments(_TCHAR *argv[])
 {
-	int i = 0;
+	int i = 1;
 	while(argv[i] != NULL) {
 		if(_tcscmp(argv[i], _T("/help")) == 0) {
 			arguments.error = TRUE;
