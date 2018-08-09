@@ -1,6 +1,12 @@
-#include "common.h"
 
+#include "common.h"
+#include "util.h"
 #include "arguments.h"
+
+#include "service.h"
+#include "persist.h"
+
+#include "writer/writers.h"
 
 _TCHAR *get_version(void)
 {
