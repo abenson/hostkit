@@ -55,16 +55,6 @@ int close_section(log_t *log)
 	return value;
 }
 
-int open_item(log_t *log)
-{
-	return writers[log->format].open_item(log);
-}
-
-int close_item(log_t *log)
-{
-	return writers[log->format].close_item(log);
-}
-
 int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
 	return writers[log->format].add_value(log, key, value);

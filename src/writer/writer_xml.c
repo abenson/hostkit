@@ -27,20 +27,8 @@ int xml_close_section(log_t *log)
 	return 0;
 }
 
-int xml_open_item(log_t *log)
-{
-	_ftprintf(log->file, _T("      <item>\n"));
-	return 0;
-}
-
-int xml_close_item(log_t *log)
-{
-	_ftprintf(log->file, _T("      </item>\n"));
-	return 0;
-}
-
 int xml_add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
-	_ftprintf(log->file, _T("          <%s>%s</%s>\n"), key, value, key);
+	_ftprintf(log->file, _T("      <%s>%s</%s>\n"), key, value, key);
 	return 0;
 }

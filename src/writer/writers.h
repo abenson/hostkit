@@ -9,10 +9,6 @@ struct writer {
 	int (*end)(log_t*);
 	int (*open_section)(log_t *, const _TCHAR*);
 	int (*close_section)(log_t *);
-
-	int (*open_item)(log_t*);
-	int (*close_item)(log_t*);
-
 	int (*add_value)(log_t*, const _TCHAR*, const _TCHAR*);
 };
 
