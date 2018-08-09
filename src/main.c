@@ -24,7 +24,7 @@ int main(int argc, _TCHAR *argv[])
 
 	initialize_arguments();
 
-	if(parse_arguments(argv) != ARGS_OK || arguments.error) {
+	if(parse_arguments(__targv) != ARGS_OK || arguments.error) {
 		_tprintf(_T("%s"), get_help());
 		quit();
 	}
