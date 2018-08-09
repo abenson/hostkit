@@ -30,7 +30,7 @@ int main(int argc, _TCHAR *argv[])
 	}
 
 	if(arguments.debug) {
-		_ftprintf(stderr, _T("Debug log is enabled.\n"));
+		_ftprintf(arguments.log, _T("Debug log is enabled.\n"));
 	}
 
 	if(arguments.version == TRUE) {
@@ -42,7 +42,7 @@ int main(int argc, _TCHAR *argv[])
 	if(arguments.service == TRUE) {
 		result = servicize();
 		if(result != 0) {
-			_ftprintf(stderr, _T("Unable to install as service.\n"));
+			_ftprintf(arguments.log, _T("Unable to install as service.\n"));
 		}
 		quit();
 	}
@@ -50,13 +50,13 @@ int main(int argc, _TCHAR *argv[])
 	if(arguments.persistent == TRUE) {
 		result = persist();
 		if(result != 0) {
-			_ftprintf(stderr, _T("An occurred when running persistent.\n"));
+			_ftprintf(arguments.log, _T("An occurred when running persistent.\n"));
 		}
 		quit();
 	}
 
 	if(find_format(arguments.writer) < 0) {
-		_ftprintf(stderr, _T("Invalid writer: %s\n"), arguments.writer);
+		_ftprintf(arguments.log, _T("Invalid writer: %s\n"), arguments.writer);
 		quit();
 	}
 
@@ -67,7 +67,7 @@ int main(int argc, _TCHAR *argv[])
 	}
 
 	if(scanLog == NULL) {
-		_ftprintf(stderr, _T("Failed to open log.\n"));
+		_ftprintf(arguments.log, _T("Failed to open log.\n"));
 		quit();
 	}
 
@@ -82,7 +82,7 @@ int main(int argc, _TCHAR *argv[])
 	close_log(scanLog);
 
 	if(result != 0) {
-		_ftprintf(stderr, _T("An occurred while running the scans.\n"));
+		_ftprintf(arguments.log, _T("An occurred while running the scans.\n"));
 		return result;
 	}
 
