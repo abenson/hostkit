@@ -15,7 +15,7 @@ struct arguments {
 	int mode;
 	FILE *file;
 	_TCHAR *filename;
-	int writer;
+	_TCHAR *writer;
 
 	BOOL persistent;
 
