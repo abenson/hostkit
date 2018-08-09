@@ -36,7 +36,7 @@ int json_open_section(log_t *log, const _TCHAR *name)
 	if(((struct json_data*)log->moduleData)->followingSection == 1) {
 		_ftprintf(log->file, _T(",\n\t\"%s\": ["), log->section);
 	} else {
-		_ftprintf(log->file, _T("\n\t\"%s\": ["), log->section);
+		_ftprintf(log->file, _T("\t\"%s\": ["), log->section);
 	}
 	return 0;
 }
