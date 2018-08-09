@@ -60,7 +60,11 @@ int main(int argc, _TCHAR *argv[])
 		quit();
 	}
 
-	scanLog = open_log(arguments.filename, arguments.writer);
+	if(arguments.filename == NULL) {
+		scanLog = open_log(_T("-"), arguments.writer);
+	} else {
+		scanLog = open_log(arguments.filename, arguments.writer);
+	}
 
 	if(scanLog == NULL) {
 		_ftprintf(stderr, _T("Failed to open log.\n"));
