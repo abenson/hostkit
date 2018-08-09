@@ -2,6 +2,7 @@
 
 #include "arguments.h"
 
+#include "writer/writers.h"
 #include "util.h"
 
 struct arguments arguments;
@@ -13,7 +14,7 @@ void initialize_arguments(void)
 	arguments.mode = RM_NONE;
 	arguments.filename = NULL;
 	arguments.file = stdout;
-	arguments.writer = find_format("json");
+	arguments.writer = find_format(_T("json"));
 	arguments.persistent = FALSE;
 	arguments.service = FALSE;
 	arguments.verbose = FALSE;
