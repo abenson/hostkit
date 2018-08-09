@@ -35,3 +35,17 @@ versions may also have limited support for XP/2003.
 - IPs
 - Status
 
+# Building
+
+You will need the `x86-64-w64-mingw32` and/or `i686-w64-mingw32` cross-compilers.
+
+To build from source,
+
+	$ cd src
+	$ make
+
+To build 32-bit, specify WIN32=yes on the make command line.
+
+	$ make WIN32=yes
+
+By default the makefile targets 64-bit.
