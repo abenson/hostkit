@@ -55,6 +55,18 @@ int main(int argc, _TCHAR *argv[])
 		quit();
 	}
 
+	if(find_format(arguments.writer) < 0) {
+		_ftprintf(stderr, _T("Invalid writer: %s\n"), arguments.writer);
+		quit();
+	}
+
+	scanLog = open_log(arguments.filename, arguments.writer);
+
+	if(scanLog == NULL) {
+		_ftprintf(stderr, _T("Failed to open log.\n"));
+		quit();
+	}
+
 	if(arguments.mode == RM_BASIC) {
 		result = run_basic_scan();
 	} else if(arguments.mode == RM_STANDARD) {
@@ -62,6 +74,8 @@ int main(int argc, _TCHAR *argv[])
 	} else if(arguments.mode == RM_FULL) {
 		result = run_full_scan();
 	}
+
+	close_log(scanLog);
 
 	if(result != 0) {
 		_ftprintf(stderr, _T("An occurred while running the scans.\n"));

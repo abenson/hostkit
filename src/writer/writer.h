@@ -15,6 +15,8 @@ typedef struct log
 
 } log_t;
 
+extern log_t *scanLog;
+
 log_t* open_log(const _TCHAR *filename, const _TCHAR *format);
 
 void close_log(log_t *log);

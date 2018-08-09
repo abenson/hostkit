@@ -5,6 +5,8 @@
 #include "writer.h"
 #include "writers.h"
 
+log_t *scanLog;
+
 log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 {
 	log_t *log;
