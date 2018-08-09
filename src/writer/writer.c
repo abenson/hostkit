@@ -22,7 +22,7 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 		}
 		if(log->file) {
 			log->format = fmtIndex;
-			modules[log->format].begin(log);
+			writers[log->format].begin(log);
 			return log;
 		}
 		free(log);
@@ -32,7 +32,7 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 
 void close_log(log_t *log)
 {
-	modules[log->format].end(log);
+	writers[log->format].end(log);
 	if(log->file != stdout) {
 		fclose(log->file);
 	}
@@ -42,28 +42,28 @@ void close_log(log_t *log)
 int open_section(log_t *log, const _TCHAR *name)
 {
 	log->section = dupestr(name);
-	return modules[log->format].open_section(log, name);
+	return writers[log->format].open_section(log, name);
 }
 
 int close_section(log_t *log)
 {
 	int value; 
-	value = modules[log->format].close_section(log);
+	value = writers[log->format].close_section(log);
 	free(log->section);
 	return value;
 }
 
 int open_item(log_t *log)
 {
-	return modules[log->format].open_item(log);
+	return writers[log->format].open_item(log);
 }
 
 int close_item(log_t *log)
 {
-	return modules[log->format].close_item(log);
+	return writers[log->format].close_item(log);
 }
 
 int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
-	return modules[log->format].add_value(log, key, value);
+	return writers[log->format].add_value(log, key, value);
 }
