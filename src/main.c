@@ -56,11 +56,16 @@ int main(int argc, _TCHAR *argv[])
 	}
 
 	if(arguments.mode == RM_BASIC) {
-		run_basic_scan();
+		result = run_basic_scan();
 	} else if(arguments.mode == RM_STANDARD) {
-		run_standard_scan();
+		result = run_standard_scan();
 	} else if(arguments.mode == RM_FULL) {
-		run_full_scan();
+		result = run_full_scan();
+	}
+
+	if(result != 0) {
+		_ftprintf(stderr, _T("An occurred while running the scans.\n"));
+		return result;
 	}
 
 	return 0;
