@@ -1,3 +1,6 @@
 *.o
 *.exe
 *.a
+*.log
+*.json
+*.xml
