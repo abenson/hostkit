@@ -19,11 +19,11 @@ static int hostname(void)
 	DWORD nameLen = 0;
 
 	/* Get size of buffer. */
-	GetComputerNameExW(ComputerNameDnsHostname, name, &nameLen);
+	GetComputerNameEx(ComputerNameDnsHostname, name, &nameLen);
 	
 	/* Get name of host. */
 	name = malloc(sizeof(*name) * nameLen);
-	GetComputerNameExW(ComputerNameDnsHostname, name, &nameLen);
+	GetComputerNameEx(ComputerNameDnsHostname, name, &nameLen);
 
 	open_item(scanLog);
 	add_value(scanLog, _T("hostname"), name);
@@ -31,4 +31,3 @@ static int hostname(void)
 
 	free(name);
 }
-

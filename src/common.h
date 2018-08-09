@@ -1,6 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#define UNICODE
 #define _UNICODE
 
 
