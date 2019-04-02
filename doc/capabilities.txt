@@ -14,9 +14,9 @@ This will describe each module and their function.
 	- Domain*
 	- OS*
 	- Version*
-	- Machine Type
-	- Processor Type
-	- Count of Processors
+	- Machine Type*
+	- Processor Type*
+	- Count of Processors*
 	- Memory
 	- Detect VM
 - Drives
