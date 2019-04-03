@@ -32,4 +32,6 @@ set(HEADERS
 	arguments.h
 )
 
+link_libraries(-static)
+
 add_executable(HostKit.exe ${SOURCES} ${HEADERS})
