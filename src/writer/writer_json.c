@@ -31,18 +31,16 @@ int json_end(log_t *log)
 
 int json_open_section(log_t *log, const _TCHAR *name)
 {
-	log->section = dupestr(name);
 	if(((struct json_data*)log->moduleData)->followingSection == 1) {
-		_ftprintf(log->file, _T(",\n    \"%s\": {"), log->section);
+		_ftprintf(log->file, _T(",\n    \"%s\": {"), name);
 	} else {
-		_ftprintf(log->file, _T("   \"%s\": {"), log->section);
+		_ftprintf(log->file, _T("   \"%s\": {"), name);
 	}
 	return 0;
 }
 
 int json_close_section(log_t *log)
 {
-	free(log->section);
 	_ftprintf(log->file, _T("\n   }"));
 	((struct json_data*)log->moduleData)->followingSection = 1;
 	((struct json_data*)log->moduleData)->followingKeyVal = 0;
