@@ -72,8 +72,10 @@ int start_itemlist_item(log_t *log)
 
 int end_itemlist_item(log_t *log)
 {
+	int value;
+	value = writers[log->format].end_itemlist_item(log);
 	log->indentLevel--;
-	return writers[log->format].end_itemlist_item(log);
+	return value;
 }
 
 int end_itemlist(log_t *log)
@@ -87,5 +89,9 @@ int end_itemlist(log_t *log)
 
 int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
-	return writers[log->format].add_value(log, key, value);
+	int retVal;
+	log->indentLevel++;
+	retVal = writers[log->format].add_value(log, key, value);
+	log->indentLevel--;
+	return retVal;
 }
