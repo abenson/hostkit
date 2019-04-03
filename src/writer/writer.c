@@ -44,6 +44,7 @@ void close_log(log_t *log)
 int open_section(log_t *log, const _TCHAR *name)
 {
 	log->section = dupestr(name);
+	log->indentLevel++;
 	return writers[log->format].open_section(log, name);
 }
 
@@ -51,7 +52,36 @@ int close_section(log_t *log)
 {
 	int value; 
 	value = writers[log->format].close_section(log);
+	log->indentLevel--;
 	free(log->section);
+	return value;
+}
+
+int start_itemlist(log_t *log, const TCHAR *name)
+{
+	log->itemlistName = dupestr(name);
+	log->indentLevel++;
+	return writers[log->format].start_itemlist(log, name);
+}
+
+int start_itemlist_item(log_t *log)
+{
+	log->indentLevel++;
+	return writers[log->format].start_itemlist_item(log);
+}
+
+int end_itemlist_item(log_t *log)
+{
+	log->indentLevel--;
+	return writers[log->format].end_itemlist_item(log);
+}
+
+int end_itemlist(log_t *log)
+{
+	int value; 
+	value = writers[log->format].end_itemlist(log);
+	log->indentLevel--;
+	free(log->itemlistName);
 	return value;
 }
 

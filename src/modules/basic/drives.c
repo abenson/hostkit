@@ -12,12 +12,19 @@ int enum_drives(void)
 
 	handle = FindFirstVolume(guid, BUFLEN);
 
-	add_value(scanLog, _T("drive"), guid);
+	start_itemlist(scanLog, _T("drive"));
+
+	start_itemlist_item(scanLog);
+	add_value(scanLog, _T("guid"), guid);
+	end_itemlist_item(scanLog);
 
 	while(FindNextVolume(handle, guid, BUFLEN)) {
-		add_value(scanLog, _T("drive"), guid);
+		start_itemlist_item(scanLog);
+		add_value(scanLog, _T("guid"), guid);
+		end_itemlist_item(scanLog);
 	}
 
+	end_itemlist(scanLog);
 	FindVolumeClose(handle);
 
 	close_section(scanLog);

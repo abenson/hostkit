@@ -11,7 +11,10 @@ typedef struct log
 	int format;
 
 	_TCHAR *section;
+	_TCHAR *itemlistName;
 	void *moduleData;
+
+	int indentLevel;
 
 } log_t;
 
@@ -25,9 +28,13 @@ int open_section(log_t *log, const _TCHAR *name);
 
 int close_section(log_t *log);
 
-int open_item(log_t *log);
+int start_itemlist(log_t *log, const TCHAR *name);
 
-int close_item(log_t *log);
+int start_itemlist_item(log_t *log);
+
+int end_itemlist_item(log_t *log);
+
+int end_itemlist(log_t *log);
 
 int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value);
 
