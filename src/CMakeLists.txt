@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.12)
 
 project(HostKit)
 
+ENABLE_LANGUAGE(RC)
+SET(CMAKE_RC_COMPILE_OBJECT "${CMAKE_RC_COMPILER} -O COFF -i <SOURCE> -o <OBJECT>")
+
 set(SOURCES
 	writer/writers.c
 	writer/writer_json.c
@@ -14,6 +17,7 @@ set(SOURCES
 	service.c
 	persist.c
 	main.c
+	hostkit.rc
 )
 
 set(HEADERS
@@ -32,6 +36,6 @@ set(HEADERS
 	arguments.h
 )
 
-link_libraries(-static)
+link_libraries(-static -mconsole)
 
 add_executable(HostKit.exe ${SOURCES} ${HEADERS})
