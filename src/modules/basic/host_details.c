@@ -1,3 +1,5 @@
+#include <intrin.h>
+
 #include "../../writer/writer.h"
 #include "../../common.h"
 
@@ -9,6 +11,7 @@ static int domainname(void);
 static int currentversion(void);
 static int architecture(void);
 static int memory(void);
+static int checkvm(void);
 
 int host_details(void)
 {
@@ -19,6 +22,7 @@ int host_details(void)
 	currentversion();
 	architecture();
 	memory();
+	checkvm();
 
 	close_section(scanLog);
 
@@ -150,5 +154,17 @@ static int memory(void)
 	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullAvailPhys / (1024*1024));
 	add_value(scanLog, _T("memavail"), value);
 
+	return 0;
+}
+
+static int checkvm(void)
+{
+	unsigned int cpuInfo[4];
+	__cpuid((int*)cpuInfo, 1);
+	if (((cpuInfo[2] >> 31) & 1) == 1) {
+		add_value(scanLog, _T("virtualized"), _T("yes"));
+	} else {
+		add_value(scanLog, _T("virtualized"), _T("no"));
+	}
 	return 0;
 }
