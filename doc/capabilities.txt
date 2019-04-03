@@ -9,7 +9,7 @@ This will describe each module and their function.
 
 ## Basic
 
-- System
+- System*
 	- Hostname*
 	- Domain*
 	- OS*
@@ -17,8 +17,8 @@ This will describe each module and their function.
 	- Machine Type*
 	- Processor Type*
 	- Count of Processors*
-	- Memory
-	- Detect VM
+	- Memory*
+	- Detect VM*
 - Drives
 	- Physical Device
 	- Assigned Drive Letter
