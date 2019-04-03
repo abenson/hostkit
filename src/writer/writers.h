@@ -15,5 +15,6 @@ struct writer {
 extern struct writer writers[];
 
 int find_format(const _TCHAR *name);
+int print_formats(FILE *fp);
 
 #endif
