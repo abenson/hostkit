@@ -19,6 +19,7 @@ int host_details(void)
 	memory();
 
 	close_section(scanLog);
+
 	return 0;
 }
 
@@ -137,18 +138,21 @@ static int memory(void)
 	MEMORYSTATUSEX mse;
 	TCHAR value[10];
 
+	mse.dwLength = sizeof mse;
+
 	GlobalMemoryStatusEx(&mse);
 
-	_stprintf(value, 10, _T("%*I64d"), mse.ullTotalPhys / 1024 / 1024);
+	_stprintf(value, 10, _T("%llu"), mse.ullTotalPhys / (1024*1024));
 	add_value(scanLog, _T("memtotal"), value);
 
-	_stprintf(value, 10, _T("%*I64d"), mse.ullAvailPhys / 1024 / 1024);
+	_stprintf(value, 10, _T("%llu"), mse.ullAvailPhys / (1024*1024));
 	add_value(scanLog, _T("memavail"), value);
 
-	_stprintf(value, 10, _T("%*I64d"), mse.ullTotalPageFile / 1024 / 1024);
+	_stprintf(value, 10, _T("%llu"), mse.ullTotalPageFile / (1024*1024));
 	add_value(scanLog, _T("swaptotal"), value);
 
-	_stprintf(value, 10, _T("%*I64d"), mse.ullAvailPageFile / 1024 / 1024);
+	_stprintf(value, 10, _T("%llu"), mse.ullAvailPageFile / (1024*1024));
 	add_value(scanLog, _T("swapavail"), value);
 
+	return 0;
 }
