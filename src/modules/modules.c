@@ -7,6 +7,7 @@
 
 struct module basic[] = {
 	host_details,
+	enum_drives,
 	NULL
 };
 
