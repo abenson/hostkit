@@ -150,11 +150,5 @@ static int memory(void)
 	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullAvailPhys / (1024*1024));
 	add_value(scanLog, _T("memavail"), value);
 
-	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullTotalPageFile / (1024*1024));
-	add_value(scanLog, _T("swaptotal"), value);
-
-	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullAvailPageFile / (1024*1024));
-	add_value(scanLog, _T("swapavail"), value);
-
 	return 0;
 }
