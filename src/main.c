@@ -56,7 +56,11 @@ int main(int argc, _TCHAR *argv[])
 	}
 
 	if(find_format(arguments.writer) < 0) {
-		_ftprintf(arguments.log, _T("Invalid writer: %s\n"), arguments.writer);
+		if(_tcscmp(arguments.writer, _T("list")) == 0) {
+			print_formats(arguments.log);
+		} else {
+			_ftprintf(arguments.log, _T("Invalid writer: %s\n"), arguments.writer);
+		}
 		quit();
 	}
 

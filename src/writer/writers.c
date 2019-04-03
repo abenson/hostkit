@@ -24,3 +24,14 @@ int find_format(const _TCHAR *format)
 	}
 	return -1;
 }
+
+int print_formats(FILE *fp)
+{
+	int i = 0;
+	_ftprintf(fp, _T("Available Writers:\n"));
+	while(writers[i].name) {
+		_ftprintf(fp, _T("\t%s\n"), writers[i].name);
+		i++;
+	}
+	return 0;
+}
