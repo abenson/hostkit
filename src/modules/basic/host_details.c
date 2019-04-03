@@ -1,6 +1,8 @@
 #include "../../writer/writer.h"
 #include "../../common.h"
 
+#undef BUFSIZE
+#define BUFSIZE 256
 
 static int hostname(void);
 static int domainname(void);
@@ -66,29 +68,29 @@ static int currentversion(void)
 {
 	_TCHAR *REG_CURRENTVERSION = _T("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
 	HKEY key;
-	_TCHAR value[256];
+	_TCHAR value[BUFSIZE];
 	DWORD keyType = REG_SZ;
 	DWORD valueLen;
 
 	RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_CURRENTVERSION, 0L, KEY_ALL_ACCESS, &key);
 
 	/* Product name */
-	valueLen = 256;
+	valueLen = BUFSIZE;
 	RegQueryValueEx(key, _T("ProductName"), NULL, &keyType, (LPBYTE)&value, &valueLen);
 	add_value(scanLog, _T("product"), value);
 
 	/* Current version */
-	valueLen = 256;
+	valueLen = BUFSIZE;
 	RegQueryValueEx(key, _T("CurrentVersion"), NULL, &keyType, (LPBYTE)&value, &valueLen);
 	add_value(scanLog, _T("version"), value);
 
 	/* Service pack */
-	valueLen = 256;
+	valueLen = BUFSIZE;
 	RegQueryValueEx(key, _T("CSDVersion"), NULL, &keyType, (LPBYTE)&value, &valueLen);
 	add_value(scanLog, _T("splevel"), value);
 
 	/* Build number */
-	valueLen = 256;
+	valueLen = BUFSIZE;
 	RegQueryValueEx(key, _T("CurrentBuildNumber"), NULL, &keyType, (LPBYTE)&value, &valueLen);
 	add_value(scanLog, _T("build"), value);
 
@@ -99,7 +101,7 @@ static int currentversion(void)
 static int architecture(void)
 {
 	SYSTEM_INFO sysinfo;
-	TCHAR value[10];
+	TCHAR value[BUFSIZE];
 	GetSystemInfo(&sysinfo);
 
 	switch(sysinfo.wProcessorArchitecture) {
@@ -127,7 +129,7 @@ static int architecture(void)
 			break;
 	}
 
-	_stprintf(value, 10, _T("%d"), sysinfo.dwNumberOfProcessors);
+	_stprintf(value, BUFSIZE, _T("%d"), sysinfo.dwNumberOfProcessors);
 	add_value(scanLog, _T("processors"), value);
 
 	return 0;
@@ -136,22 +138,22 @@ static int architecture(void)
 static int memory(void)
 {
 	MEMORYSTATUSEX mse;
-	TCHAR value[10];
+	TCHAR value[BUFSIZE];
 
 	mse.dwLength = sizeof mse;
 
 	GlobalMemoryStatusEx(&mse);
 
-	_stprintf(value, 10, _T("%llu"), mse.ullTotalPhys / (1024*1024));
+	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullTotalPhys / (1024*1024));
 	add_value(scanLog, _T("memtotal"), value);
 
-	_stprintf(value, 10, _T("%llu"), mse.ullAvailPhys / (1024*1024));
+	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullAvailPhys / (1024*1024));
 	add_value(scanLog, _T("memavail"), value);
 
-	_stprintf(value, 10, _T("%llu"), mse.ullTotalPageFile / (1024*1024));
+	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullTotalPageFile / (1024*1024));
 	add_value(scanLog, _T("swaptotal"), value);
 
-	_stprintf(value, 10, _T("%llu"), mse.ullAvailPageFile / (1024*1024));
+	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullAvailPageFile / (1024*1024));
 	add_value(scanLog, _T("swapavail"), value);
 
 	return 0;
