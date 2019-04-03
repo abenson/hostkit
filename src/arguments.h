@@ -34,6 +34,6 @@ void initialize_arguments(void);
 
 _TCHAR* get_help();
 
-int parse_arguments(_TCHAR *argv[]);
+int parse_arguments(char *argv[]);
 
 #endif

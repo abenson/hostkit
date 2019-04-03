@@ -68,61 +68,61 @@ _TCHAR* get_help(void)
 	_T("   /version             Display version.\n");
 }
 
-int parse_arguments(_TCHAR *argv[])
+int parse_arguments(char *argv[])
 {
 	int i = 1;
 	while(argv[i] != NULL) {
-		if(_tcscmp(argv[i], _T("/help")) == 0) {
+		if(strcmp(argv[i], "/help") == 0) {
 			arguments.error = TRUE;
-		} else if(_tcscmp(argv[i], _T("/version")) == 0) {
+		} else if(strcmp(argv[i], "/version") == 0) {
 			arguments.version = TRUE;
-		} else if(_tcscmp(argv[i], _T("/basic")) == 0) {
+		} else if(strcmp(argv[i], "/basic") == 0) {
 			arguments.mode = RM_BASIC;
-		} else if(_tcscmp(argv[i], _T("/standard")) == 0) {
+		} else if(strcmp(argv[i], "/standard") == 0) {
 			arguments.mode = RM_STANDARD;
-		} else if(_tcscmp(argv[i], _T("/full")) == 0) {
+		} else if(strcmp(argv[i], "/full") == 0) {
 			arguments.mode = RM_FULL;
-		} else if(_tcscmp(argv[i], _T("/filename")) == 0) {
-			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
+		} else if(strcmp(argv[i], "/filename") == 0) {
+			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.filename = dupestr(argv[i+1]);
+				arguments.filename = dupe2tchar(argv[i+1]);
 			}
 			i++;
-		} else if(_tcscmp(argv[i], _T("/writer")) == 0) {
-			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
+		} else if(strcmp(argv[i], "/writer") == 0) {
+			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.writer = dupestr(argv[i+1]);
+				arguments.writer = dupe2tchar(argv[i+1]);
 			}
 			i++;
-		} else if(_tcscmp(argv[i], _T("/persist")) == 0) {
+		} else if(strcmp(argv[i], "/persist") == 0) {
 			arguments.persistent = TRUE;
-		} else if(_tcscmp(argv[i], _T("/server")) == 0) {
-			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
+		} else if(strcmp(argv[i], "/server") == 0) {
+			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.server = dupestr(argv[i+1]);
+				arguments.server = dupe2tchar(argv[i+1]);
 			}
 			i++;
-		} else if(_tcscmp(argv[i], _T("/pipe")) == 0) {
-			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
+		} else if(strcmp(argv[i], "/pipe") == 0) {
+			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.pipe = dupestr(argv[i+1]);
+				arguments.pipe = dupe2tchar(argv[i+1]);
 			}
 			i++;
-		} else if(_tcscmp(argv[i], _T("/service")) == 0) {
+		} else if(strcmp(argv[i], "/service") == 0) {
 			arguments.service = TRUE;
-		} else if(_tcscmp(argv[i], _T("/verbose")) == 0) {
+		} else if(strcmp(argv[i], "/verbose") == 0) {
 			arguments.verbose = TRUE;
-		} else if(_tcscmp(argv[i], _T("/debug")) == 0) {
+		} else if(strcmp(argv[i], "/debug") == 0) {
 			arguments.debug = TRUE;
-		} else if(_tcscmp(argv[i], _T("/log")) == 0) {
-			if(argv[i+1] == NULL || _tcslen(argv[i+1]) == 0) {
+		} else if(strcmp(argv[i], "/log") == 0) {
+			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.log = _tfopen(argv[i+1], _T("w+"));
+				arguments.log = fopen(argv[i+1], "w+");
 				if(arguments.log == NULL) {
 					arguments.error = 2;
 				}

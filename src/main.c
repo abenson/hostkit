@@ -18,13 +18,15 @@ _TCHAR *get_copyright(void)
 	return _T("");
 }
 
-int main(int argc, _TCHAR *argv[])
+int main(int argc, char *argv[])
 {
 	int result;
 
+	int i = 1;
+
 	initialize_arguments();
 
-	if(parse_arguments(__targv) != ARGS_OK || arguments.error) {
+	if(parse_arguments(argv) != ARGS_OK || arguments.error) {
 		_tprintf(_T("%s"), get_help());
 		quit();
 	}
