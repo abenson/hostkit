@@ -12,8 +12,13 @@ else
 endif
 
 all:
-	mkdir -p $(BUILDDIR)
-	cd $(BUILDDIR) && CC=$(CC) CXX=$(CXX) RC=$(RC) cmake ../src && make
+ifdef WIN32
+	@echo "Building for i686"
+else
+	@echo "Building for x86_64"
+endif
+	@mkdir -p $(BUILDDIR)
+	@cd $(BUILDDIR) && CC=$(CC) CXX=$(CXX) RC=$(RC) cmake ../src && make
 
 clean:
 	rm -rf $(BUILDDIR)
