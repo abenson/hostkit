@@ -1,5 +1,5 @@
 
-ifeq ($(WIN32),yes)
+ifdef WIN32
 	CC=i686-w64-mingw32-gcc
 	CXX=i686-w64-mingw32-g++
 	RC=i686-w64-mingw32-windres
