@@ -6,6 +6,7 @@
 
 static int hostname(void);
 static int domainname(void);
+static int workgroup(BOOL);
 static int currentversion(void);
 static int architecture(void);
 static int memory(void);
@@ -16,7 +17,9 @@ int host_details(void)
 	open_section(scanLog, _T("host"));
 
 	hostname();
-	domainname();
+	if(domainname() != 0) {
+		workgroup(FALSE);
+	}
 	currentversion();
 	architecture();
 	memory();
@@ -51,18 +54,37 @@ static int domainname(void)
 {
 	_TCHAR *name = NULL;
 	DWORD nameLen = 0;
+	int ret = 0;
 
 	/* Get size of buffer. */
 	GetComputerNameEx(ComputerNamePhysicalDnsDomain, name, &nameLen);
 	
 	/* Get name of host. */
 	name = malloc(sizeof(*name) * nameLen);
-	GetComputerNameEx(ComputerNamePhysicalDnsDomain, name, &nameLen);
-
-	add_value(scanLog, _T("domainname"), name);
+	if(GetComputerNameEx(ComputerNamePhysicalDnsDomain, name, &nameLen) == 0) {
+		add_value(scanLog, _T("addomain"), name);
+		workgroup(TRUE);
+	} else {
+		ret = -1;
+	}
 
 	free(name);
 
+	return ret;
+}
+
+static int workgroup(BOOL onDomain)
+{
+	WKSTA_INFO_100 *wks;
+
+	NetWkstaGetInfo(NULL, 100, (BYTE**)&wks);
+
+	if(onDomain) {
+		add_value(scanLog, _T("domain"), wks->wki100_langroup);
+	} else {
+		add_value(scanLog, _T("workgroup"), wks->wki100_langroup);
+	}
+	NetApiBufferFree(wks);
 	return 0;
 }
 

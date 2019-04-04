@@ -37,6 +37,6 @@ set(HEADERS
 	arguments.h
 )
 
-link_libraries(-static -mconsole)
+link_libraries(-static -mconsole -lnetapi32)
 
 add_executable(HostKit.exe ${SOURCES} ${HEADERS})
