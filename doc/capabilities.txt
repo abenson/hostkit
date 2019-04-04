@@ -23,6 +23,11 @@ This will describe each module and their function.
 	- [x] Physical Device
 	- [x] Assigned Drive Letter
 	- [x] Type (Fixed, Removable, CD-Rom)
+- [ ] Network Devices
+	- [ ] Name
+	- [ ] HW Address
+	- [ ] IPs¹
+	- [ ] Subnet Mask
 
 ## Standard
 
@@ -50,11 +55,6 @@ This will describe each module and their function.
 	- [ ] Gateways¹
 	- [ ] Routes¹
 	- [ ] DNS Servers¹
-- [ ] Network Devices
-	- [ ] Name
-	- [ ] HW Address
-	- [ ] IPs¹
-	- [ ] Subnet Mask
 - [ ] DNS Cache
 	- [ ] Name
 	- [ ] Type
