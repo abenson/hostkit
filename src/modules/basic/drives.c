@@ -8,11 +8,10 @@ int enum_drives(void)
 {
 	TCHAR guid[BUFLEN];
 	HANDLE handle;
-	open_section(scanLog, _T("drives"));
 
 	handle = FindFirstVolume(guid, BUFLEN);
 
-	start_itemlist(scanLog, _T("drive"));
+	start_itemlist(scanLog, _T("drives"));
 
 	start_itemlist_item(scanLog);
 	add_value(scanLog, _T("guid"), guid);
@@ -27,5 +26,4 @@ int enum_drives(void)
 	end_itemlist(scanLog);
 	FindVolumeClose(handle);
 
-	close_section(scanLog);
 }
