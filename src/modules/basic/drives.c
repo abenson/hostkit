@@ -15,7 +15,7 @@ int enum_drives(void)
 	handle = FindFirstVolume(guid, BUFLEN);
 
 	do {
-		start_itemlist_item(scanLog);
+		start_itemlist_item(scanLog, _T("drive"));
 
 		add_value(scanLog, _T("guid"), guid);
 

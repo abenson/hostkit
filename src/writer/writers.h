@@ -10,7 +10,7 @@ struct writer {
 	int (*open_section)(log_t *, const _TCHAR*);
 	int (*close_section)(log_t *);
 	int (*start_itemlist)(log_t *, const TCHAR *);
-	int (*start_itemlist_item)(log_t *);
+	int (*start_itemlist_item)(log_t *, const TCHAR*);
 	int (*end_itemlist_item)(log_t *);
 	int (*end_itemlist)(log_t*);
 	int (*add_value)(log_t*, const _TCHAR*, const _TCHAR*);

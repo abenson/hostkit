@@ -10,7 +10,7 @@ int json_open_section(log_t *, const _TCHAR*);
 int json_close_section(log_t *);
 
 int json_start_itemlist(log_t *, const TCHAR*);
-int json_start_itemlist_item(log_t*);
+int json_start_itemlist_item(log_t*, const TCHAR *);
 int json_end_itemlist_item(log_t*);
 int json_end_itemlist(log_t *);
 

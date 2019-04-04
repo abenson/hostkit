@@ -65,10 +65,11 @@ int start_itemlist(log_t *log, const TCHAR *name)
 	return writers[log->format].start_itemlist(log, name);
 }
 
-int start_itemlist_item(log_t *log)
+int start_itemlist_item(log_t *log, const TCHAR *name)
 {
 	log->indentLevel++;
-	return writers[log->format].start_itemlist_item(log);
+	log->itemlistItemName = dupestr(name);
+	return writers[log->format].start_itemlist_item(log, name);
 }
 
 int end_itemlist_item(log_t *log)
@@ -76,6 +77,7 @@ int end_itemlist_item(log_t *log)
 	int value;
 	value = writers[log->format].end_itemlist_item(log);
 	log->indentLevel--;
+	free(log->itemlistItemName);
 	return value;
 }
 

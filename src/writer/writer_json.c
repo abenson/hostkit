@@ -58,7 +58,7 @@ int json_start_itemlist(log_t *log, const TCHAR *name)
 	return 0;
 }
 
-int json_start_itemlist_item(log_t *log)
+int json_start_itemlist_item(log_t *log, const TCHAR *name)
 {
 	if(((struct json_data*)log->moduleData)->inItemList == 1) {
 		_ftprintf(log->file, _T(",\n%*s{"),log->indentLevel * 3, _T(" "));
