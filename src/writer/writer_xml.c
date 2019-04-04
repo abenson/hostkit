@@ -54,6 +54,36 @@ int xml_end_itemlist(log_t *log)
 
 int xml_add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 {
-	_ftprintf(log->file, _T("%*s<%s>%s</%s>\n"), (log->indentLevel-1) * 3, _T(" "), key, value, key);
+	int i;
+	_ftprintf(log->file, _T("%*s<%s>"), (log->indentLevel-1) * 3, _T(" "), key);
+
+	for(i=0; value[i]; i++) {
+		if(value[i] == 0x09 || value[i] == 0x0A	|| value[i] == 0x0D
+			|| 0x20 <= value[i] && value[i] <= 0xD7FF
+			|| 0xE000 <= value[i] && value[i] <= 0xFFFD
+			|| 0x10000 <= value[i] && value[i] <= 0x10FFFF) {
+			switch(value[i]) {
+				case '<':
+					_ftprintf(log->file, _T("&lt;"));
+					break;
+				case '>':
+					_ftprintf(log->file, _T("&gt;"));
+					break;
+				case '&':
+					_ftprintf(log->file, _T("&amp;"));
+					break;
+				case '\'':
+					_ftprintf(log->file, _T("&apos;"));
+					break;
+				case '"':
+					_ftprintf(log->file, _T("&quot;"));
+					break;
+				default:
+					_ftprintf(log->file, _T("%c"), value[i]);
+			}
+		}
+	}
+
+	_ftprintf(log->file, _T("</%s>\n"), key);
 	return 0;
 }
