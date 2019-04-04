@@ -15,7 +15,7 @@ _TCHAR *get_version(void)
 
 _TCHAR *get_copyright(void)
 {
-	return _T("");
+	return _T("(C) 2019 HostKit Team\n");
 }
 
 int main(int argc, char *argv[])
