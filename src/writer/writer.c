@@ -17,6 +17,7 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 
 	log = malloc(sizeof(*log));
 	if(log) {
+		log->indentLevel = 0;
 		if(_tcscmp(filename, _T("-")) == 0) {
 			log->file = stdout;
 		} else {
