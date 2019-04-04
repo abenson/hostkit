@@ -7,6 +7,8 @@
 
 #include <windows.h>
 #include <tchar.h>
+#include <lm.h>
+#include <intrin.h>
 
 #include <stdio.h>
 #include <stdlib.h>

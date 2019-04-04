@@ -1,5 +1,3 @@
-#include <intrin.h>
-
 #include "../../writer/writer.h"
 #include "../../common.h"
 
