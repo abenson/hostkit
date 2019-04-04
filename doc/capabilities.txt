@@ -9,67 +9,67 @@ This will describe each module and their function.
 
 ## Basic
 
-- System*
-	- Hostname*
-	- Domain*
-	- OS*
-	- Version*
-	- Machine Type*
-	- Processor Type*
-	- Count of Processors*
-	- Memory*
-	- Detect VM*
-- Drives*
-	- Physical Device*
-	- Assigned Drive Letter*
-	- Type (Fixed, Removable, CD-Rom)*
+- [x] System
+	- [x] Hostname
+	- [x] Domain
+	- [x] OS
+	- [x] Version
+	- [x] Machine Type
+	- [x] Processor Type
+	- [x] Count of Processors
+	- [x] Memory
+	- [x] Detect VM
+- [x] Drives
+	- [x] Physical Device
+	- [x] Assigned Drive Letter
+	- [x] Type (Fixed, Removable, CD-Rom)
 
 ## Standard
 
-- Filesystem (%PATH%)
-	- Name
-	- Folder
-	- Size
-	- SHA-256
-	- Owner
-	- Verbose: ACLs¹
-- Services
-	- Name
-	- Display Name
-	- Description
-	- Status
-	- Type
-	- StartType
-- Processes
-	- PID
-	- Name
-	- Path
-	- Owner
-	- Loaded Modules¹
-- Network Info
-	- Gateways¹
-	- Routes¹
-	- DNS Servers¹
-- Network Devices
-	- Name
-	- HW Address
-	- IPs¹
-	- Subnet Mask
-- DNS Cache
-	- Name
-	- Type
-- Autoruns
-	- Location
-	- Name
-	- Value
-- USBs
-	- Serial
-	- Vendor
-	- Date 
+- [ ] Filesystem (%PATH%)
+	- [ ] Name
+	- [ ] Folder
+	- [ ] Size
+	- [ ] SHA-256
+	- [ ] Owner
+	- [ ] Verbose: ACLs¹
+- [ ] Services
+	- [ ] Name
+	- [ ] Display Name
+	- [ ] Description
+	- [ ] Status
+	- [ ] Type
+	- [ ] StartType
+- [ ] Processes
+	- [ ] PID
+	- [ ] Name
+	- [ ] Path
+	- [ ] Owner
+	- [ ] Loaded Modules¹
+- [ ] Network Info
+	- [ ] Gateways¹
+	- [ ] Routes¹
+	- [ ] DNS Servers¹
+- [ ] Network Devices
+	- [ ] Name
+	- [ ] HW Address
+	- [ ] IPs¹
+	- [ ] Subnet Mask
+- [ ] DNS Cache
+	- [ ] Name
+	- [ ] Type
+- [ ] Autoruns
+	- [ ] Location
+	- [ ] Name
+	- [ ] Value
+- [ ] USBs
+	- [ ] Serial
+	- [ ] Vendor
+	- [ ] Date 
 
 ## Full
 
-- Filesystem (everything)
+- [ ] Filesystem (everything)
 
 
 # Notes
