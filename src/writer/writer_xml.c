@@ -29,6 +29,7 @@ int xml_close_section(log_t *log)
 
 int xml_start_itemlist(log_t *log, const TCHAR *name)
 {
+	_ftprintf(log->file, _T("%*s<%s>\n"), (log->indentLevel-1) * 3, _T(" "), log->itemlistName);
 	return 0;
 }
 
@@ -47,6 +48,7 @@ int xml_end_itemlist_item(log_t *log)
 
 int xml_end_itemlist(log_t *log)
 {
+	_ftprintf(log->file, _T("%*s</%s>\n"), (log->indentLevel-1) * 3, _T(" "), log->itemlistName);
 	return 0;
 }
 
