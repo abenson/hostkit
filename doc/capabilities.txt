@@ -19,11 +19,10 @@ This will describe each module and their function.
 	- Count of Processors*
 	- Memory*
 	- Detect VM*
-- Drives
-	- Physical Device
-	- Assigned Drive Letter
-	- Model
-	- Serial
+- Drives*
+	- Physical Device*
+	- Assigned Drive Letter*
+	- Type (Fixed, Removable, CD-Rom)*
 
 ## Standard
 
