@@ -11,7 +11,7 @@ set(SOURCES
 	writer/writer.c
 	writer/writer_xml.c
 	modules/modules.c
-	modules/basic/host_details.c
+	modules/basic/host.c
 	modules/basic/drives.c
 	arguments.c
 	util.c
