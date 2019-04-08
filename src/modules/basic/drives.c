@@ -21,7 +21,7 @@ int enum_drives(void)
 
 		if(GetVolumePathNamesForVolumeName(guid, name, BUFLEN, &c) != 0) {
 			if(name[0]) {
-				add_value(scanLog, _T("volume"), name);
+				add_value(scanLog, _T("letter"), name);
 				type = GetDriveType(name);
 				switch(type) {
 					case DRIVE_NO_ROOT_DIR:
