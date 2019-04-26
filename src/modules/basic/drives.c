@@ -4,6 +4,8 @@
 #undef BUFLEN
 #define BUFLEN 32768
 
+static int volume_info(TCHAR *disk);
+
 int enum_drives(void)
 {
 	TCHAR guid[BUFLEN], name[BUFLEN];
@@ -47,12 +49,42 @@ int enum_drives(void)
 						add_value(scanLog, _T("type"), _T("unknown"));
 						break;
 				}
+				volume_info(_T("letter"));
 			}
 		}
 		end_itemlist_item(scanLog);
 	} while (FindNextVolume(handle, guid, BUFLEN));
 	
 	end_itemlist(scanLog);
+
+	return 0;
+}
+
+static int volume_info(TCHAR *disk)
+{
+	TCHAR name[BUFLEN] = {0}, fs[BUFLEN] = {0};
+	TCHAR serialStr[BUFLEN] = {0};
+	DWORD serial, flags;
+	DWORD ret;
+
+	ret = GetVolumeInformation(disk, name, BUFLEN, &serial, NULL, &flags, fs, BUFLEN);
+
+	if(ret == 0) {
+		add_value(scanLog, _T(""), _T("")): 
+		return 1;
+	}
+
+	add_value(scanLog, _T("name"), name);
+	add_value(scanLog, _T("fs"), fs);
+
+	_sntprintf(serialStr, BUFLEN, _T("%04X-%04X"), HIBYTE(serial), LOBYTE(serial));
+	add_value(scanLog, _T("serial"), serialStr);
+
+	if(flags & FILE_READ_ONLY_VOLUME) {
+		add_value(scanLog, _T("readonly"), _T("true"));
+	} else {
+		add_value(scanLog, _T("readonly"), _T("false"));
+	}
 
 	return 0;
 }
