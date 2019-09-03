@@ -70,7 +70,7 @@ static int volume_info(TCHAR *disk)
 	ret = GetVolumeInformation(disk, name, BUFLEN, &serial, NULL, &flags, fs, BUFLEN);
 
 	if(ret == 0) {
-		add_value(scanLog, _T(""), _T("")): 
+		add_value(scanLog, _T(""), _T(""));
 		return 1;
 	}
 
