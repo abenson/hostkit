@@ -1,24 +1,15 @@
 
-ifdef WIN32
-	CC=i686-w64-mingw32-gcc
-	CXX=i686-w64-mingw32-g++
-	RC=i686-w64-mingw32-windres
-	BUILDDIR=build32
-else
-	CC=x86_64-w64-mingw32-gcc
-	CXX=x86_64-w64-mingw32-g++
-	RC=x86_64-w64-mingw32-windres
-	BUILDDIR=build64
-endif
+all: win32 win64
 
-all:
-ifdef WIN32
+win32:
 	@echo "Building for i686"
-else
+	@meson setup build32 --cross-file cross/linux-mingw-w64-32bit.txt
+	@meson compile -C build32
+
+win64:
 	@echo "Building for x86_64"
-endif
-	@mkdir -p $(BUILDDIR)
-	@cd $(BUILDDIR) && CC=$(CC) CXX=$(CXX) RC=$(RC) cmake ../src && make
+	@meson setup build64 --cross-file cross/linux-mingw-w64-64bit.txt
+	@meson compile -C build64
 
 clean:
-	rm -rf $(BUILDDIR)
+	rm -rf build32 build64
