@@ -34,8 +34,8 @@ int wmain(int argc, wchar_t *argv[])
 	}
 
 	if(arguments.version == TRUE) {
-		wprintf(L"%S", get_version());
-		wprintf(L"%s", get_copyright());
+		wprintf(L"%ls", get_version());
+		wprintf(L"%ls", get_copyright());
 		quit();
 	}
 
