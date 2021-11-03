@@ -7,7 +7,7 @@
 
 log_t *scanLog;
 
-log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
+log_t* open_log(const wchar_t *filename, const wchar_t *format)
 {
 	log_t *log;
 	int fmtIndex;
@@ -18,10 +18,10 @@ log_t* open_log(const _TCHAR *filename, const _TCHAR *format)
 	log = malloc(sizeof(*log));
 	if(log) {
 		log->indentLevel = 0;
-		if(_tcscmp(filename, _T("-")) == 0) {
+		if(wcscmp(filename, L"-") == 0) {
 			log->file = stdout;
 		} else {
-			log->file = _tfopen(filename, _T("w+"));
+			log->file = _wfopen(filename, L"w+");
 		}
 		if(log->file) {
 			log->format = fmtIndex;
@@ -42,7 +42,7 @@ void close_log(log_t *log)
 	free(log);
 }
 
-int open_section(log_t *log, const _TCHAR *name)
+int open_section(log_t *log, const wchar_t *name)
 {
 	log->section = dupestr(name);
 	log->indentLevel++;
@@ -58,14 +58,14 @@ int close_section(log_t *log)
 	return value;
 }
 
-int start_itemlist(log_t *log, const TCHAR *name)
+int start_itemlist(log_t *log, const wchar_t *name)
 {
 	log->itemlistName = dupestr(name);
 	log->indentLevel++;
 	return writers[log->format].start_itemlist(log, name);
 }
 
-int start_itemlist_item(log_t *log, const TCHAR *name)
+int start_itemlist_item(log_t *log, const wchar_t *name)
 {
 	log->indentLevel++;
 	log->itemlistItemName = dupestr(name);
@@ -90,7 +90,7 @@ int end_itemlist(log_t *log)
 	return value;
 }
 
-int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
+int add_value(log_t *log, const wchar_t *key, const wchar_t *value)
 {
 	int retVal;
 	log->indentLevel++;

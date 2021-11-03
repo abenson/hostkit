@@ -14,13 +14,13 @@ void initialize_arguments(void)
 	arguments.mode = RM_NONE;
 	arguments.filename = NULL;
 	arguments.file = stdout;
-	arguments.writer = _T("json");
+	arguments.writer = L"json";
 	arguments.persistent = FALSE;
 	arguments.service = FALSE;
 	arguments.verbose = FALSE;
 	arguments.debug = FALSE;
 	arguments.log = stderr;
-	arguments.pipe = _T("hkadmin");
+	arguments.pipe = L"hkadmin";
 }
 
 int validate_arguments(void)
@@ -42,87 +42,87 @@ int validate_arguments(void)
 	return ARGS_OK;
 }
 
-_TCHAR* get_help(void)
+wchar_t* get_help(void)
 {
 	return
-	_T("Standalone options:\n")
-	_T("   /basic                Basic run mode.\n")
-	_T("   /standard             Standard run mode. Default.\n")
-	_T("   /full                 Full run mode.\n")
-	_T("   /filename <name>      Filename to write results to. Default is hostname.\n")
-	_T("   /writer <name>        Writer to use. Default is 'json'. Choose 'list' for available writers\n")
-	_T("\n")
-	_T("Persistent options\n")
-	_T("   /persist              Wait for instructions. Requires one or both of /server or /pipe.\n")
-	_T("   /server <server>      Call back to a server for instructions.\n")
-	_T("   /pipe <name>          Listen on a named pipe for instructions.\n")
-	_T("   /service              Install self and run as a service.\n")
-	_T("\n")
-	_T("Debug options:\n")
-	_T("   /verbose              Increases verbosity for logging.\n")
-	_T("   /debug                Enables debug output.\n")
-	_T("   /log <name>           Name of log. Defaults to stderr.\n")
-	_T("\n")
-	_T("Other options:\n")
-	_T("   /help                This message.\n")
-	_T("   /version             Display version.\n");
+	L"Standalone options:\n"
+	L"   /basic                Basic run mode.\n"
+	L"   /standard             Standard run mode. Default.\n"
+	L"   /full                 Full run mode.\n"
+	L"   /filename <name>      Filename to write results to. Default is hostname.\n"
+	L"   /writer <name>        Writer to use. Default is 'json'. Choose 'list' for available writers\n"
+	L"\n"
+	L"Persistent options\n"
+	L"   /persist              Wait for instructions. Requires one or both of /server or /pipe.\n"
+	L"   /server <server>      Call back to a server for instructions.\n"
+	L"   /pipe <name>          Listen on a named pipe for instructions.\n"
+	L"   /service              Install self and run as a service.\n"
+	L"\n"
+	L"Debug options:\n"
+	L"   /verbose              Increases verbosity for logging.\n"
+	L"   /debug                Enables debug output.\n"
+	L"   /log <name>           Name of log. Defaults to stderr.\n"
+	L"\n"
+	L"Other options:\n"
+	L"   /help                This message.\n"
+	L"   /version             Display version.\n";
 }
 
-int parse_arguments(char *argv[])
+int parse_arguments(wchar_t *argv[])
 {
 	int i = 1;
 	while(argv[i] != NULL) {
-		if(strcmp(argv[i], "/help") == 0) {
+		if(wcscmp(argv[i], L"/help") == 0) {
 			arguments.error = TRUE;
-		} else if(strcmp(argv[i], "/version") == 0) {
+		} else if(wcscmp(argv[i], L"/version") == 0) {
 			arguments.version = TRUE;
-		} else if(strcmp(argv[i], "/basic") == 0) {
+		} else if(wcscmp(argv[i], L"/basic") == 0) {
 			arguments.mode = RM_BASIC;
-		} else if(strcmp(argv[i], "/standard") == 0) {
+		} else if(wcscmp(argv[i], L"/standard") == 0) {
 			arguments.mode = RM_STANDARD;
-		} else if(strcmp(argv[i], "/full") == 0) {
+		} else if(wcscmp(argv[i], L"/full") == 0) {
 			arguments.mode = RM_FULL;
-		} else if(strcmp(argv[i], "/filename") == 0) {
-			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
+		} else if(wcscmp(argv[i], L"/filename") == 0) {
+			if(argv[i+1] == NULL || wcslen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.filename = dupe2tchar(argv[i+1]);
+				arguments.filename = dupestr(argv[i+1]);
 			}
 			i++;
-		} else if(strcmp(argv[i], "/writer") == 0) {
-			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
+		} else if(wcscmp(argv[i], L"/writer") == 0) {
+			if(argv[i+1] == NULL || wcslen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.writer = dupe2tchar(argv[i+1]);
+				arguments.writer = dupestr(argv[i+1]);
 			}
 			i++;
-		} else if(strcmp(argv[i], "/persist") == 0) {
+		} else if(wcscmp(argv[i], L"/persist") == 0) {
 			arguments.persistent = TRUE;
-		} else if(strcmp(argv[i], "/server") == 0) {
-			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
+		} else if(wcscmp(argv[i], L"/server") == 0) {
+			if(argv[i+1] == NULL || wcslen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.server = dupe2tchar(argv[i+1]);
+				arguments.server = dupestr(argv[i+1]);
 			}
 			i++;
-		} else if(strcmp(argv[i], "/pipe") == 0) {
-			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
+		} else if(wcscmp(argv[i], L"/pipe") == 0) {
+			if(argv[i+1] == NULL || wcslen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.pipe = dupe2tchar(argv[i+1]);
+				arguments.pipe = dupestr(argv[i+1]);
 			}
 			i++;
-		} else if(strcmp(argv[i], "/service") == 0) {
+		} else if(wcscmp(argv[i], L"/service") == 0) {
 			arguments.service = TRUE;
-		} else if(strcmp(argv[i], "/verbose") == 0) {
+		} else if(wcscmp(argv[i], L"/verbose") == 0) {
 			arguments.verbose = TRUE;
-		} else if(strcmp(argv[i], "/debug") == 0) {
+		} else if(wcscmp(argv[i], L"/debug") == 0) {
 			arguments.debug = TRUE;
-		} else if(strcmp(argv[i], "/log") == 0) {
-			if(argv[i+1] == NULL || strlen(argv[i+1]) == 0) {
+		} else if(wcscmp(argv[i], L"/log") == 0) {
+			if(argv[i+1] == NULL || wcslen(argv[i+1]) == 0) {
 				arguments.error = 1;
 			} else {
-				arguments.log = fopen(argv[i+1], "w+");
+				arguments.log = _wfopen(argv[i+1], L"w+");
 				if(arguments.log == NULL) {
 					arguments.error = 2;
 				}

@@ -14,7 +14,7 @@ static int checkvm(void);
 
 int host_details(void)
 {
-	open_section(scanLog, _T("host"));
+	open_section(scanLog, L"host");
 
 	hostname();
 	if(domainname() != 0) {
@@ -32,7 +32,7 @@ int host_details(void)
 
 static int hostname(void)
 {
-	_TCHAR *name = NULL;
+	wchar_t *name = NULL;
 	DWORD nameLen = 0;
 	LONG status;
 
@@ -43,7 +43,7 @@ static int hostname(void)
 	name = malloc(sizeof(*name) * nameLen);
 	GetComputerNameEx(ComputerNamePhysicalDnsHostname, name, &nameLen);
 
-	add_value(scanLog, _T("hostname"), name);
+	add_value(scanLog, L"hostname", name);
 
 	free(name);
 
@@ -52,7 +52,7 @@ static int hostname(void)
 
 static int domainname(void)
 {
-	_TCHAR *name = NULL;
+	wchar_t *name = NULL;
 	DWORD nameLen = 0;
 	int ret = 0;
 
@@ -62,7 +62,7 @@ static int domainname(void)
 	/* Get name of host. */
 	name = malloc(sizeof(*name) * nameLen);
 	if(GetComputerNameEx(ComputerNamePhysicalDnsDomain, name, &nameLen) == 0) {
-		add_value(scanLog, _T("addomain"), name);
+		add_value(scanLog, L"addomain", name);
 		workgroup(TRUE);
 	} else {
 		ret = -1;
@@ -80,9 +80,9 @@ static int workgroup(BOOL onDomain)
 	NetWkstaGetInfo(NULL, 100, (BYTE**)&wks);
 
 	if(onDomain) {
-		add_value(scanLog, _T("domain"), wks->wki100_langroup);
+		add_value(scanLog, L"domain", wks->wki100_langroup);
 	} else {
-		add_value(scanLog, _T("workgroup"), wks->wki100_langroup);
+		add_value(scanLog, L"workgroup", wks->wki100_langroup);
 	}
 	NetApiBufferFree(wks);
 	return 0;
@@ -90,9 +90,9 @@ static int workgroup(BOOL onDomain)
 
 static int currentversion(void)
 {
-	_TCHAR *REG_CURRENTVERSION = _T("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
+	wchar_t *REG_CURRENTVERSION = L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
 	HKEY key;
-	_TCHAR value[BUFSIZE];
+	wchar_t value[BUFSIZE];
 	DWORD keyType = REG_SZ;
 	DWORD valueLen;
 
@@ -100,23 +100,23 @@ static int currentversion(void)
 
 	/* Product name */
 	valueLen = BUFSIZE;
-	RegQueryValueEx(key, _T("ProductName"), NULL, &keyType, (LPBYTE)&value, &valueLen);
-	add_value(scanLog, _T("product"), value);
+	RegQueryValueEx(key, L"ProductName", NULL, &keyType, (LPBYTE)&value, &valueLen);
+	add_value(scanLog, L"product", value);
 
 	/* Current version */
 	valueLen = BUFSIZE;
-	RegQueryValueEx(key, _T("CurrentVersion"), NULL, &keyType, (LPBYTE)&value, &valueLen);
-	add_value(scanLog, _T("version"), value);
+	RegQueryValueEx(key, L"CurrentVersion", NULL, &keyType, (LPBYTE)&value, &valueLen);
+	add_value(scanLog, L"version", value);
 
 	/* Service pack */
 	valueLen = BUFSIZE;
-	RegQueryValueEx(key, _T("CSDVersion"), NULL, &keyType, (LPBYTE)&value, &valueLen);
-	add_value(scanLog, _T("splevel"), value);
+	RegQueryValueEx(key, L"CSDVersion", NULL, &keyType, (LPBYTE)&value, &valueLen);
+	add_value(scanLog, L"splevel", value);
 
 	/* Build number */
 	valueLen = BUFSIZE;
-	RegQueryValueEx(key, _T("CurrentBuildNumber"), NULL, &keyType, (LPBYTE)&value, &valueLen);
-	add_value(scanLog, _T("build"), value);
+	RegQueryValueEx(key, L"CurrentBuildNumber", NULL, &keyType, (LPBYTE)&value, &valueLen);
+	add_value(scanLog, L"build", value);
 
 	RegCloseKey(key);
 	return 0;
@@ -125,36 +125,36 @@ static int currentversion(void)
 static int architecture(void)
 {
 	SYSTEM_INFO sysinfo;
-	TCHAR value[BUFSIZE];
+	wchar_t value[BUFSIZE];
 	GetSystemInfo(&sysinfo);
 
 	switch(sysinfo.wProcessorArchitecture) {
 		case PROCESSOR_ARCHITECTURE_AMD64:
-			add_value(scanLog, _T("arch"), _T("x86_64"));
+			add_value(scanLog, L"arch", L"x86_64");
 			break;
 		case PROCESSOR_ARCHITECTURE_IA64:
-			add_value(scanLog, _T("arch"), _T("ia64"));
+			add_value(scanLog, L"arch", L"ia64");
 			break;
 		case PROCESSOR_ARCHITECTURE_INTEL:
-			add_value(scanLog, _T("arch"), _T("x86"));
+			add_value(scanLog, L"arch", L"x86");
 			break;
 #ifdef PROCESSOR_ARCHITECTURE_ARM
 		case PROCESSOR_ARCHITECTURE_ARM:
-			add_value(scanLog, _T("arch"), _T("arm"));
+			add_value(scanLog, L"arch", L"arm");
 			break;
 #endif
 #ifdef PROCESSOR_ARCHITECTURE_ARM64
 		case PROCESSOR_ARCHITECTURE_ARM64:
-			add_value(scanLog, _T("arch"), _T("arm64"));
+			add_value(scanLog, L"arch", L"arm64");
 			break;
 #endif
 		default:
-			add_value(scanLog, _T("arch"), _T("unknown"));
+			add_value(scanLog, L"arch", L"unknown");
 			break;
 	}
 
-	_stprintf(value, BUFSIZE, _T("%d"), sysinfo.dwNumberOfProcessors);
-	add_value(scanLog, _T("processors"), value);
+	swprintf(value, BUFSIZE, L"%d", sysinfo.dwNumberOfProcessors);
+	add_value(scanLog, L"processors", value);
 
 	return 0;
 }
@@ -162,17 +162,17 @@ static int architecture(void)
 static int memory(void)
 {
 	MEMORYSTATUSEX mse;
-	TCHAR value[BUFSIZE];
+	wchar_t value[BUFSIZE];
 
 	mse.dwLength = sizeof mse;
 
 	GlobalMemoryStatusEx(&mse);
 
-	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullTotalPhys / (1024*1024));
-	add_value(scanLog, _T("memtotal"), value);
+	swprintf(value, BUFSIZE, L"%llu", mse.ullTotalPhys / (1024*1024));
+	add_value(scanLog, L"memtotal", value);
 
-	_stprintf(value, BUFSIZE, _T("%llu"), mse.ullAvailPhys / (1024*1024));
-	add_value(scanLog, _T("memavail"), value);
+	swprintf(value, BUFSIZE, L"%llu", mse.ullAvailPhys / (1024*1024));
+	add_value(scanLog, L"memavail", value);
 
 	return 0;
 }
@@ -182,9 +182,9 @@ static int checkvm(void)
 	unsigned int cpuInfo[4];
 	__cpuid((int*)cpuInfo, 1);
 	if (((cpuInfo[2] >> 31) & 1) == 1) {
-		add_value(scanLog, _T("virtualized"), _T("yes"));
+		add_value(scanLog, L"virtualized", L"yes");
 	} else {
-		add_value(scanLog, _T("virtualized"), _T("no"));
+		add_value(scanLog, L"virtualized", L"no");
 	}
 	return 0;
 }

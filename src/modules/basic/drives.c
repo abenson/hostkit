@@ -4,52 +4,52 @@
 #undef BUFLEN
 #define BUFLEN 32768
 
-static int volume_info(TCHAR *disk);
+static int volume_info(wchar_t *disk);
 
 int enum_drives(void)
 {
-	TCHAR guid[BUFLEN], name[BUFLEN];
+	wchar_t guid[BUFLEN], name[BUFLEN];
 	HANDLE handle;
 	unsigned long i = 0, c, type;
 
-	start_itemlist(scanLog, _T("drives"));
+	start_itemlist(scanLog, L"drives");
 
 	handle = FindFirstVolume(guid, BUFLEN);
 
 	do {
-		start_itemlist_item(scanLog, _T("drive"));
+		start_itemlist_item(scanLog, L"drive");
 
-		add_value(scanLog, _T("guid"), guid);
+		add_value(scanLog, L"guid", guid);
 
 		if(GetVolumePathNamesForVolumeName(guid, name, BUFLEN, &c) != 0) {
 			if(name[0]) {
-				add_value(scanLog, _T("letter"), name);
+				add_value(scanLog, L"letter", name);
 				type = GetDriveType(name);
 				switch(type) {
 					case DRIVE_NO_ROOT_DIR:
-						add_value(scanLog, _T("type"), _T("invalid"));
+						add_value(scanLog, L"type", L"invalid");
 						break;
 					case DRIVE_REMOVABLE:
-						add_value(scanLog, _T("type"), _T("removable"));
+						add_value(scanLog, L"type", L"removable");
 						break;
 					case DRIVE_FIXED:
-						add_value(scanLog, _T("type"), _T("fixed"));
+						add_value(scanLog, L"type", L"fixed");
 						break;
 					case DRIVE_REMOTE:
-						add_value(scanLog, _T("type"), _T("remote"));
+						add_value(scanLog, L"type", L"remote");
 						break;
 					case DRIVE_CDROM:
-						add_value(scanLog, _T("type"), _T("cdrom"));
+						add_value(scanLog, L"type", L"cdrom");
 						break;
 					case DRIVE_RAMDISK:
-						add_value(scanLog, _T("type"), _T("ramdisk"));
+						add_value(scanLog, L"type", L"ramdisk");
 						break;
 					case DRIVE_UNKNOWN:
 					default:
-						add_value(scanLog, _T("type"), _T("unknown"));
+						add_value(scanLog, L"type", L"unknown");
 						break;
 				}
-				volume_info(_T("letter"));
+				volume_info(L"letter");
 			}
 		}
 		end_itemlist_item(scanLog);
@@ -60,30 +60,30 @@ int enum_drives(void)
 	return 0;
 }
 
-static int volume_info(TCHAR *disk)
+static int volume_info(wchar_t *disk)
 {
-	TCHAR name[BUFLEN] = {0}, fs[BUFLEN] = {0};
-	TCHAR serialStr[BUFLEN] = {0};
+	wchar_t name[BUFLEN] = {0}, fs[BUFLEN] = {0};
+	wchar_t serialStr[BUFLEN] = {0};
 	DWORD serial, flags;
 	DWORD ret;
 
 	ret = GetVolumeInformation(disk, name, BUFLEN, &serial, NULL, &flags, fs, BUFLEN);
 
 	if(ret == 0) {
-		add_value(scanLog, _T(""), _T(""));
+		add_value(scanLog, L"", L"");
 		return 1;
 	}
 
-	add_value(scanLog, _T("name"), name);
-	add_value(scanLog, _T("fs"), fs);
+	add_value(scanLog, L"name", name);
+	add_value(scanLog, L"fs", fs);
 
-	_sntprintf(serialStr, BUFLEN, _T("%04X-%04X"), HIBYTE(serial), LOBYTE(serial));
-	add_value(scanLog, _T("serial"), serialStr);
+	_snwprintf(serialStr, BUFLEN, L"%04X-%04X", HIBYTE(serial), LOBYTE(serial));
+	add_value(scanLog, L"serial", serialStr);
 
 	if(flags & FILE_READ_ONLY_VOLUME) {
-		add_value(scanLog, _T("readonly"), _T("true"));
+		add_value(scanLog, L"readonly", L"true");
 	} else {
-		add_value(scanLog, _T("readonly"), _T("false"));
+		add_value(scanLog, L"readonly", L"false");
 	}
 
 	return 0;

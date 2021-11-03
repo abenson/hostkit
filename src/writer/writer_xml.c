@@ -5,57 +5,57 @@
 
 int xml_begin(log_t *log)
 {
-	_ftprintf(log->file, _T("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<results>\n"));
+	fwprintf(log->file, L"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<results>\n");
 	return 0;
 }
 
 int xml_end(log_t *log)
 {
-	_ftprintf(log->file, _T("</results>\n"));
+	fwprintf(log->file, L"</results>\n");
 	return 0;
 }
 
-int xml_open_section(log_t *log, const _TCHAR *name)
+int xml_open_section(log_t *log, const wchar_t *name)
 {
-	_ftprintf(log->file, _T("%*s<%s>\n"), log->indentLevel * 3, _T(" "), log->section);
+	fwprintf(log->file, L"%*ls<%ls>\n", log->indentLevel * 3, L" ", log->section);
 	return 0;
 }
 
 int xml_close_section(log_t *log)
 {
-	_ftprintf(log->file, _T("%*s</%s>\n"), log->indentLevel * 3, _T(" "), log->section);
+	fwprintf(log->file, L"%*ls</%ls>\n", log->indentLevel * 3, L" ", log->section);
 	return 0;
 }
 
-int xml_start_itemlist(log_t *log, const TCHAR *name)
+int xml_start_itemlist(log_t *log, const wchar_t *name)
 {
-	_ftprintf(log->file, _T("%*s<%s>\n"), log->indentLevel *3, _T(" "), log->itemlistName);
+	fwprintf(log->file, L"%*ls<%ls>\n", log->indentLevel *3, L" ", log->itemlistName);
 	return 0;
 }
 
-int xml_start_itemlist_item(log_t *log, const TCHAR *name)
+int xml_start_itemlist_item(log_t *log, const wchar_t *name)
 {
 
-	_ftprintf(log->file, _T("%*s<%s>\n"), log->indentLevel * 3, _T(" "), log->itemlistItemName);
+	fwprintf(log->file, L"%*ls<%ls>\n", log->indentLevel * 3, L" ", log->itemlistItemName);
 	return 0;
 }
 
 int xml_end_itemlist_item(log_t *log)
 {
-	_ftprintf(log->file, _T("%*s</%s>\n"), log->indentLevel * 3, _T(" "), log->itemlistItemName);
+	fwprintf(log->file, L"%*ls</%ls>\n", log->indentLevel * 3, L" ", log->itemlistItemName);
 	return 0;
 }
 
 int xml_end_itemlist(log_t *log)
 {
-	_ftprintf(log->file, _T("%*s</%s>\n"), log->indentLevel *3, _T(" "), log->itemlistName);
+	fwprintf(log->file, L"%*ls</%ls>\n", log->indentLevel *3, L" ", log->itemlistName);
 	return 0;
 }
 
-int xml_add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
+int xml_add_value(log_t *log, const wchar_t *key, const wchar_t *value)
 {
 	int i;
-	_ftprintf(log->file, _T("%*s<%s>"), log->indentLevel * 3, _T(" "), key);
+	fwprintf(log->file, L"%*ls<%ls>", log->indentLevel * 3, L" ", key);
 
 	for(i=0; value[i]; i++) {
 		if(value[i] == 0x09 || value[i] == 0x0A	|| value[i] == 0x0D
@@ -64,26 +64,26 @@ int xml_add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
 			|| 0x10000 <= value[i] && value[i] <= 0x10FFFF) {
 			switch(value[i]) {
 				case '<':
-					_ftprintf(log->file, _T("&lt;"));
+					fwprintf(log->file, L"&lt;");
 					break;
 				case '>':
-					_ftprintf(log->file, _T("&gt;"));
+					fwprintf(log->file, L"&gt;");
 					break;
 				case '&':
-					_ftprintf(log->file, _T("&amp;"));
+					fwprintf(log->file, L"&amp;");
 					break;
 				case '\'':
-					_ftprintf(log->file, _T("&apos;"));
+					fwprintf(log->file, L"&apos;");
 					break;
 				case '"':
-					_ftprintf(log->file, _T("&quot;"));
+					fwprintf(log->file, L"&quot;");
 					break;
 				default:
-					_ftprintf(log->file, _T("%c"), value[i]);
+					fwprintf(log->file, L"%c", value[i]);
 			}
 		}
 	}
 
-	_ftprintf(log->file, _T("</%s>\n"), key);
+	fwprintf(log->file, L"</%ls>\n", key);
 	return 0;
 }

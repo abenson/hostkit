@@ -6,6 +6,6 @@
 
 int servicize(void)
 {
-	_ftprintf(arguments.log, _T("Service mode not implemented!\n"));
+	fwprintf(arguments.log, L"Service mode not implemented!\n");
 	return -1;
 }

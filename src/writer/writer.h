@@ -10,9 +10,9 @@ typedef struct log
 	FILE *file;
 	int format;
 
-	_TCHAR *section;
-	_TCHAR *itemlistName;
-	_TCHAR *itemlistItemName;
+	wchar_t *section;
+	wchar_t *itemlistName;
+	wchar_t *itemlistItemName;
 	void *moduleData;
 
 	int indentLevel;
@@ -21,22 +21,22 @@ typedef struct log
 
 extern log_t *scanLog;
 
-log_t* open_log(const _TCHAR *filename, const _TCHAR *format);
+log_t* open_log(const wchar_t *filename, const wchar_t *format);
 
 void close_log(log_t *log);
 
-int open_section(log_t *log, const _TCHAR *name);
+int open_section(log_t *log, const wchar_t *name);
 
 int close_section(log_t *log);
 
-int start_itemlist(log_t *log, const TCHAR *name);
+int start_itemlist(log_t *log, const wchar_t *name);
 
-int start_itemlist_item(log_t *log, const TCHAR *name);
+int start_itemlist_item(log_t *log, const wchar_t *name);
 
 int end_itemlist_item(log_t *log);
 
 int end_itemlist(log_t *log);
 
-int add_value(log_t *log, const _TCHAR *key, const _TCHAR *value);
+int add_value(log_t *log, const wchar_t *key, const wchar_t *value);
 
 #endif

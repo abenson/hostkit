@@ -19,51 +19,51 @@ int json_begin(log_t *log)
 	((struct json_data*)log->moduleData)->followingSection = 0;
 	((struct json_data*)log->moduleData)->followingKeyVal = 0;
 	((struct json_data*)log->moduleData)->inItemList = 0;
-	_ftprintf(log->file, _T("{\n"));
+	fwprintf(log->file, L"{\n");
 	return 0;
 }
 
 int json_end(log_t *log)
 {
 	free(log->moduleData);
-	_ftprintf(log->file, _T("\n}\n"));
+	fwprintf(log->file, L"\n}\n");
 	return 0;
 }
 
-int json_open_section(log_t *log, const _TCHAR *name)
+int json_open_section(log_t *log, const wchar_t *name)
 {
 	if(((struct json_data*)log->moduleData)->followingSection == 1) {
-		_ftprintf(log->file, _T(",\n%*s\"%s\": {"), log->indentLevel * 3, _T(" "), name);
+		fwprintf(log->file, L",\n%*ls\"%ls\": {", log->indentLevel * 3, L" ", name);
 	} else {
-		_ftprintf(log->file, _T("%*s\"%s\": {"), log->indentLevel * 3, _T(" "), name);
+		fwprintf(log->file, L"%*ls\"%ls\": {", log->indentLevel * 3, L" ", name);
 	}
 	return 0;
 }
 
 int json_close_section(log_t *log)
 {
-	_ftprintf(log->file, _T("\n%*s}"), log->indentLevel * 3, _T(" "));
+	fwprintf(log->file, L"\n%*ls}", log->indentLevel * 3, L" ");
 	((struct json_data*)log->moduleData)->followingSection = 1;
 	((struct json_data*)log->moduleData)->followingKeyVal = 0;
 	return 0;
 }
 
-int json_start_itemlist(log_t *log, const TCHAR *name)
+int json_start_itemlist(log_t *log, const wchar_t *name)
 {
 	if(((struct json_data*)log->moduleData)->followingSection == 1) {
-		_ftprintf(log->file, _T(",\n%*s\"%s\": ["), log->indentLevel * 3, _T(" "), name);
+		fwprintf(log->file, L",\n%*ls\"%ls\": [", log->indentLevel * 3, L" ", name);
 	} else {
-		_ftprintf(log->file, _T("%*s\"%s\": ["), log->indentLevel * 3, _T(" "), name);
+		fwprintf(log->file, L"%*ls\"%ls\": [", log->indentLevel * 3, L" ", name);
 	}
 	return 0;
 }
 
-int json_start_itemlist_item(log_t *log, const TCHAR *name)
+int json_start_itemlist_item(log_t *log, const wchar_t *name)
 {
 	if(((struct json_data*)log->moduleData)->inItemList == 1) {
-		_ftprintf(log->file, _T(",\n%*s{"),log->indentLevel * 3, _T(" "));
+		fwprintf(log->file, L",\n%*ls{",log->indentLevel * 3, L" ");
 	} else {
-		_ftprintf(log->file, _T("\n%*s{"), log->indentLevel * 3, _T(" "));
+		fwprintf(log->file, L"\n%*ls{", log->indentLevel * 3, L" ");
 	}
 	((struct json_data*)log->moduleData)->inItemList = 1;
 	((struct json_data*)log->moduleData)->followingSection = 0;
@@ -73,62 +73,62 @@ int json_start_itemlist_item(log_t *log, const TCHAR *name)
 
 int json_end_itemlist_item(log_t *log)
 {
-	_ftprintf(log->file, _T("\n%*s}"), log->indentLevel * 3, _T(" "));
+	fwprintf(log->file, L"\n%*ls}", log->indentLevel * 3, L" ");
 	return 0;
 }
 
 int json_end_itemlist(log_t *log)
 {
-	_ftprintf(log->file, _T("\n%*s]"), log->indentLevel * 3, _T(" "));
+	fwprintf(log->file, L"\n%*ls]", log->indentLevel * 3, L" ");
 	((struct json_data*)log->moduleData)->inItemList = 0;
 	return 0;
 }
 
-int json_add_value(log_t *log, const _TCHAR *key, const _TCHAR *value)
+int json_add_value(log_t *log, const wchar_t *key, const wchar_t *value)
 {
 	int i;
 	if(((struct json_data*)log->moduleData)->followingKeyVal == 1) {
-		_ftprintf(log->file, _T(","));
+		fwprintf(log->file, L",");
 	}
 
-	_ftprintf(log->file, _T("\n%*s\"%s\": \""), log->indentLevel * 3, _T(" "), key);
+	fwprintf(log->file, L"\n%*ls\"%ls\": \"", log->indentLevel * 3, L" ", key);
 
 	for(i=0; value[i]; i++) {
 		switch(value[i]) {
-			case _T('"'):
-				_ftprintf(log->file, _T("%s"), _T("\""));
+			case L'"':
+				fwprintf(log->file, L"%ls", L"\"");
 				break;
-			case _T('\\'):
-				_ftprintf(log->file, _T("%s"), _T("\\\\"));
+			case L'\\':
+				fwprintf(log->file, L"%ls", L"\\\\");
 				break;
-			case _T('/'):
-				_ftprintf(log->file, _T("%s"), _T("\\/"));
+			case L'/':
+				fwprintf(log->file, L"%ls", L"\\/");
 				break;
-			case _T('\b'):
-				_ftprintf(log->file, _T("%s"), _T("\\b"));
+			case L'\b':
+				fwprintf(log->file, L"%ls", L"\\b");
 				break;
-			case _T('\f'):
-				_ftprintf(log->file, _T("%s"), _T("\\f"));
+			case L'\f':
+				fwprintf(log->file, L"%ls", L"\\f");
 				break;
-			case _T('\n'):
-				_ftprintf(log->file, _T("%s"), _T("\\n"));
+			case L'\n':
+				fwprintf(log->file, L"%ls", L"\\n");
 				break;
-			case _T('\r'):
-				_ftprintf(log->file, _T("%s"), _T("\\r"));
+			case L'\r':
+				fwprintf(log->file, L"%ls", L"\\r");
 				break;
-			case _T('\t'):
-				_ftprintf(log->file, _T("%s"), _T("\\t"));
+			case L'\t':
+				fwprintf(log->file, L"%ls", L"\\t");
 				break;
 			default:
 				if(__isascii(value[i])) {
-					_ftprintf(log->file, _T("%c"), value[i]);
+					fwprintf(log->file, L"%c", value[i]);
 				} else {
-					_ftprintf(log->file, _T("%04d"), value[i]);
+					fwprintf(log->file, L"%04d", value[i]);
 				}
 		}
 	}
 
-	_ftprintf(log->file, _T("\""));
+	fwprintf(log->file, L"\"");
 
 	((struct json_data*)log->moduleData)->followingKeyVal = 1;
 	return 0;

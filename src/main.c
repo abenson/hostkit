@@ -8,17 +8,17 @@
 
 #include "writer/writers.h"
 
-_TCHAR *get_version(void)
+wchar_t *get_version(void)
 {
-	return _T("HostKit Agent PREALPHA\nCompiled at ") __TIME__ _T(" on ") __DATE__ _T("\n");
+	return L"HostKit Agent PREALPHA\nCompiled at " __TIME__ L" on " __DATE__ L"\n";
 }
 
-_TCHAR *get_copyright(void)
+wchar_t *get_copyright(void)
 {
-	return _T("(C) 2019 HostKit Team\n");
+	return L"(C) 2019 HostKit Team\n";
 }
 
-int main(int argc, char *argv[])
+int wmain(int argc, wchar_t *argv[])
 {
 	int result;
 
@@ -27,24 +27,24 @@ int main(int argc, char *argv[])
 	initialize_arguments();
 
 	if(parse_arguments(argv) != ARGS_OK || arguments.error) {
-		_tprintf(_T("%s"), get_help());
+		wprintf(L"%ls", get_help());
 		quit();
 	}
 
 	if(arguments.debug) {
-		_ftprintf(arguments.log, _T("Debug log is enabled.\n"));
+		fwprintf(arguments.log, L"Debug log is enabled.\n");
 	}
 
 	if(arguments.version == TRUE) {
-		_tprintf(_T("%s"), get_version());
-		_tprintf(_T("%s"), get_copyright());
+		wprintf(L"%S", get_version());
+		wprintf(L"%s", get_copyright());
 		quit();
 	}
 
 	if(arguments.service == TRUE) {
 		result = servicize();
 		if(result != 0) {
-			_ftprintf(arguments.log, _T("Unable to install as service.\n"));
+			fwprintf(arguments.log, L"Unable to install as service.\n");
 		}
 		quit();
 	}
@@ -52,28 +52,28 @@ int main(int argc, char *argv[])
 	if(arguments.persistent == TRUE) {
 		result = persist();
 		if(result != 0) {
-			_ftprintf(arguments.log, _T("An occurred when running persistent.\n"));
+			fwprintf(arguments.log, L"An occurred when running persistent.\n");
 		}
 		quit();
 	}
 
 	if(find_format(arguments.writer) < 0) {
-		if(_tcscmp(arguments.writer, _T("list")) == 0) {
+		if(wcscmp(arguments.writer, L"list") == 0) {
 			print_formats(arguments.log);
 		} else {
-			_ftprintf(arguments.log, _T("Invalid writer: %s\n"), arguments.writer);
+			fwprintf(arguments.log, L"Invalid writer: %s\n", arguments.writer);
 		}
 		quit();
 	}
 
 	if(arguments.filename == NULL) {
-		scanLog = open_log(_T("-"), arguments.writer);
+		scanLog = open_log(L"-", arguments.writer);
 	} else {
 		scanLog = open_log(arguments.filename, arguments.writer);
 	}
 
 	if(scanLog == NULL) {
-		_ftprintf(arguments.log, _T("Failed to open log.\n"));
+		fwprintf(arguments.log, L"Failed to open log.\n");
 		quit();
 	}
 
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 	close_log(scanLog);
 
 	if(result != 0) {
-		_ftprintf(arguments.log, _T("An occurred while running the scans.\n"));
+		fwprintf(arguments.log, L"An occurred while running the scans.\n");
 		return result;
 	}
 
