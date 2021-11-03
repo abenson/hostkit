@@ -10,7 +10,7 @@ int enum_drives(void)
 {
 	wchar_t guid[BUFLEN], name[BUFLEN];
 	HANDLE handle;
-	unsigned long i = 0, c, type;
+	unsigned long c, type;
 
 	start_itemlist(scanLog, L"drives");
 

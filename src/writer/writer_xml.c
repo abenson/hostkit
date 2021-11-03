@@ -59,9 +59,9 @@ int xml_add_value(log_t *log, const wchar_t *key, const wchar_t *value)
 
 	for(i=0; value[i]; i++) {
 		if(value[i] == 0x09 || value[i] == 0x0A	|| value[i] == 0x0D
-			|| 0x20 <= value[i] && value[i] <= 0xD7FF
-			|| 0xE000 <= value[i] && value[i] <= 0xFFFD
-			|| 0x10000 <= value[i] && value[i] <= 0x10FFFF) {
+			|| (0x20 <= value[i] && value[i] <= 0xD7FF)
+			|| (0xE000 <= value[i] && value[i] <= 0xFFFD)
+			|| (0x10000 <= value[i] && value[i] <= 0x10FFFF)) {
 			switch(value[i]) {
 				case '<':
 					fwprintf(log->file, L"&lt;");

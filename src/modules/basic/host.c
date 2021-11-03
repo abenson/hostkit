@@ -34,7 +34,6 @@ static int hostname(void)
 {
 	wchar_t *name = NULL;
 	DWORD nameLen = 0;
-	LONG status;
 
 	/* Get size of buffer. */
 	GetComputerNameEx(ComputerNamePhysicalDnsHostname, name, &nameLen);

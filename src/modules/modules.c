@@ -48,6 +48,7 @@ int run_basic_scan(void)
 {
 	run_scan(basic);
 	run_scan(basic_only);
+	return 0;
 }
 
 int run_standard_scan(void)
@@ -55,6 +56,7 @@ int run_standard_scan(void)
 	run_scan(basic);
 	run_scan(standard);
 	run_scan(standard_only);
+	return 0;
 }
 
 int run_full_scan(void)
@@ -63,4 +65,5 @@ int run_full_scan(void)
 	run_scan(standard);
 	run_scan(full);
 	run_scan(full_only);
+	return 0;
 }

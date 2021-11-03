@@ -22,8 +22,6 @@ int wmain(int argc, wchar_t *argv[])
 {
 	int result;
 
-	int i = 1;
-
 	initialize_arguments();
 
 	if(parse_arguments(argv) != ARGS_OK || arguments.error) {
